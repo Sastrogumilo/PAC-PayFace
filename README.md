@@ -1,6 +1,8 @@
-# cobva
+# PAC-PayFace
 
-A new Flutter project.
+A Baru Flutter Project
+
+- Sebelum mulai: "flutter pub get"
 
 ## Getting Started
 
