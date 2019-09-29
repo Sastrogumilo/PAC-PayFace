@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 
 class TopUpPage extends StatefulWidget {
   static String tag = 'topup-page';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 056f8a9fea71045512b607fe9ec2f4a110035f83
   @override 
   _TopUpPageState createState() => _TopUpPageState();
 
@@ -11,8 +15,16 @@ class TopUpPage extends StatefulWidget {
 
 
 class _TopUpPageState extends State<TopUpPage> {
+<<<<<<< HEAD
   //final _formKey = GlobalKey<FormState>();
   Map<String, dynamic> formData;
+=======
+
+  //final _formKey = GlobalKey<FormState>();
+
+  Map<String, dynamic> formData;
+
+>>>>>>> 056f8a9fea71045512b607fe9ec2f4a110035f83
   List<String> bank = [
     'BRI', 
     'BNI',
@@ -20,6 +32,10 @@ class _TopUpPageState extends State<TopUpPage> {
     'BTN',
     'DLL'
   ];
+<<<<<<< HEAD
+=======
+
+>>>>>>> 056f8a9fea71045512b607fe9ec2f4a110035f83
   List<String> nominal = [
     '20.000',
     '50.000',
@@ -31,6 +47,7 @@ class _TopUpPageState extends State<TopUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       appBar: new AppBar(
         title: const Text('Top Up'),
         actions: <Widget>[
@@ -111,4 +128,101 @@ class _TopUpPageState extends State<TopUpPage> {
       ),
     );
   }
+=======
+       appBar: new AppBar(
+      title: const Text('Top Up'),
+      actions: <Widget>[
+        new IconButton(icon: const Icon(Icons.save),
+        onPressed: () {}) //<-Di isi
+      ],
+    ),
+    body: SafeArea(
+      child: SingleChildScrollView(
+        child: new Column(
+          children: <Widget>[
+
+          Padding(padding: EdgeInsets.symmetric(vertical: 6),
+          ),
+
+          new DropDownField(
+            value: null,
+            icon: Icon(Icons.credit_card),
+            required: true,
+            hintText: 'Pilih Bank',
+            items: bank,
+            setter: (dynamic newValueBank) {
+              formData['Bank'] = newValueBank;
+            },
+          ),
+          Padding(padding: EdgeInsets.symmetric(vertical: 8),
+          
+          ),
+
+          new DropDownField(
+            value: null,
+            icon: Icon(Icons.attach_money),
+            required: true,
+            hintText: 'Jumlah Nominal',
+            items : nominal,
+            setter: (dynamic newValue) {
+              formData['Nominal'] = newValue;
+            },
+
+          ),
+
+          new ListTile(
+            leading: const Icon(Icons.credit_card),
+            title: new TextField(
+              decoration: new InputDecoration(
+                hintText: 'Masukan Nomor Rekening Anda'
+              ),
+            )
+            ,
+          ),
+          Padding(padding: EdgeInsets.symmetric(vertical: 150),
+          ),
+
+        new RaisedButton(
+          onPressed: () {},
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            width: double.infinity,
+            child: Text('Top Up',
+            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.green,
+              borderRadius: BorderRadius.circular(30)
+            
+          ),
+        ),
+      ), 
+      
+      new RaisedButton(
+        onPressed: () {},
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          width: double.infinity,
+          child: Text('Konfirmasi Top Up',
+          style: TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(30)
+          
+          ),
+        ),
+      ), 
+
+    ]
+      )
+        )
+          ),
+            );
+      
+  }
+
+>>>>>>> 056f8a9fea71045512b607fe9ec2f4a110035f83
 }

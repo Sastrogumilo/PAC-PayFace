@@ -23,7 +23,10 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Flutter for Android" level="project" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" name="Dart SDK" level="project" />
     <orderEntry type="library" name="Dart Packages" level="project" />
+=======
+>>>>>>> 056f8a9fea71045512b607fe9ec2f4a110035f83
   </component>
 </module>

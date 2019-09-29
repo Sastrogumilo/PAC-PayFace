@@ -130,14 +130,6 @@ class _DashBoardPageState extends State<DashBoardPage>
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                // LOGO APP
-                /*Image.asset(
-                  logoImage,
-                  fit: BoxFit.contain,
-                  height: 100,
-                  width: 100,
-                ),*/
-
                 // TULISAN SELAMAT DATANG
                 Column(
                   children: <Widget>[
@@ -161,9 +153,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                     )
                   ],
                 ),
-
                 card_pay_out,
-
                 // Menu BUTTON
                 Container(
                   height: 300,
