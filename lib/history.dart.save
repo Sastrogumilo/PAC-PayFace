@@ -1,0 +1,119 @@
+import 'package:flutter/material.dart';
+
+class HistoryPage extends StatefulWidget {
+  static String tag = 'history-page';
+
+  @override 
+  _HistoryPageState createState() => _HistoryPageState();
+
+}
+//FetchIsiGet() = async {
+//  var data = await http.get();
+//var jsonData = json.decode(data.body);
+
+
+//List<IsiDaftar> isiList = [];
+
+//for (var u in jsonData) {
+  
+//  IsiDaftar isi = IsiDaftar(u[""], u[""], u[""]);
+//  isiList.add(isi);
+
+//}
+//this.setState((){
+// __isiList = isiList;
+//});
+
+//}
+
+//@override 
+//void initState() [
+//  FetchIsiGet();
+//]
+
+
+//Contoh 
+
+final List<Map<String, String>> contohData= [
+{"No": "1", "Tanggal": "10-20-19", "Nilai": "Rp. 20.000"},
+{"No": "2", "Tanggal": "10-20-19", "Nilai": "Rp. 19.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+{"No": "3", "Tanggal": "12-20-19", "Nilai": "Rp. 18.000"},
+
+];
+
+class _HistoryPageState extends State<HistoryPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Riwayat Transaksi'),
+      ),
+      body: Container(
+        child: SingleChildScrollView(
+            child: Table(
+              defaultColumnWidth: FixedColumnWidth(150),
+              border: TableBorder(
+                horizontalInside: BorderSide(
+                  color: Colors.black,
+                  style: BorderStyle.solid,
+                  width: 1, 
+                  ),
+                  verticalInside: BorderSide(
+                    color: Colors.black,
+                      style: BorderStyle.solid,
+                      width: 1, 
+                    )
+                  ),
+                  children: [
+                  
+                  ],
+
+            ),
+        ),
+      )
+      );
+  }
+ TableRow _isiTable(String isiList) {
+    
+
+  }
+
+// Nanti
+//child: new DataTable(
+//          columns: [
+//            DataColumn(label: Text("No")),
+//            DataColumn(label: Text("Tanggal")),
+//            DataColumn(label: Text("Nilai"))
+//
+//          ],
+//          rows: 
+//          contohData.map(
+//                      ((isi) => DataRow(
+//                        cells: <DataCell> [
+//                          DataCell(Text(isi["No"])),
+//                          DataCell(Text(isi['Tanggal'])),
+//                          DataCell(Text(isi["Nilai"])),
+//                          
+//                        ],
+//                     )
+//          
+//        ),
+//      ).toList(),
+//      
+//        )
+//
+
+}
+
