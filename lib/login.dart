@@ -3,8 +3,6 @@ import 'package:PayFace/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
-
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
   @override
@@ -20,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: 48.0,
-        child: Image.asset('asset/logo.png'),
+        child: Image.asset('asset/images/logo_1.jpeg'),
       ),
     );
 
@@ -30,7 +28,8 @@ class _LoginPageState extends State<LoginPage> {
       initialValue: 'coba@email.com', //<- 
       decoration: InputDecoration(
         hintText: 'Email',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        prefixIcon: Icon(Icons.email),
+        contentPadding: EdgeInsets.fromLTRB(20.0, 11.0, 20.0, 11.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
@@ -41,40 +40,51 @@ class _LoginPageState extends State<LoginPage> {
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Password',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        prefixIcon: Icon(Icons.lock),
+        contentPadding: EdgeInsets.fromLTRB(20.0, 11.0, 20.0, 11.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
     final loginButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 0.0),
       child: Material(
-        borderRadius: BorderRadius.circular(30.0),
+        shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(32.0)),
         shadowColor: Colors.lightBlueAccent.shade100,
-        elevation: 5.0,
+        //elevation: 5.0,
+        clipBehavior: Clip.antiAlias, // Add This
         child: MaterialButton(
           minWidth: 200.0,
-          height: 42.0,
+          height: 46.0,
           onPressed: () {
             Navigator.of(context).pushNamed(HomePage.tag);
           },
-          color: Colors.lightBlueAccent,
+          color: Colors.blueAccent,
           child: Text('Log In', style: TextStyle(color: Colors.white)),
         ),
       ),
     );
 
-    final forgotLabel = FlatButton(
-      child: Text(
-        'Lupa Password ?',
-        style: TextStyle(color: Colors.black54),
-      ),
-      onPressed: () {}, //<-- Ke Page Lupa Password
+    final forgotLabel = Column(
+      children: <Widget>[
+        Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+                child: FlatButton(
+                  child: Text(
+                    'Forgot Password ?',
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                  onPressed: () {}, //<-- Ke Page Lupa Password
+                ),
+            ),
+        ),
+      ],
     );
 
     final register = FlatButton(
       child: Text( 
-        'Register', 
+        "Don't have an account ? Register",
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {Navigator.pushNamed(context, RegisterPage.tag);}, //<-- Ke Page Register 
@@ -90,12 +100,12 @@ class _LoginPageState extends State<LoginPage> {
             logo,
             SizedBox(height: 48.0),
             email,
-            SizedBox(height: 8.0),
+            SizedBox(height: 12.0),
             password,
-            SizedBox(height: 24.0),
+            forgotLabel,
             loginButton,
-            register,
-            forgotLabel
+            SizedBox(height: 21.0),
+            register
           ],
         ),
       ),

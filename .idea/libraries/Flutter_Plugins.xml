@@ -1,7 +1,10 @@
 <component name="libraryTable">
   <library name="Flutter Plugins" type="FlutterPluginsLibraryType">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../Android/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler-3.2.2" />
+      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/fluttertoast-3.1.3" />
+      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/permission_handler-3.2.2" />
+      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/path_provider-1.3.0" />
+      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/camera-0.5.4+2" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

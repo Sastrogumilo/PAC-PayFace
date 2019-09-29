@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'login.dart';
 import 'home_page.dart';
-import 'dashboard.dart';
+//import 'dashboard.dart';
+import 'dashboard_v2.dart';
 import 'profil.dart';
 import 'register.dart';
 import 'kirim.dart';
+//import 'kirim_v2.dart';
 import 'topup.dart';
 //mport 'history.dart';
 import 'history2.dart';
@@ -17,15 +19,12 @@ import 'kamera_profil.dart';
 import 'kamera_bayar.dart';
 import 'pin.dart';
 
-
-
 void main() {
-  SystemChrome.setEnabledSystemUIOverlays([]);
+  SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
   final routes = <String, WidgetBuilder>{
     LoginPage.tag: (context) => LoginPage(),
     HomePage.tag: (context) => HomePage(),
@@ -39,19 +38,16 @@ class MyApp extends StatelessWidget {
     KameraPage.tag: (context) => KameraPage(),
     KameraBayarPage.tag: (context) => KameraBayarPage(),
     PinPage.tag: (context) => PinPage(),
-
-
   };
-  
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PayFace',
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
-        fontFamily: 'Nunito',
+        primarySwatch: Colors.blue,
+        fontFamily: 'Arial',
       ),
       home: LoginPage(),
       routes: routes,

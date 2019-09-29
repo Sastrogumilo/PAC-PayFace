@@ -33,136 +33,117 @@ class RegisterPage extends StatelessWidget {
 
 Widget _iconLogin() {
   return Image.asset('asset/registration.png',
-  width: 150,
-  height: 150,);
-
+    width: 150,
+    height: 150,
+  );
 }
 
 Widget _titleDesc() {
   return Column(
     children: <Widget>[
-      Padding(
-        padding: EdgeInsets.only(top: 16),
-
-      ),
-      Text(
-        'Registrasi Dulu', 
+      Padding(padding: EdgeInsets.only(top: 16)),
+      Text('Registrasi Dulu',
         style: TextStyle(
         color: Colors.white, 
         fontSize: 16),
       ),
-      Padding(
-        padding: EdgeInsets.only(top: 16),
-      ),
-      Text(
-        'Ini Deskripsi',
+      Padding(padding: EdgeInsets.only(top: 16)),
+      Text('Ini Deskripsi',
         style: TextStyle(
-          fontSize: 12, color: Colors.white, 
-          ),
-          textAlign: TextAlign.center,
+          fontSize: 12, color: Colors.white,
+        ),
+        textAlign: TextAlign.center,
       )
-    ],
+    ]
   );
-
-
 }
 
 Widget _textField() {
-return Column(
-  children: <Widget>[
-    Padding(
-      padding: EdgeInsets.only(top: 12),
-    ),
-
-    TextFormField( //<-- Email
-      decoration: const InputDecoration(
-        border: UnderlineInputBorder(),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-        color: ColorPalete.underLineTextField,
-        width: 15)
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(width: 3,
-          color: Colors.white),
-        ),
-        hintText: 'Email',
-        hintStyle: TextStyle(color: ColorPalete.hintColor),
-        
-    ),
-    style: TextStyle(color: Colors.white),
-    autofocus: false,
-    ),
-
-    TextFormField( //<-- Username
-      decoration: const InputDecoration(
-        border: UnderlineInputBorder(),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: ColorPalete.underLineTextField,
-            width: 15,
+  return Column(
+    children: <Widget>[
+      Padding(padding: EdgeInsets.only(top: 12)),
+      TextFormField( //<--EMAIL
+        decoration: const InputDecoration(
+          border: UnderlineInputBorder(),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorPalete.underLineTextField,
+              width: 15)
             ),
-      ),
-      focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(width: 3, 
-        color: Colors.white
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(width: 3,
+            color: Colors.white),
+          ),
+          hintText: 'Email',
+          hintStyle: TextStyle(color: ColorPalete.hintColor),
         ),
+        style: TextStyle(color: Colors.white),
+        autofocus: false,
       ),
-      hintText: 'Username',
-      hintStyle: TextStyle(color: ColorPalete.hintColor,)
-      ),
-      style: TextStyle(color: Colors.white),
-      autofocus: false,
-  ),
-  Padding(
-    padding: EdgeInsets.only(top: 12),
-  ),
 
-  TextFormField( //<-- Password
-    decoration: const InputDecoration(
-      border: UnderlineInputBorder(),
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: ColorPalete.underLineTextField,
-        width: 15,
-      ),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(width: 3, color: Colors.white)
-    ),
-    hintText: 'Password',
-    hintStyle: TextStyle(color: ColorPalete.hintColor)
-    ),
-    style: TextStyle(color: Colors.white),
-    obscureText: true,
-    autofocus: false,
-  ),
-  Padding(
-    padding: EdgeInsets.only(top: 12),
-  ),
-
-  TextFormField( //<-- Confirm Password
-    decoration: const InputDecoration(
-      border: UnderlineInputBorder(),
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: ColorPalete.underLineTextField,
-        width: 1.5
+      TextFormField( //<-- Username
+        decoration: const InputDecoration(
+          border: UnderlineInputBorder(),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorPalete.underLineTextField,
+              width: 15,
+            ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+                width: 3,
+                color: Colors.white
+            ),
+          ),
+          hintText: 'Username',
+          hintStyle: TextStyle(color: ColorPalete.hintColor,)
         ),
+        style: TextStyle(color: Colors.white),
+        autofocus: false,
       ),
-      focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(width: 3, color: Colors.white)
+      Padding(padding: EdgeInsets.only(top: 12)),
+      TextFormField( //<-- Password
+        decoration: const InputDecoration(
+          border: UnderlineInputBorder(),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorPalete.underLineTextField,
+              width: 15,
+            ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(width: 3, color: Colors.white)
+          ),
+          hintText: 'Password',
+          hintStyle: TextStyle(color: ColorPalete.hintColor)
+        ),
+        style: TextStyle(color: Colors.white),
+        obscureText: true,
+        autofocus: false,
       ),
-      hintText: 'Ulang Password',
-      hintStyle: TextStyle(color: ColorPalete.hintColor)
+      Padding(padding: EdgeInsets.only(top: 12)),
+      TextFormField( //<-- Confirm Password
+        decoration: const InputDecoration(
+          border: UnderlineInputBorder(),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: ColorPalete.underLineTextField,
+            width: 1.5
+            ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(width: 3, color: Colors.white)
+          ),
+          hintText: 'Ulang Password',
+          hintStyle: TextStyle(color: ColorPalete.hintColor)
 
-    ),
-    style: TextStyle(color: Colors.white),
-    obscureText: true,
-    autofocus: false,
-
-  )
-  
-  ],
-);
+        ),
+        style: TextStyle(color: Colors.white),
+        obscureText: true,
+        autofocus: false,
+      )
+    ],
+  );
 
 }
 

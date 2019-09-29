@@ -16,77 +16,38 @@
 	
   class KameraBayarPage extends StatefulWidget {
     static String tag = 'kameraBayar-page';
-	
     @override
-	
     _KameraBayarPageState createState() {
-	
       return _KameraBayarPageState();
-	
     }
-	
   }
 	
   
 	
   class _KameraBayarPageState extends State {
-	
     CameraController controller;
-	
     List cameras;
-	
     int selectedCameraIdx;
-	
     String imagePath;
-	
-  
-	
     final GlobalKey _scaffoldKey = GlobalKey();
-	
-  
-	
+
     @override
-	
     void initState() {
-	
       super.initState();
-	
-  
-	
       // Get the list of available cameras.
-	
       // Then set the first camera as selected.
-	
-      availableCameras()
-	
-      .then((availableCameras) {
-	
+      availableCameras().then((availableCameras)
+      {
         cameras = availableCameras;
-	
-  
-	
         if (cameras.length > 0) {
-	
           setState(() {
-	
             selectedCameraIdx = 0;
-	
           });
-	
-  
-	
           _onCameraSwitched(cameras[selectedCameraIdx]).then((void v) {});
-	
         }
-	
-      })
-	
-      .catchError((err) {
-	
+      }).catchError((err) {
         print('Error: $err.code\nError Message: $err.message');
-	
       });
-	
     }
 	
   
@@ -575,31 +536,16 @@
       });
     Navigator.of(context).pushNamed(null); //diisis
     }
-	
-  
-	
     void _showCameraException(CameraException e) {
-	
       String errorText = 'Error: ${e.code}\nError Message: ${e.description}';
-	
       print(errorText);
-	
-  
-	
       Fluttertoast.showToast(
-	
           msg: 'Error: ${e.code}\n${e.description}',
-	
           toastLength: Toast.LENGTH_SHORT,
-	
           gravity: ToastGravity.CENTER,
-	
           timeInSecForIos: 1,
-	
           backgroundColor: Colors.red,
-	
           textColor: Colors.white
-	
       );
 	
     }
