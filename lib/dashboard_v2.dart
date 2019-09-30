@@ -56,7 +56,7 @@ class _DashBoardPageState extends State<DashBoardPage>
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
     final drawerHeader = UserAccountsDrawerHeader(
-      accountName: Text('Test_1'),
+      accountName: Text('Adi Irwanto'),
       accountEmail: Text('coba@email.com'),
       currentAccountPicture: CircleAvatar(
         child: FlutterLogo(size: 42.0),
@@ -67,9 +67,14 @@ class _DashBoardPageState extends State<DashBoardPage>
       children: <Widget>[
         drawerHeader,
         ListTile(
+          leading: Icon(Icons.supervised_user_circle),
           title: Text('Data Diri'),
+          onTap: (){
+            //setSta
+          },
         ),
         ListTile(
+          leading: Icon(Icons.power_settings_new),
           title: Text('Log Out'),
         ),
       ],

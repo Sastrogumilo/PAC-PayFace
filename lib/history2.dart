@@ -98,11 +98,13 @@ class _HistoryPageState2 extends State<HistoryPage2> {
 
     final _ktabPages = <Widget>[
       kirim_pages,
-      Center(child: Text('Terima',style: TextStyle(color: Colors.black87)))
+      Center(child: Text('Top Up',style: TextStyle(color: Colors.black87))),
+      Center(child: Text('Pay Out',style: TextStyle(color: Colors.black87)))
     ];
     final _kTabs = <Tab>[
-      Tab(text: 'Kirim',),
-      Tab(text: 'Terima',),
+      Tab(text: 'Transfer',),
+      Tab(text: 'Top Up',),
+      Tab(text: 'Pay Out',)
     ];
     return DefaultTabController(
       length: _kTabs.length,

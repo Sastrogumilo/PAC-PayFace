@@ -9,7 +9,6 @@ class ProfilPage extends StatefulWidget{
   static String tag = 'profil-tag';
   @override 
   _ProfilPageState createState() => _ProfilPageState();
-  
 }
 
 class _ProfilPageState extends State<ProfilPage> {
@@ -40,15 +39,14 @@ class _ProfilPageState extends State<ProfilPage> {
 
   @override
   Widget build(BuildContext context) {
-    final camera_button = FlatButton(
-      color: Colors.lightBlue,
-    );
     return Scaffold(
       appBar: new AppBar(
         title: const Text('Edit Profil'),
         actions: <Widget>[
-          new IconButton(icon: const Icon(Icons.save),
-          onPressed: () {}) //<-Di isi
+          new IconButton(
+            icon: const Icon(Icons.save),
+            onPressed: () => Navigator.pop(context)
+          ) //<-Di isi
         ],
       ),
       body: SingleChildScrollView(

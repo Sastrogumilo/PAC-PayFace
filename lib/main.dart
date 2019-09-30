@@ -9,8 +9,8 @@ import 'home_page.dart';
 import 'dashboard_v2.dart';
 import 'profil.dart';
 import 'register.dart';
-//import 'kirim.dart';
-import 'kirim_v2.dart';
+import 'kirim.dart';
+//import 'kirim_v2.dart';
 import 'topup.dart';
 //mport 'history.dart';
 import 'history2.dart';
@@ -27,6 +27,7 @@ void main() {
 class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
     LoginPage.tag: (context) => LoginPage(),
+
     HomePage.tag: (context) => HomePage(),
     DashBoardPage.tag: (context) => DashBoardPage(),
     ProfilPage.tag: (context) => ProfilPage(),
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PayFace',
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: 'Arial',
