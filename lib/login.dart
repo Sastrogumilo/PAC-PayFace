@@ -6,7 +6,7 @@ import 'package:PayFace/dashboard.dart';
 import 'package:PayFace/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'app_const.dart';
 import 'package:PayFace/validator/email.dart';
 import 'package:PayFace/validator/value.dart';
@@ -18,6 +18,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _email, _username, _password;
 
   @override
   Widget build(BuildContext context) {

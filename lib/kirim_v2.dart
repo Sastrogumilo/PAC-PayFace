@@ -18,26 +18,32 @@ class _KirimPageState extends State<KirimPage> {
   bool _pinned = true;
   bool _snap = false;
   bool _floating =  false;
+  String _jumlah;
 
   final page_kirim = Column(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
-      new ListTile( //<--------Nama
-        leading: const Icon(Icons.email),
-        title: new TextField(
-          decoration: new InputDecoration(
-            hintText: "Masukan Email Yang Akan Dikirim"
+      SizedBox(height: 0,),
+      Padding(
+        padding: new EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
+        child: TextFormField(
+          textCapitalization: TextCapitalization.words,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            filled: true,
+            prefixText: '\Rp ',
+            suffixText: 'RPH',
+            labelText: 'Jumlah Uang',
+            suffixStyle: TextStyle(color: Colors.green),
+            fillColor: Colors.white30,
+            icon:Icon(Icons.attach_money),
           ),
+          maxLines: 1,
+          keyboardType: TextInputType.number,
+          //onSaved: (String value) => this._jumlah = value,
         ),
       ),
-
-      new ListTile( //<-------- Email
-        leading: const Icon(Icons.attach_money),
-        title: new TextField(
-          decoration: new InputDecoration(
-            hintText: 'Masukan Nomial Yang Akan Ditransfer'
-          ),
-        ),
-      ),
+  
       const Divider(height: 400),
       new RaisedButton(
         elevation: 0,
@@ -63,6 +69,14 @@ class _KirimPageState extends State<KirimPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        label: Text('Scan Wajah'),
+        icon: Icon(Icons.camera),
+        backgroundColor: Colors.pink,
+      ),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -78,7 +92,9 @@ class _KirimPageState extends State<KirimPage> {
               ),
             ),
           ),
-          SliverFillRemaining(child: page_kirim)
+          SliverFillRemaining(
+            child: page_kirim
+          )
         ],
       ) 
     );
