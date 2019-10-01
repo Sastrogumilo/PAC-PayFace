@@ -63,7 +63,7 @@ class _RegisterPageState extends State<RegisterPage>{
             ],
           ),
           Column(children: <Widget>[
-            Image.asset('asset/registration.png',
+            Image.asset('asset/image/registration.png',
               width: 150,
               height: 150,
             ),

@@ -12,6 +12,10 @@ import 'package:PayFace/bloc/home/dashboard_state.dart';
 import 'package:PayFace/bloc/auth/auth_bloc.dart';
 import 'package:PayFace/bloc/datadiri/datadiri_bloc.dart';
 import 'profil.dart';
+import 'package:PayFace/bloc/kirim/kirim_bloc.dart';
+import 'package:PayFace/bloc/payout/payOut_bloc.dart';
+import 'package:PayFace/bloc/history/history_bloc.dart';
+import 'package:PayFace/bloc/topup/topUp_bloc.dart';
 
 
 class DashBoardPage extends StatefulWidget 
@@ -227,12 +231,92 @@ class _DashBoardPageState extends State<DashBoardPage>
                             ),
                             children: [
                               TableRow(children: [
-                                _actionList('asset/images/rupiah.png', 'Transfer Uang', KirimPage.tag),
-                                _actionList('asset/images/wallet.png', 'Pay Out', PayoutPage.tag),
+                                Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          FlatButton(
+                                            child: Image.asset('asset/images/rupiah.png', fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
+                                            onPressed: _loadKirimPage,
+                                            padding: EdgeInsets.all(8),
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          Text(
+                                            'Transfer Uang',
+                                            style: TextStyle(color: _iconColor),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          FlatButton(
+                                            child: Image.asset('asset/images/wallet.png', fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
+                                            onPressed: _loadPayoutPage,
+                                            padding: EdgeInsets.all(8),
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          Text(
+                                            'Pay Out',
+                                            style: TextStyle(color: _iconColor),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                               ]),
                               TableRow(children: [
-                                _actionList('asset/images/transaksi.png', 'Riwayat Transaksi', HistoryPage2.tag),
-                                _actionList('asset/images/topup.png', 'Top Up', TopUpPage.tag),
+                                Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          FlatButton(
+                                            child: Image.asset('asset/images/transaksi.png', fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
+                                            onPressed: _loadRiwayatPage,
+                                            padding: EdgeInsets.all(8),
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          Text(
+                                            'Riwayat Transaksi',
+                                            style: TextStyle(color: _iconColor),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          FlatButton(
+                                            child: Image.asset('asset/images/topup.png', fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
+                                            onPressed: _loadTopupPage,
+                                            padding: EdgeInsets.all(8),
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          Text(
+                                            'Top Up',
+                                            style: TextStyle(color: _iconColor),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                               ]),
                             ],
                           ),
@@ -251,29 +335,6 @@ class _DashBoardPageState extends State<DashBoardPage>
       ),
     );
   });}
-  Widget _actionList(var icon, String desc, routeName){
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          FlatButton(
-            child: Image.asset(icon, fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
-            onPressed: () => routeName,
-            padding: EdgeInsets.all(8),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-            desc,
-            style: TextStyle(color: _iconColor),
-          ),
-        ],
-      ),
-    );
-  }
 
   void _updateStatus(PermissionStatus status) {
     if (status != _status){
@@ -311,6 +372,8 @@ class _DashBoardPageState extends State<DashBoardPage>
       _updateStatus(statusCamera);
     }
   }//END onStatusUpdate
+
+  //LOAD Profile Page 
   void _loadProfilPage() {
   Navigator.push(context, 
       MaterialPageRoute(builder: (context){
@@ -327,5 +390,70 @@ class _DashBoardPageState extends State<DashBoardPage>
       )
   );
 }
+ void _loadKirimPage() {
+  Navigator.push(context, 
+      MaterialPageRoute(builder: (context){
+        return BlocProvider<KirimBloc>(
+          builder: (context) {
+            return KirimBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+            userRepo:   _dashBoardBloc.userRepo,
+            );
+          },
+          child: KirimPage(),
+
+        );
+      }
+      )
+  );
+}
+void _loadPayoutPage() {
+  Navigator.push(context, 
+      MaterialPageRoute(builder: (context){
+        return BlocProvider<PayOutBloc>(
+          builder: (context) {
+            return PayOutBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+            userRepo:   _dashBoardBloc.userRepo,
+            );
+          },
+          child: PayoutPage(),
+
+        );
+      }
+      )
+  );
+}
+void _loadRiwayatPage() {
+  Navigator.push(context, 
+      MaterialPageRoute(builder: (context){
+        return BlocProvider<HistoryBloc>(
+          builder: (context) {
+            return HistoryBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+            userRepo:   _dashBoardBloc.userRepo,
+            );
+          },
+          child: HistoryPage2(),
+
+        );
+      }
+      )
+  );
+}
+void _loadTopupPage() {
+  Navigator.push(context, 
+      MaterialPageRoute(builder: (context){
+        return BlocProvider<TopUpBloc>(
+          builder: (context) {
+            return TopUpBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+            userRepo:   _dashBoardBloc.userRepo,
+            );
+          },
+          child: TopUpPage(),
+
+        );
+      }
+      )
+  );
+}
+
 
 }

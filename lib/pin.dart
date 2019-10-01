@@ -1,6 +1,13 @@
 import 'package:PayFace/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:PayFace/bloc/pin/pin_bloc.dart';
+import 'package:PayFace/bloc/pin/pin_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:PayFace/bloc/home/dashboard_bloc.dart';
+import 'package:PayFace/bloc/auth/auth_bloc.dart';
+
+
 
 class ColorPalete {
   static const backgroundColor = Color(0xff0066ff) ;
@@ -16,8 +23,16 @@ class PinPage extends StatefulWidget {
 }
 
 class _PinPageState extends State<PinPage> {
+  PinBloc pinBloc;
+
   @override
   Widget build(BuildContext context) {
+    
+    pinBloc = BlocProvider.of<PinBloc>(context);
+    return BlocBuilder<PinBloc, PinState>(
+      bloc: pinBloc,
+      builder: (context, state){
+
     return Scaffold(
       appBar: new AppBar(
         title: const Text('Otentifikasi Pin'),
@@ -44,7 +59,7 @@ class _PinPageState extends State<PinPage> {
                     backgroundColor: Colors.red,
                     textColor: Colors.white
                   );
-                  Navigator.of(context).pushNamed(DashBoardPage.tag);
+                  _loadHomePage;
                 }, //<- Diisi
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 8),
@@ -63,5 +78,22 @@ class _PinPageState extends State<PinPage> {
         )
       )
     );
-  }
+  });}
+
+  _loadHomePage() {
+  Navigator.push(context, 
+      MaterialPageRoute(builder: (context){
+        return BlocProvider<DashBoardBloc>(
+          builder: (context) {
+            return DashBoardBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+            userRepo:   pinBloc.userRepo,
+            );
+          },
+          child: DashBoardPage(),
+
+        );
+      }
+      )
+  );
+}
 }

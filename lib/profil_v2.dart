@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:PayFace/bloc/datadiri/datadiri_bloc.dart';
 import 'package:PayFace/bloc/datadiri/datadiri_state.dart';
+import 'package:PayFace/bloc/kamera_profil/KameraProfil_bloc.dart';
+import 'package:PayFace/bloc/auth/auth_bloc.dart';
 
 
 class ProfilPage extends StatefulWidget{
@@ -179,7 +181,7 @@ class _ProfilPageState extends State<ProfilPage> {
               elevation: 0,
               color: Colors.white,
               padding: EdgeInsets.all(0),
-              onPressed: () {Navigator.pushNamed(context, KameraPage.tag);},
+              onPressed: _loadKameraProfilPage,
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 14),
                 width: double.infinity,
@@ -198,6 +200,23 @@ class _ProfilPageState extends State<ProfilPage> {
       )
     );
   }));}
+
+  void _loadKameraProfilPage() {
+  Navigator.push(context, 
+      MaterialPageRoute(builder: (context){
+        return BlocProvider<KameraProfilBloc>(
+          builder: (context) {
+            return KameraProfilBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+            userRepo:   _dataDiriBloc.userRepo,
+            );
+          },
+          child: KameraPage(),
+
+        );
+      }
+      )
+  );
+  }
 }
 
 class PasswordField extends StatefulWidget
