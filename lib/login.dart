@@ -1,15 +1,15 @@
-import 'package:PayFace/home_page.dart';
+import 'package:PayFace/bloc/login/login_bloc.dart';
 import 'package:PayFace/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:PayFace/dashboard.dart';
-import 'package:PayFace/register.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'app_const.dart';
-import 'package:PayFace/validator/email.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:PayFace/bloc/auth/auth_bloc.dart';
+import 'package:PayFace/bloc/login/login_state.dart';
+import 'package:PayFace/bloc/login/login_event.dart';
+import 'package:PayFace/bloc/register/register_bloc.dart';
 import 'package:PayFace/validator/value.dart';
+import 'package:PayFace/validator/email.dart';
+
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -19,10 +19,27 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _email, _username, _password;
+  String _email, _password;
+  final GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
+  LoginBloc _loginBloc;
+  
 
   @override
   Widget build(BuildContext context) {
+    _loginBloc = BlocProvider.of<LoginBloc>(context);
+    
+    return BlocListener <LoginBloc, LoginState>(
+      listener: (context, state) {
+        if (state is LoginGagal) {
+          _scaffoldstate.currentState.showSnackBar(SnackBar(content: Text(state.error)));
+        }
+      },
+
+    child: BlocBuilder <LoginBloc, LoginState>(
+      bloc: _loginBloc,
+      builder: (context, state) {
+      
+
     final logo = Hero(
       tag: 'hero',
       child: CircleAvatar(
@@ -35,7 +52,9 @@ class _LoginPageState extends State<LoginPage> {
     final email = TextFormField(
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
-      initialValue: 'coba@email.com', //<- 
+      key: Key('Email'),
+      validator: EmailFieldValidator.validate,
+      onSaved: (value) => _email = value, 
       decoration: InputDecoration(
         hintText: 'Email',
         prefixIcon: Icon(Icons.email),
@@ -46,7 +65,9 @@ class _LoginPageState extends State<LoginPage> {
 
     final password = TextFormField(
       autofocus: false,
-      initialValue: 'ini password', //<-- 
+      key: Key('Password'),
+      validator: ValueFieldValidator.validate,
+      onSaved: (value) => _password = value,
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Password',
@@ -66,9 +87,7 @@ class _LoginPageState extends State<LoginPage> {
         child: MaterialButton(
           minWidth: 200.0,
           height: 46.0,
-          onPressed: () {
-            Navigator.of(context).pushNamed(HomePage.tag);
-          },
+          onPressed: () =>_handleLogin(),
           color: Colors.blueAccent,
           child: Text('Log In', style: TextStyle(color: Colors.white)),
         ),
@@ -97,12 +116,15 @@ class _LoginPageState extends State<LoginPage> {
         "Don't have an account ? Register",
         style: TextStyle(color: Colors.black54),
       ),
-      onPressed: () {Navigator.pushNamed(context, RegisterPage.tag);}, //<-- Ke Page Register 
+      onPressed: _loadRegisterScreen, //<-- Ke Page Register 
     );
 
     return Scaffold(
+      key: _scaffoldstate,
       backgroundColor: Colors.white,
       body: Center(
+        child: Form(
+            key: _formKey,
         child: ListView(
           shrinkWrap: true,
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
@@ -119,9 +141,11 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-    );
+    ));
   }
-
+    )
+    );
+    }
 bool _validateDanSave() {
   final FormState form = _formKey.currentState;
   if (form.validate()) {
@@ -130,15 +154,30 @@ bool _validateDanSave() {
   }
   return false;
 }
-void _handleLogin() async {
-  if (_validateDanSave()) {
-    var userlogin = ParseUser(_username, 
-                              _password, 
-                              _email);
-    var response = await userlogin.login();
-    if (response != null){
-        Navigator.pushNamed(context, DashBoardPage.tag);
-    }
+void _handleLogin() {
+      if (_validateDanSave()) {
+    _loginBloc.dispatch(LoginButtonPressed(
+      //username: _username,
+      username: _email,
+      password: _password,
+    ));
   }
+}
+
+void _loadRegisterScreen() {
+  Navigator.push(context, 
+      MaterialPageRoute(builder: (context){
+        return BlocProvider<RegisterBloc>(
+          builder: (context) {
+            return RegisterBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+            userRepo:   _loginBloc.userRepo,
+            );
+          },
+          child: RegisterPage(),
+
+        );
+      }
+      )
+  );
 }
 }

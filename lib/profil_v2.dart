@@ -1,9 +1,13 @@
 import 'package:PayFace/kamera_profil.dart';
 import 'package:flutter/material.dart';
-import 'package:passwordfield/passwordfield.dart';
+//import 'package:passwordfield/passwordfield.dart';
 import 'package:intl/intl.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:dropdownfield/dropdownfield.dart';
+//import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+//import 'package:dropdownfield/dropdownfield.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:PayFace/bloc/datadiri/datadiri_bloc.dart';
+import 'package:PayFace/bloc/datadiri/datadiri_state.dart';
+
 
 class ProfilPage extends StatefulWidget{
   static String tag = 'profil-tag';
@@ -14,6 +18,8 @@ class ProfilPage extends StatefulWidget{
 class _ProfilPageState extends State<ProfilPage> {
   //final _formKey = GlobalKey<FormState>();
   final GlobalKey<FormFieldState<String>> _passwdFieldKey = new GlobalKey<FormFieldState<String>>();
+  DataDiriBloc _dataDiriBloc;
+
   final format = DateFormat("yyyy-MM-dd");
   //DropDown Value
   Map<String, dynamic> formData;
@@ -38,7 +44,20 @@ class _ProfilPageState extends State<ProfilPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
+    _dataDiriBloc = BlocProvider.of<DataDiriBloc>(context);
+
+    return BlocListener<DataDiriBloc, DataDiriState>(
+      listener: (context, state) {
+        if (state is DataDiriBerhasil) {
+          Navigator.pop(context);
+        }
+      },
+      child: BlocBuilder<DataDiriBloc, DataDiriState>(
+      bloc: _dataDiriBloc,
+      builder: (context, state) {
+
+
     return Scaffold(
       appBar: new AppBar(
         title: const Text('Edit Profil'),
@@ -178,7 +197,7 @@ class _ProfilPageState extends State<ProfilPage> {
         ),
       )
     );
-  }
+  }));}
 }
 
 class PasswordField extends StatefulWidget

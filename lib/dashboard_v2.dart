@@ -1,13 +1,17 @@
+import 'package:PayFace/bloc/auth/auth_event.dart';
 import 'package:PayFace/history2.dart';
-import 'package:PayFace/profil.dart';
 import 'package:PayFace/topup.dart';
 import 'package:PayFace/kirim_v2.dart';
-//import 'package:PayFace/kirim.dart';
 import 'package:PayFace/payout.dart';
-
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:PayFace/bloc/home/dashboard_bloc.dart';
+import 'package:PayFace/bloc/home/dashboard_state.dart';
+import 'package:PayFace/bloc/auth/auth_bloc.dart';
+import 'package:PayFace/bloc/datadiri/datadiri_bloc.dart';
+import 'profil.dart';
 
 
 class DashBoardPage extends StatefulWidget 
@@ -19,6 +23,9 @@ class DashBoardPage extends StatefulWidget
 
 class _DashBoardPageState extends State<DashBoardPage> 
 {
+  DashBoardBloc _dashBoardBloc;
+  AuthBloc _authBloc;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   PermissionStatus _status; //check status
   Map<String, double> dataMap = new Map();
   List<Color> colorList = [
@@ -30,6 +37,7 @@ class _DashBoardPageState extends State<DashBoardPage>
   @override
   void initState() {
     super.initState();
+    _askPermission();
     PermissionHandler().checkPermissionStatus(PermissionGroup.camera);
     PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
     dataMap.putIfAbsent("Pay Out", () => 5);
@@ -55,7 +63,12 @@ class _DashBoardPageState extends State<DashBoardPage>
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+    _dashBoardBloc = BlocProvider.of<DashBoardBloc>(context);
+    _authBloc = BlocProvider.of<AuthBloc>(context);
+    return BlocBuilder<DashBoardBloc, DashBoardState>(
+      bloc: _dashBoardBloc,
+      builder: (context, state){
+    
     final drawerHeader = UserAccountsDrawerHeader(
       accountName: Text('Adi Irwanto'),
       accountEmail: Text('coba@email.com'),
@@ -70,19 +83,20 @@ class _DashBoardPageState extends State<DashBoardPage>
         ListTile(
           leading: Icon(Icons.supervised_user_circle),
           title: Text('Data Diri'),
-          onTap: (){
-            //setSta
-          },
+          onTap: 
+            _loadProfilPage
+          ,
         ),
         ListTile(
           leading: Icon(Icons.power_settings_new),
           title: Text('Log Out'),
+          onTap: () =>_authBloc.dispatch(LoggedOut()),
         ),
       ],
     );
     const ucap_d_selamat = EdgeInsets.fromLTRB(12.0, 0, 12.0, 0);
     
-    var chart_analysis =Center(
+    var chartAnalysis =Center(
       child: PieChart(
         dataMap: dataMap,
         legendFontColor: Colors.blueGrey[900],
@@ -101,7 +115,7 @@ class _DashBoardPageState extends State<DashBoardPage>
       ),
     );
 
-    final card_pay_out = Card(
+    final cardPayOut = Card(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -110,7 +124,7 @@ class _DashBoardPageState extends State<DashBoardPage>
             title: Text('Bulan September'),
             subtitle: Text('Kegiatan bulan ini'),
           ),
-          chart_analysis     
+          chartAnalysis     
         ],
       )
     );
@@ -159,7 +173,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                     )
                   ],
                 ),
-                card_pay_out,
+                cardPayOut,
                 // Menu BUTTON
                 Container(
                   height: 300,
@@ -236,7 +250,7 @@ class _DashBoardPageState extends State<DashBoardPage>
         child: drawerItems,
       ),
     );
-  }
+  });}
   Widget _actionList(var icon, String desc, routeName){
     return Padding(
       padding: const EdgeInsets.all(8),
@@ -246,7 +260,7 @@ class _DashBoardPageState extends State<DashBoardPage>
         children: <Widget>[
           FlatButton(
             child: Image.asset(icon, fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
-            onPressed: () {Navigator.of(context).pushNamed(routeName); _askPermission();},
+            onPressed: () => routeName,
             padding: EdgeInsets.all(8),
           ),
           SizedBox(
@@ -297,4 +311,21 @@ class _DashBoardPageState extends State<DashBoardPage>
       _updateStatus(statusCamera);
     }
   }//END onStatusUpdate
+  void _loadProfilPage() {
+  Navigator.push(context, 
+      MaterialPageRoute(builder: (context){
+        return BlocProvider<DataDiriBloc>(
+          builder: (context) {
+            return DataDiriBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+            userRepo:   _dashBoardBloc.userRepo,
+            );
+          },
+          child: ProfilPage(),
+
+        );
+      }
+      )
+  );
+}
+
 }

@@ -35,10 +35,7 @@ class _HistoryPageState2 extends State<HistoryPage2> {
       _kirimList = kirimList;
     });
   }
-  @override
-  void iniState() {
-    fetchKirim();
-  }
+
   
   //GET DATA
   isiTableKirim(context) async {

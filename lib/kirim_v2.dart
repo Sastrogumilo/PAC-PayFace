@@ -20,7 +20,7 @@ class _KirimPageState extends State<KirimPage> {
   bool _floating =  false;
   String _jumlah;
 
-  final page_kirim = Column(
+  final pageKirim = Column(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
       SizedBox(height: 0,),
@@ -93,7 +93,7 @@ class _KirimPageState extends State<KirimPage> {
             ),
           ),
           SliverFillRemaining(
-            child: page_kirim
+            child: pageKirim
           )
         ],
       ) 

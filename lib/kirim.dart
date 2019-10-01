@@ -18,7 +18,7 @@ class KirimPage extends StatefulWidget {
 class _KirimPageState extends State<KirimPage> {
   @override
   Widget build(BuildContext context) {
-      final page_kirim = Column(
+      final pageKirim = Column(
         children: <Widget>[
           SizedBox(height: 8,),
           Padding(
@@ -93,7 +93,7 @@ class _KirimPageState extends State<KirimPage> {
         ],
       ),
       body: SingleChildScrollView(
-        child: page_kirim,
+        child: pageKirim,
       ),
     );
   }

@@ -1,8 +1,11 @@
-import 'package:PayFace/login.dart';
+
 import 'package:flutter/material.dart';
 import 'package:PayFace/validator/email.dart';
 import 'package:PayFace/validator/value.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:PayFace/bloc/register/register_bloc.dart';
+import 'package:PayFace/bloc/register/register_event.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:PayFace/bloc/register/register_state.dart';
 
 class ColorPalete{
   static const primaryColor = Color(0xff5364e8);
@@ -21,6 +24,7 @@ class _RegisterPageState extends State<RegisterPage>{
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email, _username, _password;
+  RegisterBloc _registerBloc;
 
   @override
   void initState(){
@@ -30,6 +34,19 @@ class _RegisterPageState extends State<RegisterPage>{
   
   @override
   Widget build(BuildContext context) {
+    _registerBloc = BlocProvider.of<RegisterBloc>(context);
+
+    return BlocListener<RegisterBloc, RegisterState>(
+      listener:  (context, state) {
+        if (state is RegisterBerhasil) {
+          Navigator.pop(context);
+        }
+      },
+      child: BlocBuilder<RegisterBloc, RegisterState>(
+        bloc: _registerBloc,
+        builder: (context, state){
+
+
     return Scaffold(
       body: Container(
         color: ColorPalete.primaryColor,
@@ -188,7 +205,7 @@ class _RegisterPageState extends State<RegisterPage>{
       ),
     )));
     
-    
+        }));
   }
   bool _validateDanSave() {
   final FormState form = _formKey.currentState;
@@ -199,15 +216,13 @@ class _RegisterPageState extends State<RegisterPage>{
   return false;
   }
 
-  void _handleRegister() async {
+  void _handleRegister() {
     if (_validateDanSave()) {
-      var userreg = ParseUser( _username, 
-                               _password, 
-                               _email);
-      var response = await userreg.signUp();
-      if (response!= null) {
-        Navigator.pop(context);
-      }
+      _registerBloc.dispatch(TombolRegister(
+        email: _email,
+        username: _username,
+        password: _password
+        ));
     }
   }
   }
