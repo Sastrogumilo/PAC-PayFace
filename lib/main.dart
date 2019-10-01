@@ -18,6 +18,7 @@ import 'history2.dart';
 import 'kamera_profil.dart';
 import 'kamera_bayar.dart';
 import 'pin.dart';
+import 'payout.dart';
 
 void main() {
   SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -27,7 +28,6 @@ void main() {
 class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
     LoginPage.tag: (context) => LoginPage(),
-
     HomePage.tag: (context) => HomePage(),
     DashBoardPage.tag: (context) => DashBoardPage(),
     ProfilPage.tag: (context) => ProfilPage(),
@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
     KameraPage.tag: (context) => KameraPage(),
     KameraBayarPage.tag: (context) => KameraBayarPage(),
     PinPage.tag: (context) => PinPage(),
+    PayoutPage.tag: (context) => PayoutPage()
   };
   @override
   Widget build(BuildContext context) {

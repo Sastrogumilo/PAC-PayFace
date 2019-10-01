@@ -3,6 +3,7 @@ import 'package:PayFace/profil.dart';
 import 'package:PayFace/topup.dart';
 import 'package:PayFace/kirim_v2.dart';
 //import 'package:PayFace/kirim.dart';
+import 'package:PayFace/payout.dart';
 
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -213,7 +214,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                             children: [
                               TableRow(children: [
                                 _actionList('asset/images/rupiah.png', 'Transfer Uang', KirimPage.tag),
-                                _actionList('asset/images/wallet.png', 'Pay Out', ProfilPage.tag),
+                                _actionList('asset/images/wallet.png', 'Pay Out', PayoutPage.tag),
                               ]),
                               TableRow(children: [
                                 _actionList('asset/images/transaksi.png', 'Riwayat Transaksi', HistoryPage2.tag),

@@ -83,7 +83,7 @@ class _KirimPageState extends State<KirimPage> {
           onPressed: () => Navigator.pushNamed(context, KameraPage.tag),
           label: Text('Scan Wajah'),
           icon: Icon(Icons.camera),
-          backgroundColor: Colors.pink,
+          backgroundColor: Colors.orange,
       ),  
       appBar: new AppBar(
         title: const Text('Trasfer'),
@@ -97,4 +97,4 @@ class _KirimPageState extends State<KirimPage> {
       ),
     );
   }
-}
+} 

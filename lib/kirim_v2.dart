@@ -75,7 +75,7 @@ class _KirimPageState extends State<KirimPage> {
         },
         label: Text('Scan Wajah'),
         icon: Icon(Icons.camera),
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.orange,
       ),
       body: CustomScrollView(
         slivers: <Widget>[
@@ -99,4 +99,5 @@ class _KirimPageState extends State<KirimPage> {
       ) 
     );
   }
+
 }
