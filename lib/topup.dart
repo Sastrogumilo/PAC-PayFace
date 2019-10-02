@@ -1,6 +1,6 @@
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
-
+import 'package:PayFace/kamera_profil.dart';
 
 class TopUpPage extends StatefulWidget {
   static String tag = 'topup-page';
@@ -8,7 +8,6 @@ class TopUpPage extends StatefulWidget {
   _TopUpPageState createState() => _TopUpPageState();
 
 }
-
 
 class _TopUpPageState extends State<TopUpPage> {
 
@@ -39,12 +38,18 @@ class _TopUpPageState extends State<TopUpPage> {
           onPressed: () {}) //<-Di isi
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => Navigator.pushNamed(context, KameraPage.tag),
+        label: Text('Scan Wajah'),
+        icon: Icon(Icons.camera),
+        backgroundColor: Colors.orange,
+      ),  
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: new Column(
             children: <Widget>[
-              Padding(padding: EdgeInsets.symmetric(vertical: 12)),
+              /*Padding(padding: EdgeInsets.symmetric(vertical: 12)),
               new DropDownField(
                 value: 'Bank *',
                 icon: Icon(Icons.credit_card),
@@ -55,8 +60,8 @@ class _TopUpPageState extends State<TopUpPage> {
                 setter: (dynamic newValueBank) {
                   formData['Bank'] = newValueBank;
                 },
-              ),
-              Padding(padding: EdgeInsets.symmetric(vertical: 8),),
+              ),*/
+              Padding(padding: EdgeInsets.symmetric(vertical: 12),),
               new DropDownField(
                 value: null,
                 icon: Icon(Icons.attach_money),
@@ -68,11 +73,11 @@ class _TopUpPageState extends State<TopUpPage> {
                 },
               ),
               Padding(padding: EdgeInsets.symmetric(vertical: 8),),
-              new RaisedButton(
+              /*new RaisedButton(
                 elevation: 0,
                 color: Colors.white,
                 padding: EdgeInsets.all(0),
-                onPressed: () {},
+                onPressed: () => Navigator.pushNamed(context, KameraPage.tag),
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 14),
                   width: double.infinity,
@@ -86,7 +91,7 @@ class _TopUpPageState extends State<TopUpPage> {
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.symmetric(vertical: 3),),
+              Padding(padding: EdgeInsets.symmetric(vertical: 3),),*/
               new RaisedButton(
                 elevation: 0,
                 color: Colors.white,
@@ -111,5 +116,4 @@ class _TopUpPageState extends State<TopUpPage> {
       ),
     );
   }
-
 }

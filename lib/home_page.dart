@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
             ),
          ),
     );
-//Body 
+    //Body 
     var container = Container(width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.all(28),
           decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.blue, Colors.lightBlueAccent]),),

@@ -28,6 +28,8 @@ class _ProfilPageState extends State<ProfilPage> {
   String _email;
   String _notelp;
   String _passwd;
+  String _username;
+  String _norek;
 
   String _validasiNama(String value)
   {
@@ -113,6 +115,22 @@ class _ProfilPageState extends State<ProfilPage> {
               maxLines: 3,
             ),
 
+            // No Rekening
+            SizedBox(height: 12,),
+            TextFormField(
+              textCapitalization: TextCapitalization.words,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.white30,
+                icon:Icon(Icons.supervised_user_circle),
+                hintText: "Nomer Rekening Bank Anda",
+                labelText: "No. Rekening"
+              ),
+              onSaved: (String value) => this._norek = value,
+              validator: _validasiNama,
+            ),
+
             // USERNAME
             SizedBox(height: 12,),
             TextFormField(
@@ -125,7 +143,7 @@ class _ProfilPageState extends State<ProfilPage> {
                 hintText: "Username yang diinginkan",
                 labelText: "Username"
               ),
-              onSaved: (String value) => this._nama = value,
+              onSaved: (String value) => this._username = value,
               validator: _validasiNama,
             ),
 

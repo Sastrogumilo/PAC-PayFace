@@ -8,6 +8,7 @@ import 'package:PayFace/payout.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:badges/badges.dart';
 
 
 class DashBoardPage extends StatefulWidget 
@@ -68,8 +69,11 @@ class _DashBoardPageState extends State<DashBoardPage>
       children: <Widget>[
         drawerHeader,
         ListTile(
-          leading: Icon(Icons.supervised_user_circle),
-          title: Text('Data Diri'),
+          leading: Badge(
+            badgeContent: Text('!', style: TextStyle(color: Colors.white)),
+            child: Icon(Icons.account_circle),
+          ),
+          title: Text('Edit Profil'),
           onTap: (){
             //setSta
           },
@@ -153,7 +157,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Container(
-                          child: Text('Test_1', style: TextStyle(fontSize: 44, color: Colors.black), textAlign: TextAlign.left) // Nama Pengguna,
+                          child: Text('Adi Irwanto', style: TextStyle(fontSize: 44, color: Colors.black), textAlign: TextAlign.left) // Nama Pengguna,
                         ),
                       )
                     )
@@ -214,7 +218,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                             children: [
                               TableRow(children: [
                                 _actionList('asset/images/rupiah.png', 'Transfer Uang', KirimPage.tag),
-                                _actionList('asset/images/wallet.png', 'Pay Out', PayoutPage.tag),
+                                _actionList('asset/images/wallet.png', 'Pay Out', ProfilPage.tag),
                               ]),
                               TableRow(children: [
                                 _actionList('asset/images/transaksi.png', 'Riwayat Transaksi', HistoryPage2.tag),

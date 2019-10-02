@@ -29,6 +29,8 @@ class _ProfilPageState extends State<ProfilPage> {
   String _email;
   String _notelp;
   String _passwd;
+  String _username;
+  String _norek;
 
   String _validasiNama(String value)
   {
@@ -40,9 +42,9 @@ class _ProfilPageState extends State<ProfilPage> {
 
   @override
   Widget build(BuildContext context) {
-    final camera_button = FlatButton(
+    /*final camera_button = FlatButton(
       color: Colors.lightBlue,
-    );
+    );*/
     return Scaffold(
       appBar: new AppBar(
         title: const Text('Edit Profil'),
@@ -115,6 +117,22 @@ class _ProfilPageState extends State<ProfilPage> {
               maxLines: 3,
             ),
 
+            // No Rekening
+            SizedBox(height: 12,),
+            TextFormField(
+              textCapitalization: TextCapitalization.words,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.white30,
+                icon:Icon(Icons.account_balance_wallet),
+                hintText: "Nomer Rekening Bank Anda",
+                labelText: "No. Rekening"
+              ),
+              onSaved: (String value) => this._norek = value,
+              validator: _validasiNama,
+            ),
+
             // USERNAME
             SizedBox(height: 12,),
             TextFormField(
@@ -176,7 +194,7 @@ class _ProfilPageState extends State<ProfilPage> {
                 ),
               ),
             ),
-            camera_button,
+            //camera_button,
           ],
         ),
       )

@@ -16,49 +16,74 @@ class KirimPage extends StatefulWidget {
 }
 
 class _KirimPageState extends State<KirimPage> {
+  /*final Widget child;
+  final Gradient gradient;
+  final double width;
+  final double height;
+  final Function onPressed;
+  
+  const RaisedGradientButton({
+    Key key,
+    @required this.child,
+    this.gradient,
+    this.width = double.infinity,
+    this.height = 50.0,
+    this.onPressed,
+  }) : super(key: key);*/
+
   @override
   Widget build(BuildContext context) {
-      final page_kirim = Column(
-        children: <Widget>[
-          SizedBox(height: 8,),
-          Padding(
-            padding: new EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
-            child: TextFormField(
-              textCapitalization: TextCapitalization.words,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                filled: true,
-                prefixText: '\Rp ',
-                suffixText: 'RPH',
-                labelText: 'Jumlah Uang',
-                suffixStyle: TextStyle(color: Colors.green),
-                fillColor: Colors.white30,
-                icon:Icon(Icons.attach_money),
-              ),
-              maxLines: 1,
-              keyboardType: TextInputType.number,
-              //onSaved: (String value) => this._jumlah = value,
+    List<Color> _backgroundColor = [
+      Color.fromRGBO(94, 128, 194, 1),
+      Color.fromRGBO(66, 145, 249, 1),
+      Color.fromRGBO(243, 249, 255, 1),
+      Color.fromRGBO(230, 244, 241, 1),
+    ];
+    final page_kirim = Column(
+      children: <Widget>[
+        SizedBox(height: 8,),
+        Padding(
+          padding: new EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
+          child: TextFormField(
+            textCapitalization: TextCapitalization.words,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              filled: true,
+              prefixText: '\Rp ',
+              suffixText: 'RPH',
+              labelText: 'Jumlah Nominal Transfer',
+              suffixStyle: TextStyle(color: Colors.green),
+              fillColor: Colors.white30,
+              icon:Icon(Icons.attach_money),
             ),
+            maxLines: 1,
+            keyboardType: TextInputType.number,
+            //onSaved: (String value) => this._jumlah = value,
           ),
-          SizedBox(height: 8,),
-          Padding(
-            padding: new EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
-            child: TextFormField(
-              textCapitalization: TextCapitalization.words,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                filled: true,
-                labelText: 'PIN anda',
-                suffixStyle: TextStyle(color: Colors.green),
-                fillColor: Colors.white30,
-                icon:Icon(Icons.keyboard),
-              ),
-              maxLines: 1,
-              keyboardType: TextInputType.number,
-              //onSaved: (String value) => this._jumlah = value,
+        ),
+        SizedBox(height: 8,),
+        Padding(
+          padding: new EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
+          child: TextFormField(
+            textCapitalization: TextCapitalization.words,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              filled: true,
+              labelText: 'PIN akun anda',
+              suffixStyle: TextStyle(color: Colors.green),
+              fillColor: Colors.white30,
+              icon:Icon(Icons.keyboard),
             ),
+            maxLines: 1,
+            maxLength: 8,
+            keyboardType: TextInputType.number,
+            //onSaved: (String value) => this._jumlah = value,
           ),
-          /*new RaisedButton(
+        ),
+        SizedBox(height: 8,),
+        Padding(
+          padding: new EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
+          child: new RaisedButton(
             elevation: 0,
             color: Colors.white,
             padding: EdgeInsets.all(0),
@@ -66,17 +91,19 @@ class _KirimPageState extends State<KirimPage> {
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 14),
               width: double.infinity,
-              child: Text('Scan Wajah',
+              child: Text('Bantuan',
                 style: TextStyle(color: Colors.white),
                 textAlign: TextAlign.center,
               ),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.blueGrey,
                 borderRadius: BorderRadius.circular(32)
               ),
             ),
-          ),*/
-        ]
+          ),
+        ),
+        /**/
+      ]
     );
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
