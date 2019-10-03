@@ -5,7 +5,11 @@
   import 'package:flutter/material.dart';
   import 'package:fluttertoast/fluttertoast.dart';
   import 'package:path_provider/path_provider.dart';
+  import 'package:PayFace/bloc/kamera_profil/KameraProfil_bloc.dart';
+  import 'package:PayFace/bloc/kamera_profil/KameraProfil_state.dart';
+  import 'package:flutter_bloc/flutter_bloc.dart';
 	
+
   class KameraPage extends StatefulWidget {
     static String tag = 'kamera-page';
     @override
@@ -15,6 +19,7 @@
   }
 
   class _KameraPageState extends State {
+    KameraProfilBloc kameraProfilBloc;
     CameraController controller;
     List cameras;
     int selectedCameraIdx;
@@ -40,6 +45,13 @@
 	
     @override
     Widget build(BuildContext context) {
+
+    kameraProfilBloc = BlocProvider.of<KameraProfilBloc>(context);
+    return BlocBuilder<KameraProfilBloc, KameraProfilState>(
+      bloc: kameraProfilBloc,
+      builder: (context, state){
+	
+
       return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
@@ -78,6 +90,7 @@
           ],
         ),
       );
+      });
     }
 
     /// Display 'Loading' text when the camera is still loading.

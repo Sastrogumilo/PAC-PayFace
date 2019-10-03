@@ -5,6 +5,10 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 //import 'package:http/http.dart' as http;
 import 'dart:async';
+import 'package:PayFace/bloc/history/history_bloc.dart';
+import 'package:PayFace/bloc/history/history_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 //Contoh Data
 Future<String> loadAsset(String path) async {
@@ -19,6 +23,7 @@ class HistoryPage2 extends StatefulWidget {
 
 //REF = https://stackoverflow.com/questions/51036758/flutter-the-method-map-was-called-on-null
 class _HistoryPageState2 extends State<HistoryPage2> {
+  HistoryBloc historyBloc;
   List<IsiItemKirim> _kirimList;
   fetchKirim() async {
     String data = await loadAsset('asset/contohData.txt');
@@ -35,10 +40,7 @@ class _HistoryPageState2 extends State<HistoryPage2> {
       _kirimList = kirimList;
     });
   }
-  @override
-  void iniState() {
-    fetchKirim();
-  }
+
   
   //GET DATA
   isiTableKirim(context) async {
@@ -67,6 +69,11 @@ class _HistoryPageState2 extends State<HistoryPage2> {
   
   @override
   Widget build(BuildContext context) {
+    historyBloc= BlocProvider.of<HistoryBloc>(context);
+    
+    return BlocBuilder<HistoryBloc, HistoryState>(
+      bloc: historyBloc,
+      builder: (context, state){
     final kirim_pages = Container(
       child: SafeArea(
         child: SingleChildScrollView(
@@ -120,7 +127,7 @@ class _HistoryPageState2 extends State<HistoryPage2> {
         )
       ),
     );
-  }
+  });}
 }
   
 class IsiItemKirim {

@@ -33,13 +33,7 @@ class _KirimPageState extends State<KirimPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Color> _backgroundColor = [
-      Color.fromRGBO(94, 128, 194, 1),
-      Color.fromRGBO(66, 145, 249, 1),
-      Color.fromRGBO(243, 249, 255, 1),
-      Color.fromRGBO(230, 244, 241, 1),
-    ];
-    final page_kirim = Column(
+    final pageKirim = Column(
       children: <Widget>[
         SizedBox(height: 8,),
         Padding(
@@ -51,7 +45,7 @@ class _KirimPageState extends State<KirimPage> {
               filled: true,
               prefixText: '\Rp ',
               suffixText: 'RPH',
-              labelText: 'Jumlah Nominal Transfer',
+              labelText: 'Jumlah Uang',
               suffixStyle: TextStyle(color: Colors.green),
               fillColor: Colors.white30,
               icon:Icon(Icons.attach_money),
@@ -60,6 +54,7 @@ class _KirimPageState extends State<KirimPage> {
             keyboardType: TextInputType.number,
             //onSaved: (String value) => this._jumlah = value,
           ),
+          //onSaved: (String value) => this._jumlah = value,
         ),
         SizedBox(height: 8,),
         Padding(
@@ -102,7 +97,6 @@ class _KirimPageState extends State<KirimPage> {
             ),
           ),
         ),
-        /**/
       ]
     );
     return Scaffold(
@@ -120,7 +114,7 @@ class _KirimPageState extends State<KirimPage> {
         ],
       ),
       body: SingleChildScrollView(
-        child: page_kirim,
+        child: pageKirim,
       ),
     );
   }

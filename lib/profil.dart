@@ -1,9 +1,9 @@
 import 'package:PayFace/kamera_profil.dart';
 import 'package:flutter/material.dart';
-import 'package:passwordfield/passwordfield.dart';
+//import 'package:passwordfield/passwordfield.dart';
 import 'package:intl/intl.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:dropdownfield/dropdownfield.dart';
+//import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+//import 'package:dropdownfield/dropdownfield.dart';
 
 class ProfilPage extends StatefulWidget{
   static String tag = 'profil-tag';
@@ -42,9 +42,6 @@ class _ProfilPageState extends State<ProfilPage> {
 
   @override
   Widget build(BuildContext context) {
-    /*final camera_button = FlatButton(
-      color: Colors.lightBlue,
-    );*/
     return Scaffold(
       appBar: new AppBar(
         title: const Text('Edit Profil'),

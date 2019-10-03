@@ -1,4 +1,11 @@
+import 'package:PayFace/kamera_bayar.dart';
 import 'package:flutter/material.dart';
+import 'package:PayFace/bloc/kirim/kirim_bloc.dart';
+import 'package:PayFace/bloc/kirim/kirim_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:PayFace/bloc/auth/auth_bloc.dart';
+import 'package:PayFace/bloc/kamera_bayar/kameraBayar_bloc.dart';
+
 
 class ColorPalete {
   static const backgroundColor = Color(0xff0066ff) ;
@@ -19,8 +26,10 @@ class _KirimPageState extends State<KirimPage> {
   bool _snap = false;
   bool _floating =  false;
   String _jumlah;
+  KirimBloc _kirimBloc;
 
-  final page_kirim = Column(
+
+  final pageKirim = Column(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
       SizedBox(height: 0,),
@@ -68,11 +77,16 @@ class _KirimPageState extends State<KirimPage> {
 
   @override
   Widget build(BuildContext context) {
+   _kirimBloc = BlocProvider.of<KirimBloc>(context);
+    return BlocBuilder<KirimBloc, KirimState>(
+      bloc: _kirimBloc,
+      builder: (context, state){
+
+
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
+        onPressed: 
+          _loadKameraBayarPage,
         label: Text('Scan Wajah'),
         icon: Icon(Icons.camera),
         backgroundColor: Colors.orange,
@@ -93,11 +107,30 @@ class _KirimPageState extends State<KirimPage> {
             ),
           ),
           SliverFillRemaining(
-            child: page_kirim
+            child: pageKirim
           )
         ],
       ) 
     );
   }
+  );
+  }
+
+  void _loadKameraBayarPage() {
+  Navigator.push(context, 
+      MaterialPageRoute(builder: (context){
+        return BlocProvider<KameraBayarBloc>(
+          builder: (context) {
+            return KameraBayarBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+            userRepo:   _kirimBloc.userRepo,
+            );
+          },
+          child: KameraBayarPage(),
+
+        );
+      }
+      )
+  );
+}
 
 }

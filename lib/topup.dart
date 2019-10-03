@@ -1,6 +1,10 @@
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:PayFace/kamera_profil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:PayFace/bloc/topup/topUp_bloc.dart';
+import 'package:PayFace/bloc/topup/topUp_state.dart';
+
 
 class TopUpPage extends StatefulWidget {
   static String tag = 'topup-page';
@@ -10,6 +14,8 @@ class TopUpPage extends StatefulWidget {
 }
 
 class _TopUpPageState extends State<TopUpPage> {
+
+  TopUpBloc topUpBloc;
 
   //final _formKey = GlobalKey<FormState>();
   Map<String, dynamic> formData;
@@ -30,6 +36,12 @@ class _TopUpPageState extends State<TopUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    topUpBloc = BlocProvider.of<TopUpBloc>(context);
+    return BlocBuilder<TopUpBloc, TopUpState>(
+      bloc: topUpBloc,
+      builder: (context, state){
+
+
     return Scaffold(
       appBar: new AppBar(
         title: const Text('Top Up'),
@@ -115,5 +127,6 @@ class _TopUpPageState extends State<TopUpPage> {
         )
       ),
     );
+  });
   }
 }

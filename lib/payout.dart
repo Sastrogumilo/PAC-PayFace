@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:PayFace/bloc/payout/payOut_bloc.dart';
+import 'package:PayFace/bloc/payout/payOut_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+
 
 class PayoutPage extends StatefulWidget
 {
@@ -62,6 +67,7 @@ class _PayoutPage extends State<PayoutPage> {
       }
     );
   }
+  PayOutBloc payOutBloc;
   
   @override
   void initState() {
@@ -69,23 +75,28 @@ class _PayoutPage extends State<PayoutPage> {
   }
   @override
   Widget build(BuildContext context) {
-    
-    final tambah_button = FloatingActionButton.extended(
-      onPressed: () => _show_dialog(),
-      label: Text('Cairkan Uang'),
-      icon: Icon(Icons.attach_money),
-      backgroundColor: Colors.orange,
-    );
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Pay Out'),
-      ),
-      body: Column(
-        children: <Widget>[
-          
-        ],
-      ),
-      floatingActionButton: tambah_button,
+    payOutBloc = BlocProvider.of<PayOutBloc>(context);
+    return BlocBuilder<PayOutBloc, PayOutState>(
+      bloc: payOutBloc,
+      builder: (context, state){
+        final tambah_button = FloatingActionButton.extended(
+          onPressed: () => _show_dialog(),
+          label: Text('Cairkan Uang'),
+          icon: Icon(Icons.attach_money),
+          backgroundColor: Colors.orange,
+        );
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Pay Out'),
+          ),
+          body: Column(
+            children: <Widget>[
+              
+            ],
+          ),
+          floatingActionButton: tambah_button,
+        );
+      }
     );
   }
 }

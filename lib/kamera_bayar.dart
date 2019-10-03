@@ -11,6 +11,9 @@
   import 'package:fluttertoast/fluttertoast.dart';
 	
   import 'package:path_provider/path_provider.dart';
+  import 'package:PayFace/bloc/kamera_bayar/kameraBayar_bloc.dart';
+  import 'package:PayFace/bloc/kamera_bayar/kameraBayar_state.dart';
+  import 'package:flutter_bloc/flutter_bloc.dart';
 	
   
 	
@@ -25,6 +28,7 @@
   
 	
   class _KameraBayarPageState extends State {
+    KameraBayarBloc kameraBayarBloc;
     CameraController controller;
     List cameras;
     int selectedCameraIdx;
@@ -55,6 +59,11 @@
     @override
 	
     Widget build(BuildContext context) {
+
+    kameraBayarBloc = BlocProvider.of<KameraBayarBloc>(context);
+    return BlocBuilder<KameraBayarBloc, KameraBayarState>(
+      bloc: kameraBayarBloc,
+      builder: (context, state){
 	
       return Scaffold(
 	
@@ -131,7 +140,7 @@
         ),
 	
       );
-	
+      });
     }
 	
   
@@ -549,5 +558,4 @@
       );
 	
     }
-	
   }
