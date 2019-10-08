@@ -6,7 +6,7 @@ import 'package:PayFace/repository/user_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:PayFace/route.dart';
+import 'package:PayFace/component/route.dart';
 
 
 
@@ -59,43 +59,3 @@ void main() async{
 
   
 }
-
-//class MyApp extends StatelessWidget {
-//  void main() {
-//  SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-//  runApp(MyApp());/
-//}
-
-
-//  final routes = <String, WidgetBuilder>{
-//    LoginPage.tag: (context) => LoginPage(),
-//    HomePage.tag: (context) => HomePage(),
-//    DashBoardPage.tag: (context) => DashBoardPage(),
-//    ProfilPage.tag: (context) => ProfilPage(),
-//    RegisterPage.tag: (context) => RegisterPage(),
-//    KirimPage.tag: (context) => KirimPage(),
-//    TopUpPage.tag: (context) => TopUpPage(),
-    //HistoryPage.tag: (context) => HistoryPage(),
-//    HistoryPage2.tag: (context) => HistoryPage2(),
-//    KameraPage.tag: (context) => KameraPage(),
-//    KameraBayarPage.tag: (context) => KameraBayarPage(),
-//    PinPage.tag: (context) => PinPage(),
-
-
-  //};
-  
-  
- /// @override
-  //Widget build(BuildContext context) {
-    //return MaterialApp(
-      //title: 'PayFace',
-      //debugShowCheckedModeBanner: false,
-      //theme: ThemeData(
-       // primarySwatch: Colors.lightBlue,
-        //fontFamily: 'Nunito',
-      //),
-      //home: LoginPage(),
-      //routes: routes,
-    //)
-  ///}
-//}

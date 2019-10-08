@@ -1,5 +1,5 @@
 //import 'package:PayFace/dashboard.dart';
-import 'package:PayFace/dashboard_v2.dart';
+import 'package:PayFace/component/dashboard_v2.dart';
 import 'package:flutter/material.dart';
 //import 'package:PayFace/dashboard.dart';
 

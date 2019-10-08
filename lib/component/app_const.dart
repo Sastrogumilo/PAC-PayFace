@@ -9,10 +9,7 @@ abstract class AppConst {
 }
 
 initParse() async {
-  Parse().initialize(AppConst.PARSE_APP_ID, 
-                    AppConst.PARSE_APP_URL,
-                    masterKey: AppConst.MASTER_KEY,
-                    debug: true);
+  Parse().initialize(AppConst.PARSE_APP_ID, AppConst.PARSE_APP_URL, masterKey: AppConst.MASTER_KEY, debug: true);
 }
 
 

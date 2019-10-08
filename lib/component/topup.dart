@@ -14,7 +14,7 @@ class TopUpPage extends StatefulWidget {
 }
 
 class _TopUpPageState extends State<TopUpPage> {
-
+  // variabel bloc topup
   TopUpBloc topUpBloc;
 
   //final _formKey = GlobalKey<FormState>();

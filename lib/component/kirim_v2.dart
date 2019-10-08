@@ -1,4 +1,4 @@
-import 'package:PayFace/kamera_bayar.dart';
+import 'package:PayFace/component/kamera_bayar.dart';
 import 'package:flutter/material.dart';
 import 'package:PayFace/bloc/kirim/kirim_bloc.dart';
 import 'package:PayFace/bloc/kirim/kirim_state.dart';

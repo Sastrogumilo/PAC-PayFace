@@ -1,4 +1,4 @@
-import 'package:PayFace/cognitive_face_flutter.dart';
+import 'package:PayFace/component/cognitive_face_flutter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'hair_color.g.dart';

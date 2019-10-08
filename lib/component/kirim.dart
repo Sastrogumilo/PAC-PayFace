@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:PayFace/kamera_profil.dart';
+import 'package:PayFace/component/kamera_profil.dart';
 
 class ColorPalete {
   static const backgroundColor = Color(0xff0066ff) ;

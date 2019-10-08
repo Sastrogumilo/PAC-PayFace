@@ -1,6 +1,6 @@
   import 'dart:async';
   import 'dart:io';
-  import 'package:PayFace/pin.dart';
+  import 'package:PayFace/component/pin.dart';
   import 'package:camera/camera.dart';
   import 'package:flutter/material.dart';
   import 'package:fluttertoast/fluttertoast.dart';

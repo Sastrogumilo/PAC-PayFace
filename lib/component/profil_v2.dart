@@ -1,4 +1,4 @@
-import 'package:PayFace/kamera_profil.dart';
+import 'package:PayFace/component/kamera_profil.dart';
 import 'package:flutter/material.dart';
 //import 'package:passwordfield/passwordfield.dart';
 import 'package:intl/intl.dart';

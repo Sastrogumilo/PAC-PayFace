@@ -1,5 +1,5 @@
 import 'package:PayFace/bloc/login/login_bloc.dart';
-import 'package:PayFace/register.dart';
+import 'package:PayFace/component/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

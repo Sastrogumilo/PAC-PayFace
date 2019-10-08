@@ -1,8 +1,8 @@
 
-import 'package:PayFace/history2.dart';
-import 'package:PayFace/profil.dart';
-import 'package:PayFace/topup.dart';
-import 'package:PayFace/kirim.dart';
+import 'package:PayFace/component/history2.dart';
+import 'package:PayFace/component/profil.dart';
+import 'package:PayFace/component/topup.dart';
+import 'package:PayFace/component/kirim.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:permission_handler/permission_handler.dart';

@@ -1,12 +1,15 @@
-import 'package:PayFace/bloc/auth/auth_event.dart';
-import 'package:PayFace/history2.dart';
-import 'package:PayFace/topup.dart';
-import 'package:PayFace/kirim_v2.dart';
-import 'package:PayFace/payout.dart';
+// Library 3rd party
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:badges/badges.dart';
+
+// Class component program
+import 'package:PayFace/bloc/auth/auth_event.dart';
+import 'package:PayFace/component/history2.dart';
+import 'package:PayFace/component/topup.dart';
+import 'package:PayFace/component/kirim_v2.dart';
+import 'package:PayFace/component/payout.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:PayFace/bloc/home/dashboard_bloc.dart';
 import 'package:PayFace/bloc/home/dashboard_state.dart';
@@ -32,13 +35,18 @@ class _DashBoardPageState extends State<DashBoardPage>
   AuthBloc _authBloc;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   PermissionStatus _status; //check status
+  
+  // Data dari piechart
   Map<String, double> dataMap = new Map();
+  
+  // Warna dari piechart
   List<Color> colorList = [
     Colors.blue,
     Colors.blueAccent,
     Colors.orange,
   ];
 
+  // Inisialisasi awal
   @override
   void initState() {
     super.initState();
@@ -50,7 +58,10 @@ class _DashBoardPageState extends State<DashBoardPage>
     dataMap.putIfAbsent("Top Up", () => 2);
   }
   
+  // Link darigambar logo
   var logoImage = 'asset/images/logo.png';
+  
+  // Background dari menu
   List<Color> _backgroundColor = [
     Color.fromRGBO(94, 128, 194, 1),
     Color.fromRGBO(66, 145, 249, 1),
@@ -74,6 +85,7 @@ class _DashBoardPageState extends State<DashBoardPage>
     return BlocBuilder<DashBoardBloc, DashBoardState>(
       bloc: _dashBoardBloc,
       builder: (context, state){
+        
         final drawerHeader = UserAccountsDrawerHeader(
           accountName: Text('Adi Irwanto'),
           accountEmail: Text('coba@email.com'),
@@ -82,6 +94,7 @@ class _DashBoardPageState extends State<DashBoardPage>
             backgroundColor: Colors.white,
           ),
         );
+        
         final drawerItems = ListView(
           children: <Widget>[
             drawerHeader,
@@ -102,7 +115,9 @@ class _DashBoardPageState extends State<DashBoardPage>
             ),
           ],
         );
+
         const ucap_d_selamat = EdgeInsets.fromLTRB(12.0, 0, 12.0, 0);
+        
         var chartAnalysis =Center(
           child: PieChart(
             dataMap: dataMap,
@@ -121,6 +136,7 @@ class _DashBoardPageState extends State<DashBoardPage>
             decimalPlaces: 1,
           ),
         );
+        
         final cardPayOut = Card(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -134,10 +150,11 @@ class _DashBoardPageState extends State<DashBoardPage>
             ],
           )
         );
+        
         return Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
-              leading: IconButton(
+            leading: IconButton(
               color: Colors.black,
               icon: Icon(Icons.dehaze),
               onPressed: () => _scaffoldKey.currentState.openDrawer(),
@@ -383,7 +400,7 @@ class _DashBoardPageState extends State<DashBoardPage>
         return BlocProvider<DataDiriBloc>(
             builder: (context) {
               return DataDiriBloc(authBloc: BlocProvider.of<AuthBloc>(context),
-              userRepo:   _dashBoardBloc.userRepo,
+                userRepo: _dashBoardBloc.userRepo,
               );
             },
             child: ProfilPage(),
@@ -399,7 +416,7 @@ class _DashBoardPageState extends State<DashBoardPage>
         return BlocProvider<KirimBloc>(
           builder: (context) {
             return KirimBloc(authBloc: BlocProvider.of<AuthBloc>(context),
-            userRepo:   _dashBoardBloc.userRepo,
+              userRepo:   _dashBoardBloc.userRepo,
             );
           },
           child: KirimPage(),
@@ -415,7 +432,7 @@ class _DashBoardPageState extends State<DashBoardPage>
         return BlocProvider<PayOutBloc>(
           builder: (context) {
             return PayOutBloc(authBloc: BlocProvider.of<AuthBloc>(context),
-            userRepo:   _dashBoardBloc.userRepo,
+              userRepo:   _dashBoardBloc.userRepo,
             );
           },
           child: PayoutPage(),
@@ -431,7 +448,7 @@ class _DashBoardPageState extends State<DashBoardPage>
         return BlocProvider<HistoryBloc>(
           builder: (context) {
             return HistoryBloc(authBloc: BlocProvider.of<AuthBloc>(context),
-            userRepo:   _dashBoardBloc.userRepo,
+              userRepo:   _dashBoardBloc.userRepo,
             );
           },
           child: HistoryPage2(),
