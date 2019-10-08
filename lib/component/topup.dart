@@ -1,6 +1,6 @@
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
-import 'package:PayFace/kamera_profil.dart';
+import 'package:PayFace/component/kamera_profil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:PayFace/bloc/topup/topUp_bloc.dart';
 import 'package:PayFace/bloc/topup/topUp_state.dart';
