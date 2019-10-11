@@ -36,7 +36,7 @@ class SimpleBlocDelegate extends BlocDelegate {
 }
 
 void main() async{
-  SystemChrome.setEnabledSystemUIOverlays([]);
+  //SystemChrome.setEnabledSystemUIOverlays([]);
   //runApp(MyApp());
   BlocSupervisor.delegate = SimpleBlocDelegate();
   await Parse().initialize(
@@ -56,6 +56,4 @@ void main() async{
         child: Routes(),
       )
     );
-
-  
 }
