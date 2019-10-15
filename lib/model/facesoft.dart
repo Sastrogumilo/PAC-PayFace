@@ -1,6 +1,7 @@
 import 'package:http/http.dart' show Client;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async' show Future;
 
 final String baseUrl = "https://api.facesoft.io/v1/";
 final String createTag = "face/tags";
@@ -42,16 +43,33 @@ class GagalRecognise{
   }
 }
 
-class BerhasilRecognise{
-  String confidence;
-  String tagID;
-  BerhasilRecognise({this.confidence, this.tagID});
+class ListHasilRecog{
+  final List<Hasil> recog; 
 
-  factory BerhasilRecognise.fromJson(Map<String, dynamic> parsedJson) {
-    return BerhasilRecognise(confidence: parsedJson['confidence'], tagID: parsedJson['tagID']);
+  ListHasilRecog({this.recog});
+
+  factory ListHasilRecog.fromJson(List<dynamic> parsedJson) {
+
+    List<Hasil> recog = new List<Hasil>();
+    recog = parsedJson.map((f)=>Hasil.fromJson(f)).toList();
+
+    return new ListHasilRecog(recog: recog);
   }
+  
 }
 
+class Hasil{
+  double confidence;
+  String tagID;
+  
+  Hasil({this.confidence, this.tagID});
+
+  factory Hasil.fromJson(Map<String, dynamic> json){
+    return new Hasil (confidence: json['confidence'],
+                      tagID: json['tagID']);
+  }
+  
+}
 
 //tagData(String jsonData) async {
 //  var pref = await SharedPreferences.getInstance();
@@ -115,18 +133,19 @@ Future faceRecognition() async {
 
   } else {
     final dataSukses = json.decode(response.body);
-    print('respon = '+response.body);
-    BerhasilRecognise data = new BerhasilRecognise.fromJson(dataSukses);
-    pref.setString('confidence', data.confidence);
-    pref.setString('tagHasil', data.tagID);
-    tagAwal = pref.getString('tagID');
+    print('respon = '+response.body); // => [{}]
+    ListHasilRecog dataList = ListHasilRecog.fromJson(dataSukses);
+    pref.setDouble('confidence', dataList.recog[0].confidence);
+    pref.setString('tagHasil', dataList.recog[0].tagID);
+    print('tagID: '+dataList.recog[0].tagID+', confidence: '+dataList.recog[0].confidence.toString());
+
     tagHasil = pref.getString('tagHasil');
-    print(data.confidence);
+    tagAwal = pref.getString('tagID');
 
     if (tagAwal == tagHasil) {
-      print("Wajah Dikenali");
+      print("Ini Wajah Anda");
     } else {
-      print("Wajah Tidak Dikenal");
+      print("Ini Bukan Wajah Anda atau Wajah Tidak Dikenal");
     }
   }
 }
