@@ -1,22 +1,19 @@
   import 'dart:async';
-	
   import 'dart:io';
-	
   //import 'package:PayFace/pin.dart';
-  
   import 'package:camera/camera.dart';
-	
   import 'package:flutter/material.dart';
-	
   import 'package:fluttertoast/fluttertoast.dart';
-	
   import 'package:path_provider/path_provider.dart';
   import 'package:PayFace/bloc/kamera_bayar/kameraBayar_bloc.dart';
   import 'package:PayFace/bloc/kamera_bayar/kameraBayar_state.dart';
   import 'package:flutter_bloc/flutter_bloc.dart';
-	
-  
-	
+	import 'package:PayFace/model/facesoft.dart';
+  import 'package:shared_preferences/shared_preferences.dart';
+  import 'package:image/image.dart' as ImageProcess;
+  import 'dart:convert';
+
+
   class KameraBayarPage extends StatefulWidget {
     static String tag = 'kameraBayar-page';
     @override
@@ -35,9 +32,30 @@
     String imagePath;
     final GlobalKey _scaffoldKey = GlobalKey();
 
+    String tagID;
+    String imageRecog;
+
+    loadSharedPref() async {
+      try {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        String tag = prefs.getString('tagID');
+        if(tag == null){
+        getTags();
+        }else{
+          print(tag);
+        }
+        setState(() {
+          tagID = tag;
+        });
+      } catch (Exception) {
+
+      }
+    }
+
     @override
     void initState() {
       super.initState();
+      loadSharedPref();
       // Get the list of available cameras.
       // Then set the first camera as selected.
       availableCameras().then((availableCameras)
@@ -54,7 +72,6 @@
       });
     }
 	
-  
 	
     @override
 	
@@ -128,12 +145,18 @@
                   _captureControlRowWidget(),
 	
                   _thumbnailWidget(),
-	
+                  
+
                 ],
+                
 	
               ),
 	
             ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Text("TagID: " + (tagID ?? "")),
+            )
 	
           ],
 	
@@ -480,7 +503,7 @@
       //final String currentTime = DateTime.now().millisecondsSinceEpoch.toString();
 	
       final String filePath = '$pictureDirectory/ScanWajahBayar.jpg';
-      final File checkImage = new File('$pictureDirectory/ScanWajahBayar.jpg');
+      File checkImage = new File('$pictureDirectory/ScanWajahBayar.jpg');
      
       if(await checkImage.exists()){
           checkImage.delete();
@@ -489,6 +512,14 @@
       try {
 	
         await controller.takePicture(filePath);
+        var pref = await SharedPreferences.getInstance();
+        final _imageConvert = ImageProcess.decodeImage(checkImage.readAsBytesSync(),);
+      
+        String base64Image = base64Encode(ImageProcess.encodeJpg(_imageConvert));
+        
+        imageRecog = base64Image;
+        pref.setString('imageRecog', imageRecog);
+        //print(imageRecog);
 	
       } on CameraException catch (e) {
 	
@@ -498,9 +529,7 @@
 	
       }
 	
-  
-	
-      return filePath;
+        return filePath;
 	
     }
 	
@@ -509,9 +538,10 @@
     void _onCapturePressed() {
 	
       _takePicture().then((filePath) {
+        
 	
         if (mounted) {
-	
+          faceRecognition();
           setState(() {
 	
             imagePath = filePath;
@@ -522,28 +552,28 @@
 	
           if (filePath != null) {
 	
-            Fluttertoast.showToast(
+            //Fluttertoast.showToast(
 	
-                msg: 'Gambar Disimpan',
+              //  msg: 'Gambar Disimpan',
 	
-                toastLength: Toast.LENGTH_SHORT,
+                //toastLength: Toast.LENGTH_SHORT,
 	
-                gravity: ToastGravity.CENTER,
+                //gravity: ToastGravity.CENTER,
 	
-                timeInSecForIos: 1,
+                //timeInSecForIos: 1,
 	
-                backgroundColor: Colors.grey,
+                //backgroundColor: Colors.grey,
 	
-                textColor: Colors.white
+                //textColor: Colors.white
 	
-            );
+            //);
 	
           }
 	
         }
 	
       });
-    Navigator.of(context).pushNamed(null); //diisis
+    //Navigator.of(context).pushNamed(null); //diisis
     }
     void _showCameraException(CameraException e) {
       String errorText = 'Error: ${e.code}\nError Message: ${e.description}';

@@ -15,7 +15,7 @@ import 'package:PayFace/bloc/home/dashboard_bloc.dart';
 import 'package:PayFace/bloc/home/dashboard_state.dart';
 import 'package:PayFace/bloc/auth/auth_bloc.dart';
 import 'package:PayFace/bloc/datadiri/datadiri_bloc.dart';
-import 'profil.dart';
+import 'profil_v2.dart';
 import 'package:PayFace/bloc/kirim/kirim_bloc.dart';
 import 'package:PayFace/bloc/payout/payOut_bloc.dart';
 import 'package:PayFace/bloc/history/history_bloc.dart';
@@ -161,7 +161,7 @@ class _DashBoardPageState extends State<DashBoardPage>
             ),
             title: Text('',style: TextStyle(color: Colors.black)), backgroundColor: Colors.transparent, elevation: 0.0,
           ),
-          body: SafeArea(
+          body: SingleChildScrollView(
             child: GestureDetector(
               child: Container(
                 height: MediaQuery.of(context).size.height,
