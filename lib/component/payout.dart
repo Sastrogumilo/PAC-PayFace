@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:PayFace/bloc/payout/payOut_bloc.dart';
 import 'package:PayFace/bloc/payout/payOut_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:PayFace/model/initialization.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 
@@ -68,10 +71,17 @@ class _PayoutPage extends State<PayoutPage> {
     );
   }
   PayOutBloc payOutBloc;
-  
+  checkUser() async {
+    var pref = await SharedPreferences.getInstance();
+    
+
+    }
+
   @override
   void initState() {
     super.initState();
+    getCurrentObject();
+    
   }
   @override
   Widget build(BuildContext context) {
