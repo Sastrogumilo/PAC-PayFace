@@ -1,6 +1,8 @@
   import 'dart:async';
   import 'dart:io';
-  import 'package:PayFace/component/pin.dart';
+  import 'dart:convert';
+  import 'package:image/image.dart' as ImageProcess;
+  //import 'package:PayFace/component/pin.dart';
   import 'package:camera/camera.dart';
   import 'package:flutter/material.dart';
   import 'package:fluttertoast/fluttertoast.dart';
@@ -8,7 +10,8 @@
   import 'package:PayFace/bloc/kamera_profil/KameraProfil_bloc.dart';
   import 'package:PayFace/bloc/kamera_profil/KameraProfil_state.dart';
   import 'package:flutter_bloc/flutter_bloc.dart';
-	
+  import 'package:PayFace/model/facesoft.dart';
+	import 'package:shared_preferences/shared_preferences.dart';
 
   class KameraPage extends StatefulWidget {
     static String tag = 'kamera-page';
@@ -18,6 +21,8 @@
     }
   }
 
+  
+
   class _KameraPageState extends State {
     KameraProfilBloc kameraProfilBloc;
     CameraController controller;
@@ -25,9 +30,33 @@
     int selectedCameraIdx;
     String imagePath;
     final GlobalKey _scaffoldKey = GlobalKey();
+    String image1;
+    var pref;
+    String tagID;
+    
+    loadSharedPref() async {
+      try {
+        
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        String tag = prefs.getString('tagID');
+        if (tag == null ){
+          getTags();
+        }else{
+          print(tag);
+        }
+        setState(() {
+          tagID = tag;
+        });
+      } catch (Exception) {
+
+      }
+    }
+  
     @override
     void initState() {
       super.initState();
+      loadSharedPref();
+       
       // Get the list of available cameras.
       // Then set the first camera as selected.
       availableCameras().then((availableCameras) {
@@ -42,15 +71,13 @@
         print('Error: $err.code\nError Message: $err.message');
       });
     }
-	
     @override
     Widget build(BuildContext context) {
-
+    
     kameraProfilBloc = BlocProvider.of<KameraProfilBloc>(context);
     return BlocBuilder<KameraProfilBloc, KameraProfilState>(
       bloc: kameraProfilBloc,
       builder: (context, state){
-	
 
       return Scaffold(
         key: _scaffoldKey,
@@ -84,9 +111,14 @@
                   _cameraTogglesRowWidget(),
                   _captureControlRowWidget(),
                   _thumbnailWidget(),
+                  
+                  
                 ],
               ),
             ),
+            Padding(padding: EdgeInsets.all(5),
+            child: Text("TagID: " + (tagID ?? ""))
+            )
           ],
         ),
       );
@@ -244,22 +276,38 @@
       await Directory(pictureDirectory).create(recursive: true);
       //final String currentTime = DateTime.now().millisecondsSinceEpoch.toString();
       final String filePath = '$pictureDirectory/ScanWajah.jpg';
-      final File checkImage = new File('$pictureDirectory/ScanWajah.jpg');
+      File checkImage = new File('$pictureDirectory/ScanWajah.jpg');
+
       if(await checkImage.exists()){
           checkImage.delete();
       }
       try {
         await controller.takePicture(filePath);
+        var pref = await SharedPreferences.getInstance();
+        final _imageConvert = ImageProcess.decodeImage(checkImage.readAsBytesSync(),);
+      
+        String base64Image = base64Encode(ImageProcess.encodeJpg(_imageConvert));
+        
+        image1 = base64Image;
+        pref.setString('image1', image1);
+        //print(image1);
+        
       } on CameraException catch (e) {
         _showCameraException(e);
-        return null;
+          
+          return null;
       }
       return filePath;
+    
+
+
     }
 
-    void _onCapturePressed() {
+    void _onCapturePressed() async {
+      
       _takePicture().then((filePath) {
         if (mounted) {
+          uploadGambar();
           setState(() {
             imagePath = filePath;
           });
@@ -275,7 +323,8 @@
           }
         }
       });
-      Navigator.of(context).pushNamed(PinPage.tag);
+      
+      //Navigator.of(context).pushNamed(PinPage.tag);
     }
 
     void _showCameraException(CameraException e) {
