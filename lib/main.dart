@@ -47,7 +47,6 @@ void main() async{
     autoSendSessionId: true,
     debug: true,
     coreStore: await CoreStoreSharedPrefsImp.getInstance());
-
     runApp(BlocProvider<AuthBloc>(
         builder: (context) {
           return AuthBloc(userRepo: UserRepo())
