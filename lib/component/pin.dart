@@ -1,4 +1,4 @@
-import 'package:PayFace/component/dashboard.dart';
+import 'package:PayFace/component/dashboard_v2.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:PayFace/bloc/pin/pin_bloc.dart';
@@ -59,7 +59,7 @@ class _PinPageState extends State<PinPage> {
                     backgroundColor: Colors.red,
                     textColor: Colors.white
                   );
-                  _loadHomePage;
+                  _loadHomePage();
                 }, //<- Diisi
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 8),
@@ -80,7 +80,7 @@ class _PinPageState extends State<PinPage> {
     );
   });}
 
-  _loadHomePage() {
+  void _loadHomePage() {
   Navigator.push(context, 
       MaterialPageRoute(builder: (context){
         return BlocProvider<DashBoardBloc>(

@@ -20,6 +20,7 @@ import 'package:PayFace/bloc/kirim/kirim_bloc.dart';
 import 'package:PayFace/bloc/payout/payOut_bloc.dart';
 import 'package:PayFace/bloc/history/history_bloc.dart';
 import 'package:PayFace/bloc/topup/topUp_bloc.dart';
+import 'package:PayFace/model/initialization.dart';
 
 
 class DashBoardPage extends StatefulWidget 
@@ -56,18 +57,19 @@ class _DashBoardPageState extends State<DashBoardPage>
     dataMap.putIfAbsent("Pay Out", () => 5);
     dataMap.putIfAbsent("Transfer", () => 3);
     dataMap.putIfAbsent("Top Up", () => 2);
+    checkObject();
   }
   
   // Link darigambar logo
   var logoImage = 'asset/images/logo.png';
   
   // Background dari menu
-  List<Color> _backgroundColor = [
-    Color.fromRGBO(94, 128, 194, 1),
-    Color.fromRGBO(66, 145, 249, 1),
-    Color.fromRGBO(243, 249, 255, 1),
-    Color.fromRGBO(230, 244, 241, 1),
-  ];
+  //List<Color> _backgroundColor = [
+  //  Color.fromRGBO(94, 128, 194, 1),
+  //  Color.fromRGBO(66, 145, 249, 1),
+  //  Color.fromRGBO(243, 249, 255, 1),
+  //  Color.fromRGBO(230, 244, 241, 1),
+  //];
   Color _iconColor = Colors.white;
   Color _textColor = Color.fromRGBO(253, 211, 4, 1);
   Color _borderContainer = Color.fromRGBO(34, 58, 90, 0.2);
