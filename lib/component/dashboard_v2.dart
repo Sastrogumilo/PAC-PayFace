@@ -82,75 +82,98 @@ class _DashBoardPageState extends State<DashBoardPage>
   Widget build(BuildContext context) {
     _dashBoardBloc = BlocProvider.of<DashBoardBloc>(context);
     _authBloc = BlocProvider.of<AuthBloc>(context);
+    
+    final drawerHeader = UserAccountsDrawerHeader(
+      accountName: Text('Adi Irwanto'),
+      accountEmail: Text('coba@email.com'),
+      currentAccountPicture: CircleAvatar(
+        child: FlutterLogo(size: 42.0),
+        backgroundColor: Colors.white,
+      ),
+    );
+    
+    final drawerItems = ListView(
+      children: <Widget>[
+        drawerHeader,
+        ListTile(
+          leading: Badge(
+            badgeContent: Text('!', style: TextStyle(color: Colors.white)),
+            child: Icon(Icons.account_circle),
+          ),
+          title: Text('Edit Profil'),
+          onTap: (){
+            _loadProfilPage();
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.power_settings_new),
+          title: Text('Log Out'),
+          onTap: () =>_authBloc.dispatch(LoggedOut()),
+        ),
+      ],
+    );
+
+    const ucap_d_selamat = EdgeInsets.fromLTRB(12.0, 0, 12.0, 0);
+    
+    var chartAnalysis =Center(
+      child: PieChart(
+        dataMap: dataMap,
+        legendFontColor: Colors.blueGrey[900],
+        legendFontSize: 14.0,
+        legendFontWeight: FontWeight.w500,
+        animationDuration: Duration(milliseconds: 800),
+        chartLegendSpacing: 32.0,
+        chartRadius: MediaQuery.of(context).size.width / 2.0,
+        showChartValuesInPercentage: false,
+        showChartValues: false,
+        showChartValuesOutside: false,
+        chartValuesColor: Colors.blueGrey[900].withOpacity(0.9),
+        colorList: colorList,
+        showLegends: true,
+        decimalPlaces: 1,
+      ),
+    );
+    
+    final cardPayOut = Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const ListTile(
+            leading: Icon(Icons.album),
+            title: Text('Bulan September'),
+            subtitle: Text('Kegiatan bulan ini'),
+          ),
+          chartAnalysis     
+        ],
+      )
+    );
+    
+    final head_title = Column(
+      children: <Widget>[
+        Padding(
+          padding: ucap_d_selamat,
+          child: Align(
+            alignment: Alignment.topLeft,
+            child:Container(
+              child: Text('Welcome,', style: TextStyle(fontSize: 18, color: Colors.black),textAlign: TextAlign.left),
+            )
+          ),
+        ),
+        Padding(
+          padding: ucap_d_selamat,
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              child: Text('Adi Irwanto', style: TextStyle(fontSize: 44, color: Colors.black), textAlign: TextAlign.left) // Nama Pengguna,
+            ),
+          )
+        )
+      ],
+    );
+    
     return BlocBuilder<DashBoardBloc, DashBoardState>(
       bloc: _dashBoardBloc,
-      builder: (context, state){
-        
-        final drawerHeader = UserAccountsDrawerHeader(
-          accountName: Text('Adi Irwanto'),
-          accountEmail: Text('coba@email.com'),
-          currentAccountPicture: CircleAvatar(
-            child: FlutterLogo(size: 42.0),
-            backgroundColor: Colors.white,
-          ),
-        );
-        
-        final drawerItems = ListView(
-          children: <Widget>[
-            drawerHeader,
-            ListTile(
-              leading: Badge(
-                badgeContent: Text('!', style: TextStyle(color: Colors.white)),
-                child: Icon(Icons.account_circle),
-              ),
-              title: Text('Edit Profil'),
-              onTap: (){
-                _loadProfilPage();
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.power_settings_new),
-              title: Text('Log Out'),
-              onTap: () =>_authBloc.dispatch(LoggedOut()),
-            ),
-          ],
-        );
-
-        const ucap_d_selamat = EdgeInsets.fromLTRB(12.0, 0, 12.0, 0);
-        
-        var chartAnalysis =Center(
-          child: PieChart(
-            dataMap: dataMap,
-            legendFontColor: Colors.blueGrey[900],
-            legendFontSize: 14.0,
-            legendFontWeight: FontWeight.w500,
-            animationDuration: Duration(milliseconds: 800),
-            chartLegendSpacing: 32.0,
-            chartRadius: MediaQuery.of(context).size.width / 2.0,
-            showChartValuesInPercentage: false,
-            showChartValues: false,
-            showChartValuesOutside: false,
-            chartValuesColor: Colors.blueGrey[900].withOpacity(0.9),
-            colorList: colorList,
-            showLegends: true,
-            decimalPlaces: 1,
-          ),
-        );
-        
-        final cardPayOut = Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const ListTile(
-                leading: Icon(Icons.album),
-                title: Text('Bulan September'),
-                subtitle: Text('Kegiatan bulan ini'),
-              ),
-              chartAnalysis     
-            ],
-          )
-        );
-        
+      builder: (context, state){  
         return Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
@@ -172,30 +195,11 @@ class _DashBoardPageState extends State<DashBoardPage>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    // TULISAN SELAMAT DATANG
-                    Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: ucap_d_selamat,
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child:Container(
-                              child: Text('Welcome,', style: TextStyle(fontSize: 18, color: Colors.black),textAlign: TextAlign.left),
-                            )
-                          ),
-                        ),
-                        Padding(
-                          padding: ucap_d_selamat,
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Container(
-                              child: Text('Adi Irwanto', style: TextStyle(fontSize: 44, color: Colors.black), textAlign: TextAlign.left) // Nama Pengguna,
-                            ),
-                          )
-                        )
-                      ],
-                    ),
+                    // Bagian berisi SELAMAT DATANG
+                    head_title,
+                    // Bagian berisi total keseluruhan payment
                     cardPayOut,
+                    SizedBox(height: 100,),
                     // Menu BUTTON
                     Container(
                       height: 300,

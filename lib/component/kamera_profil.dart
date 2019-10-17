@@ -16,9 +16,7 @@
   class KameraPage extends StatefulWidget {
     static String tag = 'kamera-page';
     @override
-    _KameraPageState createState() {
-      return _KameraPageState();
-    }
+    _KameraPageState createState() => new _KameraPageState();
   }
 
   
@@ -36,7 +34,6 @@
     
     loadSharedPref() async {
       try {
-        
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String tag = prefs.getString('tagID');
         if (tag == null ){
