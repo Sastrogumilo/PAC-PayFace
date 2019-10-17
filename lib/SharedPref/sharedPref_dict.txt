@@ -4,6 +4,8 @@ User [
     username = current username,
     email = current email,
     tagID = current user tagID (butuh upload),
+    sessionToken = current user session Token,
+    password = current user password
 ]
 
 facesoft [

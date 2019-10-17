@@ -39,11 +39,13 @@ class UserSaatIni{
   String namaLengkap;
   String tagID;
   String sessionToken;
+  String password;
 
 
   UserSaatIni({this.objectID, 
               this.username, 
               this.email, 
+              this.password,
               this.tagID,
               this.alamat,
               this.namaLengkap,
@@ -54,6 +56,7 @@ class UserSaatIni{
   factory UserSaatIni.fromJson(Map<String, dynamic> parsedJson){
     return UserSaatIni(objectID: parsedJson['objectId'],
                         username: parsedJson['username'],
+                        password: parsedJson['password'],
                         email: parsedJson['email'],
                         alamat: parsedJson['alamat'],
                         namaLengkap: parsedJson['nama_lengkap'],
@@ -105,6 +108,7 @@ Future getCurrentObject() async {
   pref.setString('username', userIni.username);
   pref.setString('email', userIni.email);
   pref.setString('sessionToken', userIni.sessionToken);
+  pref.setString('password', userIni.password);
   
 
   String objectID = pref.getString('objectID');

@@ -9,6 +9,8 @@ import 'package:PayFace/bloc/datadiri/datadiri_bloc.dart';
 import 'package:PayFace/bloc/datadiri/datadiri_state.dart';
 import 'package:PayFace/bloc/kamera_profil/KameraProfil_bloc.dart';
 import 'package:PayFace/bloc/auth/auth_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:PayFace/repository/datadiri_repo.dart';
 
 
 class ProfilPage extends StatefulWidget{
@@ -18,10 +20,9 @@ class ProfilPage extends StatefulWidget{
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-  //final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormFieldState<String>> _passwdFieldKey = new GlobalKey<FormFieldState<String>>();
   DataDiriBloc _dataDiriBloc;
-
   final format = DateFormat("yyyy-MM-dd");
   //DropDown Value
   Map<String, dynamic> formData;
@@ -38,6 +39,7 @@ class _ProfilPageState extends State<ProfilPage> {
   String _passwd;
   String _username;
   String _norek;
+  String _alamat;
 
   String _validasiNama(String value)
   {
@@ -71,6 +73,9 @@ class _ProfilPageState extends State<ProfilPage> {
               ],
             ),
             body: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+              child: Padding (
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: new Column(
                 children: <Widget>[
@@ -85,8 +90,10 @@ class _ProfilPageState extends State<ProfilPage> {
                       icon:Icon(Icons.person),
                       hintText: "Siapa nama lengkap anda?",
                       labelText: "Nama Lengkap"
+                      
                     ),
-                    onSaved: (String value) => this._nama = value,
+                    key: Key('Nama Lengkap'),
+                    onSaved: (value) => _nama = value,
                     validator: _validasiNama,
                   ),
 
@@ -101,7 +108,8 @@ class _ProfilPageState extends State<ProfilPage> {
                       hintText: "Email yang digunakan",
                       labelText: "E-mail"
                     ),
-                    onSaved: (String value) => this._email = value,
+                    key: Key('Email'),
+                    onSaved: (value) => _email = value,
                     keyboardType: TextInputType.emailAddress,
                   ),
 
@@ -116,7 +124,8 @@ class _ProfilPageState extends State<ProfilPage> {
                       hintText: "No telepon yang digunakan",
                       labelText: "No Telepon: 08965454627"
                     ),
-                    onSaved: (String value) => this._notelp = value,
+                    key: Key('No Telp'),
+                    onSaved: (String value) => _notelp = value,
                     keyboardType: TextInputType.phone,
                   ),
                   
@@ -131,6 +140,8 @@ class _ProfilPageState extends State<ProfilPage> {
                       hintText: "Alamat rumah anda",
                       labelText: "Alamat"
                     ),
+                    key: Key('Alamat'),
+                    onSaved: (value) => _alamat = value,
                     maxLines: 3,
                   ),
 
@@ -146,7 +157,8 @@ class _ProfilPageState extends State<ProfilPage> {
                       hintText: "Nomer Rekening Bank Anda",
                       labelText: "No. Rekening"
                     ),
-                    onSaved: (String value) => this._norek = value,
+                    key: Key('No Rekening'),
+                    onSaved: (value) => _norek = value,
                     validator: _validasiNama,
                   ),
 
@@ -162,7 +174,8 @@ class _ProfilPageState extends State<ProfilPage> {
                       hintText: "Username yang diinginkan",
                       labelText: "Username"
                     ),
-                    onSaved: (String value) => this._username = value,
+                    key: Key('Username'),
+                    onSaved: (value) => _username = value,
                     validator: _validasiNama,
                   ),
 
@@ -174,7 +187,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     labelText: 'Password',
                     onFieldSubmitted: (String value){
                       setState(() {
-                      this._passwd = value; 
+                      _passwd = value; 
                       });
                     },
                   ),
@@ -193,6 +206,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     obscureText: true,
                   ),
                   SizedBox(height: 8,),
+                  
                   new RaisedButton(
                     elevation: 0,
                     color: Colors.white,
@@ -211,10 +225,28 @@ class _ProfilPageState extends State<ProfilPage> {
                       ),
                     ),
                   ),
+                  new RaisedButton(
+                    elevation: 0,
+                    color: Colors.white,
+                    padding: EdgeInsets.all(0),
+                    onPressed: _handleDataUpdate,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      width: double.infinity,
+                      child: Text('Update Data Diri',
+                        style: TextStyle(color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(32)
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )
-          );
+          )));
         }
       )
     );
@@ -235,6 +267,41 @@ class _ProfilPageState extends State<ProfilPage> {
       }
       )
   );
+  }
+  _handleDataUpdate() async {
+      String email;
+      //String passwd;
+      String username;
+      final FormState form = _formKey.currentState;
+      form.save();
+      print("Alamat = "+"$_alamat");
+      print("Telp = "+"$_notelp");
+      print("Nama Lengkap = "+"$_nama");
+      var pref = await SharedPreferences.getInstance();
+      
+      if (_email == "" || _email == null) {
+        email = pref.getString('email');
+        
+      }
+
+      //if (_passwd == ""){
+      //  passwd = pref.getString('password');
+      //}
+      
+      if(_username == "" || _username == null){
+        username = pref.getString('username');
+      }
+
+      uploadDataTambahan(
+        notelp: _notelp,
+        alamat: _alamat,
+        namalengkap: _nama,
+        email: email,
+        //password: passwd,
+        username: username,
+      );
+      
+    
   }
 }
 
