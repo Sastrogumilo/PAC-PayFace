@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # PAC-PayFace
 
 A Baru Flutter Project
@@ -8,8 +7,6 @@ A Baru Flutter Project
 # cobva
 
 A new Flutter project.
->>>>>>> 056f8a9fea71045512b607fe9ec2f4a110035f83
-
 ## Getting Started
 
 This project is a starting point for a Flutter application.
