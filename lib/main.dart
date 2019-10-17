@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:PayFace/bloc/auth/auth_bloc.dart';
 import 'package:PayFace/bloc/auth/auth_event.dart';
 import 'package:PayFace/repository/user_repo.dart';
@@ -7,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:PayFace/component/route.dart';
-
 
 
 const String PARSE_APP_ID = 'wbqbiarjQM0PB1RWzvalXmgZeHhYQBUFrx998d6v';

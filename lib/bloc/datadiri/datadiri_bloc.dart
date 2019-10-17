@@ -27,7 +27,11 @@ class DataDiriBloc extends Bloc<DataDiriEvent, DataDiriState>{
           final dataHasil = await dataRepo.dataTambahan(
               alamat: event.alamat,
               notlp: event.notlp,
-              namalengkap: event.namalengkap
+              namalengkap: event.namalengkap,
+              email: event.email,
+              password: event.password,
+              username: event.username,
+
             );
 
         if (dataHasil != null) {

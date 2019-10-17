@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:PayFace/repository/user_repo.dart';
 import 'package:PayFace/component/root.dart';
-import 'package:PayFace/component/profil.dart';
+import 'package:PayFace/component/profil_v2.dart';
 
 
 class Routes extends StatelessWidget {

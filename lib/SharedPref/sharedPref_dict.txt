@@ -1,0 +1,17 @@
+
+User [
+    objectID = objectID current User,
+    username = current username,
+    email = current email,
+    tagID = current user tagID (butuh upload),
+    sessionToken = current user session Token,
+    password = current user password
+]
+
+facesoft [
+    image1 = gambar upload untuk kamera_profil.dart,
+    imageRecog = gambar upload untuk kamera_bayar.dart,
+    tagHasil = tagID hasil return Recognize Image,
+    confidence = value double hasil return dari Recognize Image,
+
+]
