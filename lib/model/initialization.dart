@@ -146,7 +146,7 @@ Future updateTagID() async {
                               "X-Parse-Session-Token": "$sessionToken",
                               //"Content-Type" : "application/json"
                               };
-  if (tagID != null) {
+  if (tagID != null || tagID != "") {
     Map<String, String> bodyTagUpdate = {"id_foto_dataset":"$tagID"};
     String body = jsonEncode(bodyTagUpdate);
     
