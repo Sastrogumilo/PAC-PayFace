@@ -1,8 +1,11 @@
 // Library 3rd party
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:badges/badges.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Class component program
 import 'package:PayFace/bloc/auth/auth_event.dart';
@@ -36,7 +39,11 @@ class _DashBoardPageState extends State<DashBoardPage>
   AuthBloc _authBloc;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   PermissionStatus _status; //check status
-  
+
+  //DataUser
+  String displayNama;
+  String displayEmail;
+
   // Data dari piechart
   Map<String, double> dataMap = new Map();
   
@@ -47,9 +54,21 @@ class _DashBoardPageState extends State<DashBoardPage>
     Colors.orange,
   ];
 
+  loadDataUser() async {
+    var pref = await SharedPreferences.getInstance();
+    String nama = pref.getString('namaLengkap');
+    String email = pref.getString('email');
+    setState(() {
+      displayNama = nama;
+      displayEmail = email;
+      });
+    } 
   // Inisialisasi awal
-  @override
+  //@override
   void initState() {
+    checkObject();
+    Timer(const Duration(seconds: 3), loadDataUser);
+    //loadDataUser();
     super.initState();
     _askPermission();
     PermissionHandler().checkPermissionStatus(PermissionGroup.camera);
@@ -57,7 +76,8 @@ class _DashBoardPageState extends State<DashBoardPage>
     dataMap.putIfAbsent("Pay Out", () => 5);
     dataMap.putIfAbsent("Transfer", () => 3);
     dataMap.putIfAbsent("Top Up", () => 2);
-    checkObject();
+    
+    
   }
   
   // Link darigambar logo
@@ -89,8 +109,8 @@ class _DashBoardPageState extends State<DashBoardPage>
       builder: (context, state){
         
         final drawerHeader = UserAccountsDrawerHeader(
-          accountName: Text('Adi Irwanto'),
-          accountEmail: Text('coba@email.com'),
+          accountName: Text("$displayNama"),
+          accountEmail: Text("$displayEmail"),
           currentAccountPicture: CircleAvatar(
             child: FlutterLogo(size: 42.0),
             backgroundColor: Colors.white,
@@ -191,7 +211,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Container(
-                              child: Text('Adi Irwanto', style: TextStyle(fontSize: 44, color: Colors.black), textAlign: TextAlign.left) // Nama Pengguna,
+                              child: Text('$displayNama', style: TextStyle(fontSize: 44, color: Colors.black), textAlign: TextAlign.left) // Nama Pengguna,
                             ),
                           )
                         )

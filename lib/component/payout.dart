@@ -1,3 +1,4 @@
+import 'package:PayFace/repository/rekening_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:PayFace/bloc/payout/payOut_bloc.dart';
 import 'package:PayFace/bloc/payout/payOut_state.dart';
@@ -18,7 +19,7 @@ class _PayoutPage extends State<PayoutPage> {
       Navigator.pop(context);
   }
 
-  void _show_dialog()
+  void _showDialog()
   {
     showDialog(
       context: context,
@@ -73,6 +74,7 @@ class _PayoutPage extends State<PayoutPage> {
   @override
   void initState() {
     super.initState();
+    rekUserQuery();
     
   }
   @override
@@ -81,8 +83,8 @@ class _PayoutPage extends State<PayoutPage> {
     return BlocBuilder<PayOutBloc, PayOutState>(
       bloc: payOutBloc,
       builder: (context, state){
-        final tambah_button = FloatingActionButton.extended(
-          onPressed: () => _show_dialog(),
+        final tambahButton = FloatingActionButton.extended(
+          onPressed: () => _showDialog(),
           label: Text('Cairkan Uang'),
           icon: Icon(Icons.attach_money),
           backgroundColor: Colors.orange,
@@ -96,7 +98,7 @@ class _PayoutPage extends State<PayoutPage> {
               
             ],
           ),
-          floatingActionButton: tambah_button,
+          floatingActionButton: tambahButton,
         );
       }
     );

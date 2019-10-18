@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:PayFace/component/dashboard_v2.dart';
 import 'package:PayFace/component/kamera_profil.dart';
+import 'package:PayFace/model/initialization.dart';
 import 'package:flutter/material.dart';
 //import 'package:passwordfield/passwordfield.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +15,8 @@ import 'package:PayFace/bloc/kamera_profil/KameraProfil_bloc.dart';
 import 'package:PayFace/bloc/auth/auth_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:PayFace/repository/datadiri_repo.dart';
+import 'package:PayFace/repository/rekening_repo.dart';
+import 'package:PayFace/bloc/home/dashboard_bloc.dart';
 
 
 class ProfilPage extends StatefulWidget{
@@ -68,7 +74,8 @@ class _ProfilPageState extends State<ProfilPage> {
               actions: <Widget>[
                 new IconButton(
                   icon: const Icon(Icons.save),
-                  onPressed: () => Navigator.pop(context)
+                  onPressed: () => {_handleDataUpdate(), 
+                    Timer(const Duration(seconds: 5), _loadProfilPage),}
                 ) //<-Di isi
               ],
             ),
@@ -225,24 +232,6 @@ class _ProfilPageState extends State<ProfilPage> {
                       ),
                     ),
                   ),
-                  new RaisedButton(
-                    elevation: 0,
-                    color: Colors.white,
-                    padding: EdgeInsets.all(0),
-                    onPressed: _handleDataUpdate,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 14),
-                      width: double.infinity,
-                      child: Text('Update Data Diri',
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.center,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(32)
-                      ),
-                    ),
-                  ),
                 ],
               ),
             )
@@ -268,21 +257,64 @@ class _ProfilPageState extends State<ProfilPage> {
       )
   );
   }
+  void _loadProfilPage() {
+  Navigator.push(context, 
+      MaterialPageRoute(builder: (context){
+        return BlocProvider<DashBoardBloc>(
+          builder: (context) {
+            return DashBoardBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+            userRepo:   _dataDiriBloc.userRepo,
+            );
+          },
+          child: DashBoardPage(),
+
+        );
+      }
+      )
+  );
+  }
+
   _handleDataUpdate() async {
       String email;
       //String passwd;
       String username;
+      String namaForm;
+      String alamat;
+      String notelp;
+      String noRekSekarang;
+      String userRekID;
+
       final FormState form = _formKey.currentState;
       form.save();
-      print("Alamat = "+"$_alamat");
-      print("Telp = "+"$_notelp");
-      print("Nama Lengkap = "+"$_nama");
+
+      //print("Alamat = "+"$_alamat");
+      //print("Telp = "+"$_notelp");
+      //print("Nama Lengkap = "+"$_nama");
+      //print("No Rekening = "+"$_norek");
+      
       var pref = await SharedPreferences.getInstance();
       
+      noRekSekarang = pref.getString('noRekUser');
+      userRekID = pref.getString('userRekID');
+      //print("No Rek Sekarang = "+"$noRekSekarang");
+      //print("ID Rek Sekarang = "+"$userRekID");
+
+
       if (_email == "" || _email == null) {
         email = pref.getString('email');
-        
-      }
+      } else {email = _email;}
+
+      if (_nama == "" || _nama == null) {
+        namaForm = pref.getString('namaLengkap');
+      } else {namaForm = _nama;}
+
+      if (_alamat == "" || _alamat == null) {
+        alamat = pref.getString('alamat');
+      } else {alamat = _alamat;}
+
+      if (_notelp == "" || _notelp == null) {
+        notelp = pref.getString('notelp');
+      } else {notelp = _notelp;}
 
       //if (_passwd == ""){
       //  passwd = pref.getString('password');
@@ -290,17 +322,45 @@ class _ProfilPageState extends State<ProfilPage> {
       
       if(_username == "" || _username == null){
         username = pref.getString('username');
-      }
+      } else {username = _username;}
+
+      if(_norek == "" || _norek == null){ //tidak diisi
+        _norek = "null";
+        print("_norek = "+"$_norek");
+
+        if(noRekSekarang == _norek){print("Form Rekening Kosong");} //hasil sama tetapi null          
+
+        }else {//diisi isi sama
+          if(noRekSekarang == _norek){
+            print(noRekSekarang);
+            print(_norek); 
+            updateRekening(noRekSekarang);
+            print("Update Rekening Tetapi Value Sama");
+
+          }else {//diisi isi beda
+            print("Update Rekening Tetapi Value Beda");
+            if (userRekID == "null"){
+                noRekSekarang = _norek;
+                postRekening(noRekSekarang);
+                Timer(const Duration(seconds: 5), rekUserQuery);
+            } else {
+              noRekSekarang = _norek;
+              updateRekening(noRekSekarang);
+            }
+            
+          }
+        }
 
       uploadDataTambahan(
-        notelp: _notelp,
-        alamat: _alamat,
-        namalengkap: _nama,
+        notelp: notelp,
+        alamat: alamat,
+        namalengkap: namaForm,
         email: email,
         //password: passwd,
         username: username,
       );
-      
+      checkObject();
+    Timer(const Duration(seconds: 5), getUsersData);
     
   }
 }
