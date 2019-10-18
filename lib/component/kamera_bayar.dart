@@ -1,7 +1,8 @@
   import 'dart:async';
   import 'dart:io';
   //import 'package:PayFace/pin.dart';
-  import 'package:camera/camera.dart';
+  import 'package:PayFace/repository/hasilCariUser.dart';
+import 'package:camera/camera.dart';
   import 'package:flutter/material.dart';
   import 'package:fluttertoast/fluttertoast.dart';
   import 'package:path_provider/path_provider.dart';
@@ -294,13 +295,9 @@
 	
       }
 	
-  
-	
       CameraDescription selectedCamera = cameras[selectedCameraIdx];
 	
       CameraLensDirection lensDirection = selectedCamera.lensDirection;
-	
-  
 	
       return Expanded(
 	
@@ -366,11 +363,7 @@
 	
       }
 	
-  
-	
       controller = CameraController(cameraDescription, ResolutionPreset.high);
-	
-  
 	
       // If the controller is updated then update the UI.
 	
@@ -381,8 +374,6 @@
           setState(() {});
 	
         }
-	
-  
 	
         if (controller.value.hasError) {
 	
@@ -406,8 +397,6 @@
 	
       });
 	
-  
-	
       try {
 	
         await controller.initialize();
@@ -417,8 +406,6 @@
         _showCameraException(e);
 	
       }
-	
-  
 	
       if (mounted) {
 	
@@ -440,11 +427,7 @@
 	
       CameraDescription selectedCamera = cameras[selectedCameraIdx];
 	
-  
-	
       _onCameraSwitched(selectedCamera);
-	
-  
 	
       setState(() {
 	
@@ -453,8 +436,6 @@
       });
 	
     }
-	
-  
 	
     Future _takePicture() async {
 	
@@ -476,13 +457,9 @@
 	
         );
 	
-  
-	
         return null;
 	
       }
-	
-  
 	
       // Do nothing if a capture is on progress
 	
@@ -491,8 +468,6 @@
         return null;
 	
       }
-	
-  
 	
       final Directory appDirectory = await getApplicationDocumentsDirectory();
 	
@@ -533,22 +508,18 @@
 	
     }
 	
-  
-	
     void _onCapturePressed() {
 	
       _takePicture().then((filePath) {
         
-	
         if (mounted) {
           faceRecognition();
+          new Future.delayed(const Duration(seconds: 5), ()=> hasilCariQuery());
           setState(() {
 	
             imagePath = filePath;
 	
           });
-	
-
 	
           if (filePath != null) {
 	

@@ -89,9 +89,10 @@ Future checkObject() async {
     print("Tidak ada di data lokal objectID, proses pembuatan data lokal ...");
     getCurrentObject();
     print("get User Data dari DB ...");
-    Timer(const Duration(seconds: 5), getUsersData);
+    Future.delayed(Duration(seconds: 3), () => getUsersData());
+    //getUsersData();
     print("check object ...");
-    Timer(const Duration(seconds: 15), checkObject);
+    Timer(const Duration(seconds: 20), checkObject);
 
   }else{
     print("objectID ada = "+"$objectID");

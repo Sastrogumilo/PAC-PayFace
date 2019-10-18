@@ -43,6 +43,7 @@ class _DashBoardPageState extends State<DashBoardPage>
   //DataUser
   String displayNama;
   String displayEmail;
+  int displaySaldo;
 
   // Data dari piechart
   Map<String, double> dataMap = new Map();
@@ -55,21 +56,29 @@ class _DashBoardPageState extends State<DashBoardPage>
   ];
 
   loadDataUser() async {
-    var pref = await SharedPreferences.getInstance();
-    String nama = pref.getString('namaLengkap');
-    String email = pref.getString('email');
-    setState(() {
-      displayNama = nama;
-      displayEmail = email;
-      });
-    } 
+    try {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    //pref.reload();
+      
+      new Future.delayed(Duration.zero, () => setState(() {
+      displayNama = (pref.getString('namaLengkap') ?? "Loading Data ...");
+      displayEmail = (pref.getString('email') ?? "Email Anda");
+      displaySaldo = (pref.getString('saldo') ?? 0);
+      //print(displayNama);
+          }
+        )
+      );
+    } catch (Exception) {
+
+    }
+  } 
   // Inisialisasi awal
-  //@override
-  void initState() {
+  @override
+  void initState(){
     checkObject();
-    Timer(const Duration(seconds: 3), loadDataUser);
-    //loadDataUser();
+    Timer(const Duration(seconds: 8), loadDataUser);
     super.initState();
+    //super.initState();
     _askPermission();
     PermissionHandler().checkPermissionStatus(PermissionGroup.camera);
     PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
@@ -244,7 +253,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                                 child: Center(
                                   child: ListView(
                                     children: <Widget>[
-                                      Text('Rp. 696969', //<--Total Uang
+                                      Text("Rp. "+"$displaySaldo", //<--Total Uang
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: _textColor,

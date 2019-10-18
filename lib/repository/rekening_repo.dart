@@ -180,19 +180,28 @@ Future <void> rekUserQuery() async {
   final QueryBuilder<RekUser> query = QueryBuilder<RekUser>(RekUser())
                 ..regEx(userID, "$objectID");
   final response = await query.query();
-  print(response.result);
-
-  final data = json.decode(response.result.toString());
+  print(response.statusCode);
   
-  ListHasilRek dataList = ListHasilRek.fromJson(data);
-  pref.setString('userRekID', dataList.rekening[0].objectIDRek);
-  pref.setString('noRekUser', dataList.rekening[0].noRek);
-  pref.setInt('saldo', dataList.rekening[0].saldo);
+  if(response.result == null){
+    print("Data Tidak Ditemukan Di Server");
+    print(response.error);
 
-  String userRek = pref.getString('userRekID');
-  String noRekUser = pref.getString('noRekUser');
-  int saldo = pref.getInt('saldo');
+  }else{
+      print("hasil: = "+response.result.toString());
+      final data = json.decode(response.result.toString());
+      
+      ListHasilRek dataList = ListHasilRek.fromJson(data);
+      pref.setString('userRekID', dataList.rekening[0].objectIDRek);
+      pref.setString('noRekUser', dataList.rekening[0].noRek);
+      pref.setInt('saldo', dataList.rekening[0].saldo);
 
-  print('UserRekening = '+"$userRek"+", No Rekening = "+"$noRekUser"+", Saldo = "+"$saldo");
+      String userRek = pref.getString('userRekID');
+      String noRekUser = pref.getString('noRekUser');
+      int saldo = pref.getInt('saldo');
+      print('Menyimpan Data Pada Devices....');
+      print('UserRekening = '+"$userRek"+", No Rekening = "+"$noRekUser"+", Saldo = "+"$saldo");
+      }
+
+  
 
 }
