@@ -49,6 +49,7 @@ class _RootState extends State<Root>{
               child: LoginPage(),
             );
           }
+          
           return Center(child: CircularProgressIndicator(),
           );
         

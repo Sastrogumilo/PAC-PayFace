@@ -26,6 +26,7 @@ class _KirimPageState extends State<KirimPage> {
   bool _snap = false;
   bool _floating =  false;
   String _jumlah;
+  
   KirimBloc _kirimBloc;
 
 

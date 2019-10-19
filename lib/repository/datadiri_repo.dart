@@ -1,3 +1,4 @@
+import 'package:PayFace/model/initialization.dart';
 import 'package:http/http.dart' show Client;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async' show Future;
@@ -92,6 +93,8 @@ Future uploadDataTambahan({
         final data = json.decode(response.body);
         DebugDataUpload error = new DebugDataUpload.fromJson(data);
         print(error.error);
+      
+      checkObject();
           
       }
       

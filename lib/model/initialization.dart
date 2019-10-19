@@ -30,6 +30,16 @@ Map<String, String> headers = {"X-Parse-Application-Id" : "wbqbiarjQM0PB1RWzvalX
                               };
 Client client = Client();
 
+class DebugInisialisasi{
+String error;
+  DebugInisialisasi({this.error});
+
+  factory DebugInisialisasi.fromJson(Map<String, dynamic> parsedJson) {
+    return DebugInisialisasi(error: parsedJson['error']);
+  }
+}
+
+
 class UserSaatIni{
   String objectID;
   String username;
@@ -79,7 +89,8 @@ Future checkObject() async {
     print("Tidak ada di data lokal objectID, proses pembuatan data lokal ...");
     getCurrentObject();
     print("get User Data dari DB ...");
-    Timer(const Duration(seconds: 5), getUsersData);
+    Future.delayed(Duration(seconds: 3), () => getUsersData());
+    //getUsersData();
     print("check object ...");
     Timer(const Duration(seconds: 20), checkObject);
 
@@ -128,13 +139,16 @@ Future getUsersData() async {
 
   final data = jsonDecode(response.body);
   UserSaatIni userSaatIni = new UserSaatIni.fromJson(data);
-  pref.setString('tagID', userSaatIni.tagID ?? null);
+  pref.setString('tagID', userSaatIni.tagID ?? "");
   pref.setString('namaLengkap', userSaatIni.namaLengkap);
   pref.setString('notelp', userSaatIni.notelp);
   pref.setString('alamat', userSaatIni.alamat);
   
+  String namaLengkap = pref.getString('namaLengkap');
   String tagID = pref.getString('tagID');
   print("tagID = "+"$tagID");
+  print("Nama = "+"$namaLengkap");
+  
 }
 Future updateTagID() async {
   var pref = await SharedPreferences.getInstance();
@@ -150,19 +164,27 @@ Future updateTagID() async {
                               "X-Parse-Session-Token": "$sessionToken",
                               //"Content-Type" : "application/json"
                               };
-  if (tagID != null || tagID != "") {
+  if (tagID == "null" || tagID == "") {
+    getTags();
+    print("Delay 5 Detik");
+    Timer(const Duration(seconds: 10), updateTagID);
+  
+  }else{
+
     Map<String, String> bodyTagUpdate = {"id_foto_dataset":"$tagID"};
     String body = jsonEncode(bodyTagUpdate);
     
     final response = await client.put("$baseUrlUser"+"$objectID", headers: headersUpdate, body: body);
+    print(response.statusCode);
+    if(response.statusCode >= 400){
+      final data = jsonDecode(response.body);
+      DebugInisialisasi error = DebugInisialisasi.fromJson(data);
+      print(error.error);
+    }
     print("TagID telah ditambahkan ke DataBase = "+response.statusCode.toString());
 
     checkObject();
-
-  }else{
-    getTags();
-    print("Delay 5 Detik");
-    Timer(const Duration(seconds: 10), updateTagID);
   }
 
 }
+

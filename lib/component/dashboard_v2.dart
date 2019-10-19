@@ -1,8 +1,11 @@
 // Library 3rd party
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:badges/badges.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Class component program
 import 'package:PayFace/bloc/auth/auth_event.dart';
@@ -36,7 +39,12 @@ class _DashBoardPageState extends State<DashBoardPage>
   AuthBloc _authBloc;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   PermissionStatus _status; //check status
-  
+
+  //DataUser
+  String displayNama;
+  String displayEmail;
+  int displaySaldo;
+
   // Data dari piechart
   Map<String, double> dataMap = new Map();
   
@@ -47,17 +55,38 @@ class _DashBoardPageState extends State<DashBoardPage>
     Colors.orange,
   ];
 
+  loadDataUser() async {
+    try {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    //pref.reload();
+      
+      new Future.delayed(Duration.zero, () => setState(() {
+      displayNama = (pref.getString('namaLengkap') ?? "Loading Data ...");
+      displayEmail = (pref.getString('email') ?? "Email Anda");
+      displaySaldo = (pref.getString('saldo') ?? 0);
+      //print(displayNama);
+          }
+        )
+      );
+    } catch (Exception) {
+
+    }
+  } 
   // Inisialisasi awal
   @override
-  void initState() {
+  void initState(){
+    checkObject();
+    Timer(const Duration(seconds: 8), loadDataUser);
     super.initState();
+    //super.initState();
     _askPermission();
     PermissionHandler().checkPermissionStatus(PermissionGroup.camera);
     PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
     dataMap.putIfAbsent("Pay Out", () => 5);
     dataMap.putIfAbsent("Transfer", () => 3);
     dataMap.putIfAbsent("Top Up", () => 2);
-    checkObject();
+    
+    
   }
   
   // Link darigambar logo
@@ -84,6 +113,7 @@ class _DashBoardPageState extends State<DashBoardPage>
   Widget build(BuildContext context) {
     _dashBoardBloc = BlocProvider.of<DashBoardBloc>(context);
     _authBloc = BlocProvider.of<AuthBloc>(context);
+<<<<<<< HEAD
     
     final drawerHeader = UserAccountsDrawerHeader(
       accountName: Text('Adi Irwanto'),
@@ -101,6 +131,18 @@ class _DashBoardPageState extends State<DashBoardPage>
           leading: Badge(
             badgeContent: Text('!', style: TextStyle(color: Colors.white)),
             child: Icon(Icons.account_circle),
+=======
+    return BlocBuilder<DashBoardBloc, DashBoardState>(
+      bloc: _dashBoardBloc,
+      builder: (context, state){
+        
+        final drawerHeader = UserAccountsDrawerHeader(
+          accountName: Text("$displayNama"),
+          accountEmail: Text("$displayEmail"),
+          currentAccountPicture: CircleAvatar(
+            child: FlutterLogo(size: 42.0),
+            backgroundColor: Colors.white,
+>>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
           ),
           title: Text('Edit Profil'),
           onTap: (){
@@ -197,9 +239,35 @@ class _DashBoardPageState extends State<DashBoardPage>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+<<<<<<< HEAD
                     // Bagian berisi SELAMAT DATANG
                     head_title,
                     // Bagian berisi total keseluruhan payment
+=======
+                    // TULISAN SELAMAT DATANG
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: ucap_d_selamat,
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child:Container(
+                              child: Text('Welcome,', style: TextStyle(fontSize: 18, color: Colors.black),textAlign: TextAlign.left),
+                            )
+                          ),
+                        ),
+                        Padding(
+                          padding: ucap_d_selamat,
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              child: Text('$displayNama', style: TextStyle(fontSize: 44, color: Colors.black), textAlign: TextAlign.left) // Nama Pengguna,
+                            ),
+                          )
+                        )
+                      ],
+                    ),
+>>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
                     cardPayOut,
                     SizedBox(height: 100,),
                     // Menu BUTTON
@@ -228,7 +296,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                                 child: Center(
                                   child: ListView(
                                     children: <Widget>[
-                                      Text('Rp. 696969', //<--Total Uang
+                                      Text("Rp. "+"$displaySaldo", //<--Total Uang
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: _textColor,

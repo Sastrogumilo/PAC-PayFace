@@ -24,6 +24,9 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
   LoginBloc _loginBloc;
   
+ 
+    
+
   @override
   Widget build(BuildContext context) {
     _loginBloc = BlocProvider.of<LoginBloc>(context);

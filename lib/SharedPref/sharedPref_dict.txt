@@ -6,6 +6,8 @@ User [
     tagID = current user tagID (butuh upload),
     sessionToken = current user session Token,
     password = current user password
+    namaLengkap = nama lengkap user
+    alamat = alamat user;
 ]
 
 facesoft [
@@ -14,4 +16,16 @@ facesoft [
     tagHasil = tagID hasil return Recognize Image,
     confidence = value double hasil return dari Recognize Image,
 
+]
+
+Rekening [
+    userRekID = objectID class rekening User Sekarang,
+    noRekUser = Nomor Rekening User,
+    saldo = lurus,
+    userRekPenerima = objectID class Rekening User Penerima,
+
+]
+
+Cari User[
+    
 ]

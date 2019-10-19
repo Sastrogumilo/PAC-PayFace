@@ -1,25 +1,23 @@
 import 'package:parse_server_sdk/parse_server_sdk.dart';
-
-const String _keyTableName = '_User';
-const String keyRek= 'rekening';
-const String keyPin= 'pin';
-const String keySaldo= 'saldo';
-const String keyUserId = 'user_id';
-
-class Rekening extends ParseObject implements ParseCloneable{
-
-  Rekening(): super(_keyTableName);
-  Rekening.clone(): this();
+import 'dart:core';
 
 
-  @override clone(Map map) => Rekening.clone()..fromJson(map);
+const String keyRekening = 'Rekening';
+const String noRek = 'no_rekening';
+const String userID = 'user_id';
 
-  String get rekening => get<String>(keyRek);
-  String get pinrek => get<String>(keyPin);
-  String get saldo => get<String>(keySaldo);
+class RekUser extends ParseObject implements ParseCloneable {
   
-  set rekening(String nama) => set<String>(keyRek, nama); 
-  set pinrek(String alamat) => set<String>(keyPin, alamat);
-  set saldo(String telp) => set<String>(keySaldo, telp);
+  RekUser() : super(keyRekening);
+  RekUser.clone() : this(); 
+
+  @override 
+  RekUser clone(Map<String, dynamic> map) => RekUser.clone()..fromJson(map);
+
+  String get noRek => get<String>(noRek);
+  set noRek(String noRek) => set<String>(noRek, noRek);
+
+  String get userID => get<String>(userID);
+  set userID(String userID) => set<String>(userID, userID);
   
 }

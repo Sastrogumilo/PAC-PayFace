@@ -1,7 +1,8 @@
   import 'dart:async';
   import 'dart:io';
   //import 'package:PayFace/pin.dart';
-  import 'package:camera/camera.dart';
+  import 'package:PayFace/repository/hasilCariUser.dart';
+import 'package:camera/camera.dart';
   import 'package:flutter/material.dart';
 	import 'package:fluttertoast/fluttertoast.dart';
 	import 'package:path_provider/path_provider.dart';
@@ -190,9 +191,17 @@
       if (cameras == null) {
         return Row();
       }
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
       CameraDescription selectedCamera = cameras[selectedCameraIdx];
       CameraLensDirection lensDirection = selectedCamera.lensDirection;
+<<<<<<< HEAD
       
+=======
+	
+>>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
       return Expanded(
         child: Align(
           alignment: Alignment.centerLeft,
@@ -225,7 +234,13 @@
       if (controller != null) {
         await controller.dispose();
       }
+<<<<<<< HEAD
       controller = CameraController(cameraDescription, ResolutionPreset.high);
+=======
+	
+      controller = CameraController(cameraDescription, ResolutionPreset.high);
+	
+>>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
       // If the controller is updated then update the UI.
       controller.addListener(() {
         if (mounted) {
@@ -243,13 +258,21 @@
           );
         }	
       });
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
       try {
         await controller.initialize();
       } on CameraException catch (e) {
         _showCameraException(e);	
       }
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
       if (mounted) {
         setState(() {});
       }
@@ -260,7 +283,13 @@
           ? selectedCameraIdx + 1
           : 0;
       CameraDescription selectedCamera = cameras[selectedCameraIdx];
+<<<<<<< HEAD
       _onCameraSwitched(selectedCamera);
+=======
+	
+      _onCameraSwitched(selectedCamera);
+	
+>>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
       setState(() {
         selectedCameraIdx = selectedCameraIdx;
       });
@@ -276,6 +305,10 @@
             backgroundColor: Colors.grey,
             textColor: Colors.white
         );
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
         return null;
       }
 	
@@ -315,11 +348,20 @@
 	
     void _onCapturePressed() {
       _takePicture().then((filePath) {
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
         if (mounted) {
           faceRecognition();
+          new Future.delayed(const Duration(seconds: 5), ()=> hasilCariQuery());
           setState(() {
             imagePath = filePath;
           });
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
           if (filePath != null) {
             Fluttertoast.showToast(
                 msg: 'Gambar Disimpan',
