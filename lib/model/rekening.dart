@@ -1,7 +1,6 @@
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'dart:core';
 
-
 const String keyRekening = 'Rekening';
 const String noRek = 'no_rekening';
 const String userID = 'user_id';

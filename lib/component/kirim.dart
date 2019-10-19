@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:PayFace/component/kamera_profil.dart';
+import 'package:PayFace/bloc/kamera_profil/KameraProfil_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:PayFace/bloc/auth/auth_bloc.dart';
 
 class ColorPalete {
   static const backgroundColor = Color(0xff0066ff) ;
@@ -101,7 +104,7 @@ class _KirimPageState extends State<KirimPage> {
     );
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => Navigator.pushNamed(context, KameraPage.tag),
+          onPressed: _loadKameraProfilPage,
           label: Text('Scan Wajah'),
           icon: Icon(Icons.camera),
           backgroundColor: Colors.orange,
@@ -116,6 +119,21 @@ class _KirimPageState extends State<KirimPage> {
       body: SingleChildScrollView(
         child: pageKirim,
       ),
+    );
+  }
+  void _loadKameraProfilPage() {
+    Navigator.push(context, 
+      MaterialPageRoute(builder: (context){
+        return BlocProvider<KameraProfilBloc>(
+          builder: (context) {
+            return KameraProfilBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+            );
+          },
+          child: KameraPage(),
+
+        );
+      }
+      )
     );
   }
 } 

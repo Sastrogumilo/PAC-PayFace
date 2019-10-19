@@ -9,14 +9,11 @@ import 'package:PayFace/repository/rekening_repo.dart';
 
 class ListCariUser{
   final List<UserQuery> listUser; 
-
   ListCariUser({this.listUser});
 
   factory ListCariUser.fromJson(List<dynamic> parsedJson) {
-
     List<UserQuery> listUser = new List<UserQuery>();
     listUser = parsedJson.map((f)=>UserQuery.fromJson(f)).toList();
-
     return new ListCariUser(listUser: listUser);
   }
   
@@ -30,37 +27,37 @@ class UserQuery{
   String objectIdPenerima;
   String noTelpPenerima;
   
-  UserQuery({this.alamatPenerima, 
-            this.emailPenerima, 
-            this.namaLengkapPenerima, 
-            this.usernamePenerima,
-            this.objectIdPenerima,
-            this.noTelpPenerima,
-            
-            });
+  UserQuery({
+    this.alamatPenerima, 
+    this.emailPenerima, 
+    this.namaLengkapPenerima, 
+    this.usernamePenerima,
+    this.objectIdPenerima,
+    this.noTelpPenerima,        
+  });
 
-    factory UserQuery.fromJson(Map<String, dynamic> json){
-    return new UserQuery (objectIdPenerima: json['objectId'],
-                          alamatPenerima: json['alamat'],
-                          emailPenerima: json['email'],
-                          namaLengkapPenerima: json['nama_lengkap'],
-                          usernamePenerima: json['username'],
-                          noTelpPenerima: json['notelp'],
-                        );
+  factory UserQuery.fromJson(Map<String, dynamic> json){
+    return new UserQuery (
+      objectIdPenerima: json['objectId'],
+      alamatPenerima: json['alamat'],
+      emailPenerima: json['email'],
+      namaLengkapPenerima: json['nama_lengkap'],
+      usernamePenerima: json['username'],
+      noTelpPenerima: json['notelp'],
+    );
   }
-  
 }
 
 Future <void> hasilCariQuery() async {
-String tagIDHasil;
+  String tagIDHasil;
 
-final pref = await SharedPreferences.getInstance();
-pref.reload();
-tagIDHasil = pref.getString('tagHasil');
-print("Tag Hasil = "+"$tagIDHasil");
+  final pref = await SharedPreferences.getInstance();
+  pref.reload();
+  tagIDHasil = pref.getString('tagHasil');
+  print("Tag Hasil = "+"$tagIDHasil");
 
-final QueryBuilder<CariUser> query = QueryBuilder<CariUser>(CariUser())
-                ..regEx(tagID, "$tagIDHasil");
+  final QueryBuilder<CariUser> query = QueryBuilder<CariUser>(CariUser())
+                  ..regEx(tagID, "$tagIDHasil");
   final response = await query.query();
   print(response.result);
   
@@ -72,7 +69,6 @@ final QueryBuilder<CariUser> query = QueryBuilder<CariUser>(CariUser())
 
   }else{
     final data = json.decode(response.result.toString());
-  
     ListCariUser dataList = ListCariUser.fromJson(data);
 
     pref.setString('objectIdPenerima', dataList.listUser[0].objectIdPenerima);
@@ -110,19 +106,17 @@ Future <void> hasilCariRek() async {
     print(response.error);
     print(objectIdPenerima);
   }else{
-  
-      ListHasilRek dataList = ListHasilRek.fromJson(data);
-      
-      pref.setString('userRekIdPenerima', dataList.rekening[0].objectIDRek);
-      pref.setString('noRekUserPenerima', dataList.rekening[0].noRek);
-      pref.setInt('saldoPenerima', dataList.rekening[0].saldo);
+    ListHasilRek dataList = ListHasilRek.fromJson(data);
+    
+    pref.setString('userRekIdPenerima', dataList.rekening[0].objectIDRek);
+    pref.setString('noRekUserPenerima', dataList.rekening[0].noRek);
+    pref.setInt('saldoPenerima', dataList.rekening[0].saldo);
 
-      String userRekPenerima = pref.getString('userRekIdPenerima');
-      String noRekUserPenerima = pref.getString('noRekUserPenerima');
-      int saldo = pref.getInt('saldoPenerima');
+    String userRekPenerima = pref.getString('userRekIdPenerima');
+    String noRekUserPenerima = pref.getString('noRekUserPenerima');
+    int saldo = pref.getInt('saldoPenerima');
 
-      print('Menyimpan Data Pada Devices....');
-      print('UserRekening = '+"$userRekPenerima"+", No Rekening = "+"$noRekUserPenerima"+", Saldo = "+"$saldo");
-      
+    print('Menyimpan Data Pada Devices....');
+    print('UserRekening = '+"$userRekPenerima"+", No Rekening = "+"$noRekUserPenerima"+", Saldo = "+"$saldo");
   }
 }
