@@ -212,7 +212,6 @@ class _ProfilPageState extends State<ProfilPage> {
                     maxLength: 8,
                     obscureText: true,
                   ),
-                  SizedBox(height: 8,),
                   
                   new RaisedButton(
                     elevation: 0,
@@ -227,11 +226,12 @@ class _ProfilPageState extends State<ProfilPage> {
                         textAlign: TextAlign.center,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.orange,
                         borderRadius: BorderRadius.circular(32)
                       ),
                     ),
                   ),
+                  SizedBox(height: 8,),
                 ],
               ),
             )
@@ -242,7 +242,7 @@ class _ProfilPageState extends State<ProfilPage> {
   }
 
   void _loadKameraProfilPage() {
-  Navigator.push(context, 
+    Navigator.push(context, 
       MaterialPageRoute(builder: (context){
         return BlocProvider<KameraProfilBloc>(
           builder: (context) {
@@ -255,10 +255,10 @@ class _ProfilPageState extends State<ProfilPage> {
         );
       }
       )
-  );
+    );
   }
   void _loadProfilPage() {
-  Navigator.push(context, 
+    Navigator.push(context, 
       MaterialPageRoute(builder: (context){
         return BlocProvider<DashBoardBloc>(
           builder: (context) {
@@ -269,9 +269,8 @@ class _ProfilPageState extends State<ProfilPage> {
           child: DashBoardPage(),
 
         );
-      }
-      )
-  );
+      })
+    );
   }
 
   _handleDataUpdate() async {

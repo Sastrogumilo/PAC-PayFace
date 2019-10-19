@@ -23,22 +23,22 @@ import 'package:PayFace/model/facesoft.dart';
 
 final String baseUrlUser = "https://payface.back4app.io/users/";// + objectID
 
-Map<String, String> headers = {"X-Parse-Application-Id" : "wbqbiarjQM0PB1RWzvalXmgZeHhYQBUFrx998d6v",
-                              "X-Parse-REST-API-Key" : "tucEGaVGztVSvPlPdDuzL6IbvJNs9LSSIZ8H5pT0",
-                              
-                              //"Content-Type" : "application/json"
-                              };
+Map<String, String> headers = {
+  "X-Parse-Application-Id" : "wbqbiarjQM0PB1RWzvalXmgZeHhYQBUFrx998d6v",
+  "X-Parse-REST-API-Key" : "tucEGaVGztVSvPlPdDuzL6IbvJNs9LSSIZ8H5pT0",
+  //"Content-Type" : "application/json"
+};
+
 Client client = Client();
 
 class DebugInisialisasi{
-String error;
+  String error;
   DebugInisialisasi({this.error});
 
   factory DebugInisialisasi.fromJson(Map<String, dynamic> parsedJson) {
     return DebugInisialisasi(error: parsedJson['error']);
   }
 }
-
 
 class UserSaatIni{
   String objectID;
@@ -51,30 +51,30 @@ class UserSaatIni{
   String sessionToken;
   String password;
 
-
-  UserSaatIni({this.objectID, 
-              this.username, 
-              this.email, 
-              this.password,
-              this.tagID,
-              this.alamat,
-              this.namaLengkap,
-              this.notelp,
-              this.sessionToken,
-              });
+  UserSaatIni({
+    this.objectID, 
+    this.username, 
+    this.email, 
+    this.password,
+    this.tagID,
+    this.alamat,
+    this.namaLengkap,
+    this.notelp,
+    this.sessionToken,
+  });
 
   factory UserSaatIni.fromJson(Map<String, dynamic> parsedJson){
-    return UserSaatIni(objectID: parsedJson['objectId'],
-                        username: parsedJson['username'],
-                        password: parsedJson['password'],
-                        email: parsedJson['email'],
-                        alamat: parsedJson['alamat'],
-                        namaLengkap: parsedJson['nama_lengkap'],
-                        notelp: parsedJson['notelp'],
-                        tagID: parsedJson['id_foto_dataset'],
-                        sessionToken: parsedJson['sessionToken']
-
-                      );
+    return UserSaatIni(
+      objectID: parsedJson['objectId'],
+      username: parsedJson['username'],
+      password: parsedJson['password'],
+      email: parsedJson['email'],
+      alamat: parsedJson['alamat'],
+      namaLengkap: parsedJson['nama_lengkap'],
+      notelp: parsedJson['notelp'],
+      tagID: parsedJson['id_foto_dataset'],
+      sessionToken: parsedJson['sessionToken']
+    );
   }
 }
 
@@ -93,16 +93,13 @@ Future checkObject() async {
     //getUsersData();
     print("check object ...");
     Timer(const Duration(seconds: 20), checkObject);
-
   }else{
     print("objectID ada = "+"$objectID");
-
     if(tagID == "" || tagID == null) { //true
         print("tagID tidak ada proses pembuatan tagID dari database ...");
         updateTagID();
     }else{
         print("tagID ada = "+"$tagID");
-
     }
   }
 }
@@ -120,8 +117,6 @@ Future getCurrentObject() async {
   pref.setString('email', userIni.email);
   pref.setString('sessionToken', userIni.sessionToken);
   pref.setString('password', userIni.password);
-  
-
   String objectID = pref.getString('objectID');
   //String username = pref.getString('username');
   //String email = pref.getString('email');
@@ -147,9 +142,9 @@ Future getUsersData() async {
   String namaLengkap = pref.getString('namaLengkap');
   String tagID = pref.getString('tagID');
   print("tagID = "+"$tagID");
-  print("Nama = "+"$namaLengkap");
-  
+  print("Nama = "+"$namaLengkap");  
 }
+
 Future updateTagID() async {
   var pref = await SharedPreferences.getInstance();
   String objectID = pref.getString('objectID');
@@ -159,11 +154,12 @@ Future updateTagID() async {
   print("ObjectID = "+"$objectID"+", tagID = "+"$tagID"+", Session  = "+"$sessionToken");
 
   Map<String, String> headersUpdate = {
-                              "X-Parse-Application-Id" : "wbqbiarjQM0PB1RWzvalXmgZeHhYQBUFrx998d6v",
-                              "X-Parse-REST-API-Key" : "tucEGaVGztVSvPlPdDuzL6IbvJNs9LSSIZ8H5pT0",
-                              "X-Parse-Session-Token": "$sessionToken",
-                              //"Content-Type" : "application/json"
-                              };
+    "X-Parse-Application-Id" : "wbqbiarjQM0PB1RWzvalXmgZeHhYQBUFrx998d6v",
+    "X-Parse-REST-API-Key" : "tucEGaVGztVSvPlPdDuzL6IbvJNs9LSSIZ8H5pT0",
+    "X-Parse-Session-Token": "$sessionToken",
+    //"Content-Type" : "application/json"
+  };
+  
   if (tagID == "null" || tagID == "") {
     getTags();
     print("Delay 5 Detik");
@@ -182,7 +178,6 @@ Future updateTagID() async {
       print(error.error);
     }
     print("TagID telah ditambahkan ke DataBase = "+response.statusCode.toString());
-
     checkObject();
   }
 

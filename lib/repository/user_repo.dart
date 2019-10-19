@@ -3,26 +3,19 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:meta/meta.dart';
 
 abstract class BaseUserRepo {
-
   Future<ParseUser> authenticate({String username, @required String email, @required String password});
   Future<ParseUser> register({@required String username, @required String email, @required String password,});
   Future<ParseUser> currentUser();
   Future<bool> logout();
   Future<ParseObject> dataTambahan({@required String alamat, @required String namalengkap, @required String notlp});
   Future<ParseObject> rekening({@required String norek, @required String pin});
-  
 }
 
 class UserRepo extends BaseUserRepo {
 
   UserRepo();
   
-  Future<ParseUser> authenticate({
-    String username,
-    @required String password,
-    @required String email,
-    
-  }) async {
+  Future<ParseUser> authenticate({String username, @required String password, @required String email,}) async {
     var user = ParseUser(username, password, email);
     var response = await user.login();
     if (response.success)
@@ -30,11 +23,7 @@ class UserRepo extends BaseUserRepo {
     return null;
   } //End auth
 
-  Future<ParseUser> register({
-    @required String username,
-    @required String email,
-    @required String password,
-  }) async {
+  Future<ParseUser> register({@required String username, @required String email, @required String password,}) async {
     var user = ParseUser(username, password, email);
     var result = await user.save();
     if (result.success) {

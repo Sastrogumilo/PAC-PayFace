@@ -93,10 +93,35 @@ class _PayoutPage extends State<PayoutPage> {
           appBar: AppBar(
             title: Text('Pay Out'),
           ),
-          body: Column(
-            children: <Widget>[
-              
-            ],
+          body: Padding(
+            padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Icon(
+                      Icons.payment,
+                      size: 52,  
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                          child: Text('Transaksi : 123123asd12'),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                          child: Text('Jumlah : Rp. 50,000',textAlign: TextAlign.start,),
+                        )
+                      ],
+                    ),
+                  ],
+                )             
+              ],
+            ),
           ),
           floatingActionButton: tambahButton,
         );

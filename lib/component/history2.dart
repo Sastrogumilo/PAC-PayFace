@@ -102,12 +102,6 @@ class _HistoryPageState2 extends State<HistoryPage2> {
         ),
       ),
     );
-
-    final _ktabPages = <Widget>[
-      kirim_pages,
-      Center(child: Text('Top Up',style: TextStyle(color: Colors.black87))),
-      Center(child: Text('Pay Out',style: TextStyle(color: Colors.black87)))
-    ];
     final _kTabs = <Tab>[
       Tab(text: 'Transfer',),
       Tab(text: 'Top Up',),
@@ -122,9 +116,7 @@ class _HistoryPageState2 extends State<HistoryPage2> {
             tabs: _kTabs,
           ),
         ),
-        body: TabBarView(
-          children: _ktabPages,
-        )
+        body: Text('ISI')
       ),
     );
   });}
