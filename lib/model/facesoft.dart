@@ -131,11 +131,11 @@ Future faceRecognition() async {
     tagHasil = pref.getString('tagHasil'); // Get Data tagHasil
     tagAwal = pref.getString('tagID'); // Get Data tagAwal
 
-    if (tagAwal == tagHasil) {
+    /*if (tagAwal == tagHasil) {
       print("Ini Wajah Anda");
     } else {
       print("Ini Bukan Wajah Anda atau Wajah Tidak Dikenal");
-    }
+    }*/
   }
 }
 

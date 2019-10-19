@@ -53,13 +53,13 @@ class UserRepo extends BaseUserRepo {
         ..set('pin', pin);
         await datarek.save();
     var response = await datarek.save();
-        if (response.success) {
-          return response.result;
-        }
-        return null;
-      }
+    if (response.success) {
+      return response.result;
+    }
+    return null;
+  }
 
-    Future<ParseObject> dataTambahan({
+  Future<ParseObject> dataTambahan({
     @required String alamat,
     @required String notlp,
     @required String namalengkap

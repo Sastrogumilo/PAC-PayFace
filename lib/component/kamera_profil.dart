@@ -71,55 +71,72 @@
     @override
     Widget build(BuildContext context) {
     
-    kameraProfilBloc = BlocProvider.of<KameraProfilBloc>(context);
-    return BlocBuilder<KameraProfilBloc, KameraProfilState>(
-      bloc: kameraProfilBloc,
-      builder: (context, state){
+      kameraProfilBloc = BlocProvider.of<KameraProfilBloc>(context);
+      return BlocBuilder<KameraProfilBloc, KameraProfilState>(
+        bloc: kameraProfilBloc,
+        builder: (context, state){
 
-      return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: const Text('Scan Wajah'),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: Center(
-                    child: _cameraPreviewWidget(),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 3.0,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
+        return Scaffold(
+          key: _scaffoldKey,
+          appBar: AppBar(
+            title: const Text('Scan Wajah'),
+          ),
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                //mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
                   _cameraTogglesRowWidget(),
+                  SizedBox(width: 10,),
                   _captureControlRowWidget(),
-                  _thumbnailWidget(),
-                  
-                  
+                  SizedBox(width: 10,),
+                  _thumbnailWidget(), 
                 ],
               ),
-            ),
-            Padding(padding: EdgeInsets.all(5),
-            child: Text("TagID: " + (tagID ?? ""))
-            )
-          ],
-        ),
-      );
-      });
+            ], 
+          ),
+          body: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Center(
+                      child: _cameraPreviewWidget(),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: 3.0,
+                    ),
+                  ),
+                ),
+              ),
+              
+              /*Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    _cameraTogglesRowWidget(),
+                    _captureControlRowWidget(),
+                    _thumbnailWidget(), 
+                  ],
+                ),
+              ),*/
+              
+              /*Padding(
+                padding: EdgeInsets.all(5),
+                child: Text("TagID: " + (tagID ?? ""))
+              )*/
+            ],
+          ),
+        );
+        });
     }
 
     /// Display 'Loading' text when the camera is still loading.
@@ -142,21 +159,24 @@
 
     /// Display the thumbnail of the captured image
     Widget _thumbnailWidget() {
-      return Expanded(
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: imagePath == null ? SizedBox() : SizedBox(
-              child: Image.file(File(imagePath)),
-              width: 64.0,
-              height: 64.0,
-            ),
-        ),
+      return Align(
+        child: imagePath == null ? SizedBox() : SizedBox(
+            child: Image.file(File(imagePath)),
+            width: 64.0,
+            height: 64.0,
+          ),
       );
     }
 
     /// Display the control bar with buttons to take pictures
     Widget _captureControlRowWidget() {
-      return Expanded(
+      return FloatingActionButton(
+          onPressed: controller != null &&
+                    controller.value.isInitialized ? _onCapturePressed : null,
+          backgroundColor: Colors.orange,
+          child: const Icon(Icons.camera_alt),
+      );
+      /*Expanded(
         child: Align(
           alignment: Alignment.center,
           child: Row(
@@ -172,7 +192,7 @@
             ],
           ),
         ),
-      );
+      );*/
     }
 
     /// Display a row of toggle to select the camera (or a message if no camera is available).
@@ -182,7 +202,13 @@
       }
       CameraDescription selectedCamera = cameras[selectedCameraIdx];
       CameraLensDirection lensDirection = selectedCamera.lensDirection;
-      return Expanded(
+      return FloatingActionButton(
+          onPressed: _onSwitchCamera,
+          //label: Text("${lensDirection.toString().substring(lensDirection.toString().indexOf('.')+1)}"),
+          child: Icon(_getCameraLensIcon(lensDirection)),
+          backgroundColor: Colors.orange,
+      );  
+      /*Expanded(
         child: Align(
           alignment: Alignment.centerLeft,
           child: FlatButton.icon(
@@ -193,7 +219,7 @@
               label: Text("${lensDirection.toString().substring(lensDirection.toString().indexOf('.')+1)}")
           ),
         ),
-      );
+      );*/
     }
 
     IconData _getCameraLensIcon(CameraLensDirection direction) {
@@ -336,4 +362,5 @@
           textColor: Colors.white
       );
     }
-  }
+
+}

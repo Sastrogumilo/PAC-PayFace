@@ -41,7 +41,7 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String tag = prefs.getString('tagID');
         if(tag == null){
-        getTags();
+          getTags();
         }else{
           print(tag);
         }
@@ -80,17 +80,34 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
       return BlocBuilder<KameraBayarBloc, KameraBayarState>(
         bloc: kameraBayarBloc,
         builder: (context, state){
+        
         return Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
             title: const Text('Scan Wajah'),
+          ),
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                //mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  _cameraTogglesRowWidget(),
+                  SizedBox(width: 10,),
+                  _captureControlRowWidget(),
+                  SizedBox(width: 10,),
+                  _thumbnailWidget(), 
+                ],
+              ),
+            ], 
           ),
           body: Column(
             children: [
               Expanded(
                 child: Container(
                   child: Padding(
-                    padding: const EdgeInsets.all(1.0),
+                    padding: const EdgeInsets.all(0.0),
                     child: Center(
                       child: _cameraPreviewWidget(),
                     ),
@@ -104,7 +121,7 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
                   ),
                 ),
               ),
-              Padding(
+              /*Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -118,7 +135,7 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
               Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Text("TagID: " + (tagID ?? "")),
-              )
+              )*/
             ],
           ),
         );
@@ -145,8 +162,7 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
 	
     /// Display the thumbnail of the captured image
     Widget _thumbnailWidget() {
-      return Expanded(
-        child: Align(
+      return Align(
           alignment: Alignment.centerRight,
           child: imagePath == null
             ? SizedBox()
@@ -155,13 +171,20 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
               width: 64.0,
               height: 64.0,
             ),
-        ),
-      );
+        );
     }
 	
     /// Display the control bar with buttons to take pictures
     Widget _captureControlRowWidget() {
-      return Expanded(
+      return FloatingActionButton(
+          onPressed: controller != null &&
+                    controller.value.isInitialized
+                    ? _onCapturePressed
+                    : null,
+          backgroundColor: Colors.orange,
+          child: const Icon(Icons.camera_alt),
+      );
+      /*return Expanded(
         child: Align(
           alignment: Alignment.center,
           child: Row(
@@ -179,7 +202,7 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
             ],
           ),
         ),
-      );
+      );*/
     }
 	
     /// Display a row of toggle to select the camera (or a message if no camera is available).
@@ -190,8 +213,13 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
 	
       CameraDescription selectedCamera = cameras[selectedCameraIdx];
       CameraLensDirection lensDirection = selectedCamera.lensDirection;
-	
-      return Expanded(
+      return FloatingActionButton(
+          onPressed: _onSwitchCamera,
+          //label: Text("${lensDirection.toString().substring(lensDirection.toString().indexOf('.')+1)}"),
+          child: Icon(_getCameraLensIcon(lensDirection)),
+          backgroundColor: Colors.orange,
+      );  
+      /*return Expanded(
         child: Align(
           alignment: Alignment.centerLeft,
           child: FlatButton.icon(
@@ -203,7 +231,7 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
                   .substring(lensDirection.toString().indexOf('.')+1)}")
           ),
         ),
-      );
+      );*/
     }
 
     IconData _getCameraLensIcon(CameraLensDirection direction) {
@@ -337,8 +365,8 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
         }	
       });
     //Navigator.of(context).pushNamed(null); //diisis
-    
     }
+    
     void _showCameraException(CameraException e) {
       String errorText = 'Error: ${e.code}\nError Message: ${e.description}';
       print(errorText);
@@ -353,21 +381,20 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
 	
     }
 
-
-     void _loadKonfirmasiPage() {
+    void _loadKonfirmasiPage() {
       Navigator.push(context, 
-        MaterialPageRoute(builder: (context){
-        return BlocProvider<KonfirmasiBloc>(
-          builder: (context) {
-            return KonfirmasiBloc(authBloc: BlocProvider.of<AuthBloc>(context),
-            userRepo: kameraBayarBloc.userRepo,
+        MaterialPageRoute(
+          builder: (context){
+            return BlocProvider<KonfirmasiBloc>(
+              builder: (context) {
+                return KonfirmasiBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+                userRepo: kameraBayarBloc.userRepo,
+                );
+              },
+              child: KonfirmasiPage(),
             );
-          },
-          child: KonfirmasiPage(),
-
-        );
-      }
-      )
+          }
+        )
       );
     }
 
@@ -377,37 +404,47 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
       valueRecog = pref.getInt('valueRecog');
       print("Value = "+"$valueRecog");
       
-          if(valueRecog == 0){
-            //ERROR
-            Fluttertoast.showToast(
-	              msg: 'Wajah Tidak Dikenal !, Tunggu Beberapa Saat dan Silahkan Coba Lagi ...',
-	              toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIos: 1,
-                backgroundColor: Colors.red,
-                textColor: Colors.white
-            );
-                pref.remove('valueRecog');
-                pref.remove('tagHasil');
-
-                pref.reload();
-
-                print(pref.getInt('valueRecog'));
-                print(pref.getInt('tagHasil'));
-                //print(pref.getString('objectIdPenerima'));
-                  
-                  //print("value = "+pref.getString('valueRecog'));
-
-          }else {
+      if(valueRecog <= 0){
+        //ERROR
+        Fluttertoast.showToast(
+            msg: 'Wajah Tidak Dikenal !, Tunggu Beberapa Saat dan Silahkan Coba Lagi ...',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white
+        );
+        pref.remove('valueRecog');
+        pref.remove('tagHasil');
+        pref.reload();
+        print(pref.getInt('valueRecog'));
+        print(pref.getInt('tagHasil'));
+        //print(pref.getString('objectIdPenerima'));
+        //print("value = "+pref.getString('valueRecog'));
+      }else {
+        if(pref.getString('tagHasil') == pref.getString('tagID')){
           Fluttertoast.showToast(
-	              msg: 'User Terdeteksi !, Silahkan Tunggu ...',
-	              toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIos: 1,
-                backgroundColor: Colors.green,
-                textColor: Colors.white
-            );
-          new Future.delayed(const Duration(seconds: 3), ()=> _loadKonfirmasiPage());
+              msg: 'Tidak Bisa Mentransfer Diri Sendiri',
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.white
+          );
+          pref.remove('valueRecog');
+          pref.remove('tagHasil');
+          pref.reload();
+          print(pref.getInt('valueRecog'));
+          print(pref.getInt('tagHasil'));
+        }else{
+          Fluttertoast.showToast(
+              msg: 'User Terdeteksi !, Silahkan Tunggu ...',
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.white
+          );
           pref.remove('valueRecog');
           pref.remove('tagHasil');
 
@@ -429,9 +466,10 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
           print(pref.getString('tagHasil'));
           print(pref.getString('objectIdPenerima'));
           pref.reload();
-          }
-
+          //new Future.delayed(const Duration(seconds: 3), ()=> _loadKonfirmasiPage());
+          //_loadKonfirmasiPage();
+        }
+      }
     }
-
   }
    
