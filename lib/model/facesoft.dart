@@ -119,12 +119,7 @@ Future faceRecognition() async {
     print(bodyUpload);
     final dataGagal = json.decode(response.body);
     GagalRecognise error = new GagalRecognise.fromJson(dataGagal);
-<<<<<<< HEAD
-    print(error.error);
-=======
     print(error.error); //No Face Found
-
->>>>>>> 19e7d0c4d85cf8cb59b000856687889a18a1efd1
   } else {
     final dataSukses = json.decode(response.body);
     print('respon = '+response.body); // => [{}]

@@ -4,25 +4,6 @@ import 'dart:io';
 import 'package:PayFace/component/konfirmasi.dart';
 import 'package:PayFace/repository/hasilCariUser.dart';
 import 'package:camera/camera.dart';
-<<<<<<< HEAD
-  import 'package:flutter/material.dart';
-	import 'package:fluttertoast/fluttertoast.dart';
-	import 'package:path_provider/path_provider.dart';
-  import 'package:PayFace/bloc/kamera_bayar/kameraBayar_bloc.dart';
-  import 'package:PayFace/bloc/kamera_bayar/kameraBayar_state.dart';
-  import 'package:flutter_bloc/flutter_bloc.dart';
-	
-  import 'package:fluttertoast/fluttertoast.dart';
-  import 'package:path_provider/path_provider.dart';
-  import 'package:PayFace/bloc/kamera_bayar/kameraBayar_bloc.dart';
-  import 'package:PayFace/bloc/kamera_bayar/kameraBayar_state.dart';
-  import 'package:flutter_bloc/flutter_bloc.dart';
-	import 'package:PayFace/model/facesoft.dart';
-  import 'package:shared_preferences/shared_preferences.dart';
-  import 'package:image/image.dart' as ImageProcess;
-  import 'dart:convert';
-
-=======
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
@@ -35,7 +16,6 @@ import 'package:image/image.dart' as ImageProcess;
 import 'dart:convert';
 import 'package:PayFace/bloc/konfirmasi/konfirmasi_bloc.dart';
 import 'package:PayFace/bloc/auth/auth_bloc.dart';
->>>>>>> 19e7d0c4d85cf8cb59b000856687889a18a1efd1
 
   class KameraBayarPage extends StatefulWidget {
     static String tag = 'kameraBayar-page';
@@ -207,17 +187,10 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
       if (cameras == null) {
         return Row();
       }
-<<<<<<< HEAD
-=======
 	
->>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
       CameraDescription selectedCamera = cameras[selectedCameraIdx];
       CameraLensDirection lensDirection = selectedCamera.lensDirection;
-<<<<<<< HEAD
-      
-=======
 	
->>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
       return Expanded(
         child: Align(
           alignment: Alignment.centerLeft,
@@ -250,13 +223,7 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
       if (controller != null) {
         await controller.dispose();
       }
-<<<<<<< HEAD
       controller = CameraController(cameraDescription, ResolutionPreset.high);
-=======
-	
-      controller = CameraController(cameraDescription, ResolutionPreset.high);
-	
->>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
       // If the controller is updated then update the UI.
       controller.addListener(() {
         if (mounted) {
@@ -274,21 +241,13 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
           );
         }	
       });
-<<<<<<< HEAD
-
-=======
 	
->>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
       try {
         await controller.initialize();
       } on CameraException catch (e) {
         _showCameraException(e);	
       }
-<<<<<<< HEAD
-
-=======
 	
->>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
       if (mounted) {
         setState(() {});
       }
@@ -299,13 +258,7 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
           ? selectedCameraIdx + 1
           : 0;
       CameraDescription selectedCamera = cameras[selectedCameraIdx];
-<<<<<<< HEAD
       _onCameraSwitched(selectedCamera);
-=======
-	
-      _onCameraSwitched(selectedCamera);
-	
->>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
       setState(() {
         selectedCameraIdx = selectedCameraIdx;
       });
@@ -321,10 +274,6 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
             backgroundColor: Colors.grey,
             textColor: Colors.white
         );
-<<<<<<< HEAD
-=======
-	
->>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
         return null;
       }
 	
@@ -364,10 +313,6 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
 	
     void _onCapturePressed() {
       _takePicture().then((filePath) {
-<<<<<<< HEAD
-=======
-        
->>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
         if (mounted) {
           faceRecognition();
           print('Check Image ...');
@@ -379,10 +324,6 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
           setState(() {
             imagePath = filePath;
           });
-<<<<<<< HEAD
-=======
-	
->>>>>>> 1c2217fe8672795541799b154492a374ffafd1f7
           if (filePath != null) {
             Fluttertoast.showToast(
                 msg: 'Gambar Disimpan',
@@ -393,14 +334,7 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
                 textColor: Colors.white
             );
           }
-<<<<<<< HEAD
         }	
-=======
-	
-        }
-       
-	
->>>>>>> 19e7d0c4d85cf8cb59b000856687889a18a1efd1
       });
     //Navigator.of(context).pushNamed(null); //diisis
     

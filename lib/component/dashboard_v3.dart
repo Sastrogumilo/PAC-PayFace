@@ -85,6 +85,8 @@ class _DashBoardPageState extends State<DashBoardPage>
     dataMap.putIfAbsent("Pay Out", () => 5);
     dataMap.putIfAbsent("Transfer", () => 3);
     dataMap.putIfAbsent("Top Up", () => 2);
+    
+    
   }
   
   // Link darigambar logo
@@ -281,91 +283,91 @@ class _DashBoardPageState extends State<DashBoardPage>
                                 children: [
                                   TableRow(children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          FlatButton(
-                                            child: Image.asset('asset/images/rupiah.png', fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
-                                            onPressed: _loadKirimPage,
-                                            padding: EdgeInsets.all(8),
+                                          padding: const EdgeInsets.all(8),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              FlatButton(
+                                                child: Image.asset('asset/images/rupiah.png', fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
+                                                onPressed: _loadKirimPage,
+                                                padding: EdgeInsets.all(8),
+                                              ),
+                                              SizedBox(
+                                                height: 8,
+                                              ),
+                                              Text(
+                                                'Transfer Uang',
+                                                style: TextStyle(color: _iconColor),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text(
-                                            'Transfer Uang',
-                                            style: TextStyle(color: _iconColor),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
                                     Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          FlatButton(
-                                            child: Image.asset('asset/images/wallet.png', fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
-                                            onPressed: _loadPayoutPage,
-                                            padding: EdgeInsets.all(8),
+                                          padding: const EdgeInsets.all(8),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              FlatButton(
+                                                child: Image.asset('asset/images/wallet.png', fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
+                                                onPressed: _loadPayoutPage,
+                                                padding: EdgeInsets.all(8),
+                                              ),
+                                              SizedBox(
+                                                height: 8,
+                                              ),
+                                              Text(
+                                                'Pay Out',
+                                                style: TextStyle(color: _iconColor),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text(
-                                            'Pay Out',
-                                            style: TextStyle(color: _iconColor),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
                                   ]),
                                   TableRow(children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          FlatButton(
-                                            child: Image.asset('asset/images/transaksi.png', fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
-                                            onPressed: _loadRiwayatPage,
-                                            padding: EdgeInsets.all(8),
+                                          padding: const EdgeInsets.all(8),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              FlatButton(
+                                                child: Image.asset('asset/images/transaksi.png', fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
+                                                onPressed: _loadRiwayatPage,
+                                                padding: EdgeInsets.all(8),
+                                              ),
+                                              SizedBox(
+                                                height: 8,
+                                              ),
+                                              Text(
+                                                'Riwayat Transaksi',
+                                                style: TextStyle(color: _iconColor),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text(
-                                            'Riwayat Transaksi',
-                                            style: TextStyle(color: _iconColor),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
                                     Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          FlatButton(
-                                            child: Image.asset('asset/images/topup.png', fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
-                                            onPressed: _loadTopupPage,
-                                            padding: EdgeInsets.all(8),
+                                          padding: const EdgeInsets.all(8),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              FlatButton(
+                                                child: Image.asset('asset/images/topup.png', fit: BoxFit.contain, color: _iconColor, width: 45, height: 45,),
+                                                onPressed: _loadTopupPage,
+                                                padding: EdgeInsets.all(8),
+                                              ),
+                                              SizedBox(
+                                                height: 8,
+                                              ),
+                                              Text(
+                                                'Top Up',
+                                                style: TextStyle(color: _iconColor),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text(
-                                            'Top Up',
-                                            style: TextStyle(color: _iconColor),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
                                   ]),
                                 ],
                               ),
