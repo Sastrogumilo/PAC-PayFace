@@ -132,9 +132,10 @@ Future postRekening(
                                     body: {
                                           "user_id" : "$objectID",
                                           "no_rekening" : "$noRek",
+                                          "saldo": 0,
                                           }
   );
-  print("Update Rekening = "+response.statusCode.toString());
+  print("POST Rekening = "+response.statusCode.toString());
   
   if (response.statusCode >= 400){
     final data = json.decode(response.body);

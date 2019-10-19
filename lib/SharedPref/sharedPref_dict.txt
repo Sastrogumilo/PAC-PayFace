@@ -27,5 +27,16 @@ Rekening [
 ]
 
 Cari User[
+    objectIdPenerima
+    alamatPenerima 
+    namaLengkapPenerima
+    emailPenerima
+    usernamePenerima
+    notelpPenerima
+
+    userRekIdPenerima
+    noRekUserPenerima
+    saldoPenerima
+    
     
 ]
