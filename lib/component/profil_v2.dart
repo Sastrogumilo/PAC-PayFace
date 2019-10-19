@@ -338,7 +338,7 @@ class _ProfilPageState extends State<ProfilPage> {
 
           }else {//diisi isi beda
             print("Update Rekening Tetapi Value Beda");
-            if (userRekID == "null"){
+            if (userRekID == "null" || userRekID == null){
                 noRekSekarang = _norek;
                 postRekening(noRekSekarang);
                 Timer(const Duration(seconds: 5), rekUserQuery);

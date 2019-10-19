@@ -57,17 +57,14 @@ class _DashBoardPageState extends State<DashBoardPage>
 
   loadDataUser() async {
     try {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    //pref.reload();
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      //pref.reload();
       
       new Future.delayed(Duration.zero, () => setState(() {
-      displayNama = (pref.getString('namaLengkap') ?? "Loading Data ...");
-      displayEmail = (pref.getString('email') ?? "Email Anda");
-      displaySaldo = (pref.getString('saldo') ?? 0);
-      //print(displayNama);
-          }
-        )
-      );
+        displayNama = (pref.getString('namaLengkap') ?? "Loading Data ...");
+        displayEmail = (pref.getString('email') ?? "Email Anda");
+        displaySaldo = (pref.getString('saldo') ?? 0);
+      }));
     } catch (Exception) {
 
     }

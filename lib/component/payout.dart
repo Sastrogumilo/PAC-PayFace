@@ -89,6 +89,62 @@ class _PayoutPage extends State<PayoutPage> {
           icon: Icon(Icons.attach_money),
           backgroundColor: Colors.orange,
         );
+        final list_belum = Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.fromLTRB(8, 2, 8, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Flexible(
+                flex: 1,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.network('https://cdn2.tstatic.net/kaltim/foto/bank/images/rupiah-lagi_20170721_173853.jpg'),
+                ),
+              ),
+              Flexible(
+                flex: 8,
+                child: Container(
+                  padding: EdgeInsets.all(13.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "PO-3331-0000-111-222",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(
+                        "300.000",
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 3,
+                child: Container(
+                  padding: EdgeInsets.all(13.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        "Belum Disetujui",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
         return Scaffold(
           appBar: AppBar(
             title: Text('Pay Out'),
@@ -97,29 +153,7 @@ class _PayoutPage extends State<PayoutPage> {
             padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
             child: Column(
               children: <Widget>[
-                Row(
-                  
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Icon(
-                      Icons.payment,
-                      size: 52,  
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                          child: Text('Transaksi : 123123asd12'),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                          child: Text('Jumlah : Rp. 50,000',textAlign: TextAlign.start,),
-                        )
-                      ],
-                    ),
-                  ],
-                )             
+                list_belum      
               ],
             ),
           ),

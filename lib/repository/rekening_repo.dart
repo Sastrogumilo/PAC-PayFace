@@ -112,27 +112,27 @@ class DebugRekening{
   }
 }
 
+Future postRekening(
+  String noRek,
 
-Future postRekening(String noRek) async {
+) async {
+  String body;
   var pref = await SharedPreferences.getInstance();
   String objectID = pref.getString('objectID');
+  print("$noRek");
+  Map<String, dynamic> bodyRek = {
+                                  "user_id" : "$objectID",
+                                  "no_rekening" : "$noRek",
+                                  "saldo": 0,
+  };
+  body = jsonEncode(bodyRek);
 
-  final response = await client.post(
-    "$urlRekening", 
-    headers: headers, 
-    body: {
-      "user_id" : "$objectID",
-      "no_rekening" : "$noRek",
-      "saldo": 0,
-    }
+  final response = await client.post("$urlRekening", 
+                                    headers: headers, 
+                                    body: body
+                                          
   );
   print("POST Rekening = "+response.statusCode.toString());
-  
-  if (response.statusCode >= 400){
-    final data = json.decode(response.body);
-    DebugRekening error = new DebugRekening.fromJson(data);
-    print(error.error);
-  }
 }
 
 // Mengedit Nomer Rekening dari User

@@ -35,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage>{
   @override
   Widget build(BuildContext context) {
     _registerBloc = BlocProvider.of<RegisterBloc>(context);
-
+    
     return BlocListener<RegisterBloc, RegisterState>(
       listener:  (context, state) {
         if (state is RegisterBerhasil) {
@@ -45,184 +45,130 @@ class _RegisterPageState extends State<RegisterPage>{
       child: BlocBuilder<RegisterBloc, RegisterState>(
         bloc: _registerBloc,
         builder: (context, state){
-
-
-    return Scaffold(
-      body: Container(
-        color: ColorPalete.primaryColor,
-        child: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-          children: <Widget>[
-          Column(children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 12),
+          final logo = Hero(
+            tag: 'hero',
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              radius: 48.0,
+              child: Image.asset('asset/images/logo_1.jpeg'),
+            ),
+          );
+          final username = TextFormField(
+            autofocus: false,
+            key: Key('Username'),
+            onSaved: (value) => _username = value,
+            decoration: InputDecoration(
+              hintText: 'Username',
+              prefixIcon: Icon(Icons.supervised_user_circle),
+              contentPadding: EdgeInsets.fromLTRB(20.0, 11.0, 20.0, 11.0),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            ),
+          );
+          final email = TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            autofocus: false,
+            key: Key('Email'),
+            validator: EmailFieldValidator.validate,
+            onSaved: (value) => _email = value, 
+            decoration: InputDecoration(
+              hintText: 'Email',
+              prefixIcon: Icon(Icons.email),
+              contentPadding: EdgeInsets.fromLTRB(20.0, 11.0, 20.0, 11.0),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            ),
+          );
+          final password = TextFormField(
+            autofocus: false,
+            key: Key('Password'),
+            validator: ValueFieldValidator.validate,
+            onSaved: (value) => _password = value,
+            obscureText: true,
+            decoration: InputDecoration(
+              hintText: 'Password',
+              prefixIcon: Icon(Icons.lock),
+              contentPadding: EdgeInsets.fromLTRB(20.0, 11.0, 20.0, 11.0),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            ),
+          );
+          final registerButton = Padding(
+            padding: EdgeInsets.symmetric(vertical: 0.0),
+            child: Material(
+              shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(32.0)),
+              shadowColor: Colors.lightBlueAccent.shade100,
+              //elevation: 5.0,
+              clipBehavior: Clip.antiAlias, // Add This
+              child: MaterialButton(
+                minWidth: 200.0,
+                height: 46.0,
+                onPressed: _handleRegister,
+                color: Colors.orange,
+                child: Text('Register', style: TextStyle(color: Colors.white)),
               ),
-            ],
-          ),
-          Column(children: <Widget>[
-            Image.asset('asset/image/registration.png',
-              width: 150,
-              height: 150,
             ),
-            
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 16),
-
+          );
+          return Scaffold(
+            body: Container(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.all(20),
+                child: Form(
+                  key: _formKey,
+                  child: ListView(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(left: 24.0, right: 24.0),
+                    children: <Widget>[
+                      SizedBox(height: 138.0),
+                      logo,
+                      SizedBox(height: 48.0),
+                      username,
+                      SizedBox(height: 8,),
+                      email,
+                      SizedBox(height: 8,),
+                      password,
+                      SizedBox(height: 8,),
+                      registerButton,
+                      
+                      Padding(
+                        padding: EdgeInsets.only(top: 16),
+                      ),
+                      
+                      Center(
+                        child: Text('or',style: TextStyle(color: Colors.grey[700], fontSize: 12),),
+                      ),
+                      
+                      FlatButton(
+                        child: Text('Login',
+                        style: TextStyle(color: Colors.grey[700]),
+                        ),
+                        onPressed: () => Navigator.pop(context) 
+                      )
+                         
+                    ],
+                  )
                 ),
-                Text(
-                  'Registrasi Dulu', 
-                  style: TextStyle(
-                  color: Colors.white, 
-                  fontSize: 16),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 16),
-                ),
-                Text(
-                  'Ini Deskripsi',
-                  style: TextStyle(
-                    fontSize: 12, color: Colors.white, 
-                    ),
-                    textAlign: TextAlign.center,
-                )
-              ],
-        ),
-        Padding(
-          padding: EdgeInsets.only(top: 12),
-        ),
-
-        TextFormField( //<-- Email
-        key: Key('Email'),
-        validator: EmailFieldValidator.validate,
-        onSaved: (value) => _email = value,
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-            color: ColorPalete.underLineTextField,
-            width: 15)
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(width: 3,
-              color: Colors.white),
-            ),
-            hintText: 'Email',
-            hintStyle: TextStyle(color: ColorPalete.hintColor),
-            
-        ),
-        style: TextStyle(color: Colors.white),
-        autofocus: false,
-        ),
-
-        TextFormField( //<-- Username
-        key: Key('Username'),
-        validator: ValueFieldValidator.validate,
-        onSaved: (value) => _username = value,
-          decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: ColorPalete.underLineTextField,
-                width: 15,
-                ),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(width: 3, 
-            color: Colors.white
-            ),
-          ),
-          hintText: 'Username',
-          hintStyle: TextStyle(color: ColorPalete.hintColor,)
-          ),
-          style: TextStyle(color: Colors.white),
-          autofocus: false,
-      ),
-      Padding(
-        padding: EdgeInsets.only(top: 12),
-      ),
-
-  TextFormField( //<-- Password
-  key: Key('Password'),
-  validator: ValueFieldValidator.validate,
-  onSaved: (value) => _password = value,
-    decoration: const InputDecoration(
-      border: UnderlineInputBorder(),
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: ColorPalete.underLineTextField,
-        width: 15,
-      ),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(width: 3, color: Colors.white)
-    ),
-    hintText: 'Password',
-    hintStyle: TextStyle(color: ColorPalete.hintColor)
-    ),
-    style: TextStyle(color: Colors.white),
-    obscureText: true,
-    autofocus: false,
-  ),
-      Padding(
-        padding: EdgeInsets.only(top: 16),
-      ),
-      FlatButton(
-        onPressed: _handleRegister,
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 8),
-          width: double.infinity,
-          child: Text('Register',
-          style: TextStyle(color: ColorPalete.primaryColor),
-          textAlign: TextAlign.center,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(30)
-          ),
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.only(top: 16),
-      ),
-      Text('or',
-      style: TextStyle(color: Colors.white, fontSize: 12),
-      ),
-      FlatButton(
-        child: Text('Login',
-        style: TextStyle(color: Colors.white),
-        ),
-        onPressed: () => Navigator.pop(context) 
+              ),
+            )
+          );
+        }
       )
-    ],
-  )
-
-          ],
-        ),
-      ),
-    )));
-    
-        }));
+    );
   }
   bool _validateDanSave() {
-  final FormState form = _formKey.currentState;
-  if (form.validate()) {
-    form.save();
-    return true;
-  }
-  return false;
+    final FormState form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
   }
 
   void _handleRegister() {
     if (_validateDanSave()) {
       _registerBloc.dispatch(TombolRegister(
-        email: _email,
         username: _username,
+        email: _email,
         password: _password
-        ));
+      ));
     }
   }
-  }
+
+}

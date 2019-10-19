@@ -167,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
           return BlocProvider<RegisterBloc>(
             builder: (context) {
               return RegisterBloc(authBloc: BlocProvider.of<AuthBloc>(context),
-              userRepo:   _loginBloc.userRepo,
+              userRepo: _loginBloc.userRepo,
               );
             },
             child: RegisterPage(),

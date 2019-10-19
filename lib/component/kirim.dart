@@ -87,7 +87,7 @@ class _KirimPageState extends State<KirimPage> {
             padding: EdgeInsets.all(0),
             onPressed: () {},
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 14),
+            padding: EdgeInsets.symmetric(vertical: 14),
               width: double.infinity,
               child: Text('Bantuan',
                 style: TextStyle(color: Colors.white),
@@ -113,7 +113,9 @@ class _KirimPageState extends State<KirimPage> {
         title: const Text('Trasfer'),
         actions: <Widget>[
           new IconButton(icon: const Icon(Icons.send),
-          onPressed: () {}) //<-Di isi
+          onPressed: () {
+
+          }) //<-Di isi
         ],
       ),
       body: SingleChildScrollView(

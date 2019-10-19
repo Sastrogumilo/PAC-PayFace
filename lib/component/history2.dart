@@ -51,7 +51,6 @@ class _HistoryPageState2 extends State<HistoryPage2> {
             DataColumn(label: Text("No")),
             DataColumn(label: Text("Tanggal")),
             DataColumn(label: Text("Nilai")),
-
           ],
           sortColumnIndex: 1,
           rows: _kirimList?.map(((isi) => DataRow(
@@ -75,33 +74,55 @@ class _HistoryPageState2 extends State<HistoryPage2> {
       bloc: historyBloc,
       builder: (context, state){
     final kirim_pages = Container(
-      child: SafeArea(
-        child: SingleChildScrollView(
-          child: Table(
-            border: TableBorder.symmetric(
-              inside: BorderSide(
-                color: Colors.blue.shade200,
-                style: BorderStyle.solid,
-                width: 0.5),
+      alignment: Alignment.center,
+      padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Flexible(
+            flex: 1,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Image.asset('asset/images/topup.png'),
             ),
-            children: [
-              TableRow(children: [
-                FlatButton(
-                  child: Text('Kirim'),
-                  onPressed: () async {
-                    String hasil = await isiTableKirim(context);
-                  },
-                ),
-                FlatButton(
-                  child: Text("Terima"),
-                  onPressed: () {},
-                ),
-              ])
-            ],
+          ),
+          Flexible(
+            flex: 6,
+            child: Container(
+              padding: EdgeInsets.all(13.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "TT-12323-00",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  Text(
+                    "50.000",
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           )
-        ),
+        ],
       ),
     );
+    
+    final _ktabPages = <Widget>[
+      Column(
+        children: <Widget>[
+          kirim_pages,
+          kirim_pages,
+        ],
+      ),
+      Center(child: Text('Top Up',style: TextStyle(color: Colors.black87))),
+      Center(child: Text('Pay Out',style: TextStyle(color: Colors.black87)))
+    ];
     final _kTabs = <Tab>[
       Tab(text: 'Transfer',),
       Tab(text: 'Top Up',),
@@ -116,7 +137,9 @@ class _HistoryPageState2 extends State<HistoryPage2> {
             tabs: _kTabs,
           ),
         ),
-        body: Text('ISI')
+        body: TabBarView(
+          children: _ktabPages,
+        )
       ),
     );
   });}
