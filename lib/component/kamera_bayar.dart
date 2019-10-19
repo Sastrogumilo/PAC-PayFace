@@ -1,19 +1,21 @@
-  import 'dart:async';
-  import 'dart:io';
-  //import 'package:PayFace/pin.dart';
-  import 'package:PayFace/repository/hasilCariUser.dart';
+import 'dart:async';
+import 'dart:io';
+//import 'package:PayFace/pin.dart';
+import 'package:PayFace/component/konfirmasi.dart';
+import 'package:PayFace/repository/hasilCariUser.dart';
 import 'package:camera/camera.dart';
-  import 'package:flutter/material.dart';
-  import 'package:fluttertoast/fluttertoast.dart';
-  import 'package:path_provider/path_provider.dart';
-  import 'package:PayFace/bloc/kamera_bayar/kameraBayar_bloc.dart';
-  import 'package:PayFace/bloc/kamera_bayar/kameraBayar_state.dart';
-  import 'package:flutter_bloc/flutter_bloc.dart';
-	import 'package:PayFace/model/facesoft.dart';
-  import 'package:shared_preferences/shared_preferences.dart';
-  import 'package:image/image.dart' as ImageProcess;
-  import 'dart:convert';
-
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:PayFace/bloc/kamera_bayar/kameraBayar_bloc.dart';
+import 'package:PayFace/bloc/kamera_bayar/kameraBayar_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:PayFace/model/facesoft.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image/image.dart' as ImageProcess;
+import 'dart:convert';
+import 'package:PayFace/bloc/konfirmasi/konfirmasi_bloc.dart';
+import 'package:PayFace/bloc/auth/auth_bloc.dart';
 
   class KameraBayarPage extends StatefulWidget {
     static String tag = 'kameraBayar-page';
@@ -514,7 +516,12 @@ import 'package:camera/camera.dart';
         
         if (mounted) {
           faceRecognition();
-          new Future.delayed(const Duration(seconds: 5), ()=> hasilCariQuery());
+          print('Check Image ...');
+          new Future.delayed(Duration(seconds: 5), ()=> hasilCariQuery());
+          //hasilCariQuery();
+          new Future.delayed(Duration(seconds: 8), ()=> checkWajah());
+          
+          //_loadKonfirmasiPage();
           setState(() {
 	
             imagePath = filePath;
@@ -542,9 +549,11 @@ import 'package:camera/camera.dart';
           }
 	
         }
+       
 	
       });
     //Navigator.of(context).pushNamed(null); //diisis
+    
     }
     void _showCameraException(CameraException e) {
       String errorText = 'Error: ${e.code}\nError Message: ${e.description}';
@@ -559,4 +568,86 @@ import 'package:camera/camera.dart';
       );
 	
     }
+
+
+     void _loadKonfirmasiPage() {
+      Navigator.push(context, 
+        MaterialPageRoute(builder: (context){
+        return BlocProvider<KonfirmasiBloc>(
+          builder: (context) {
+            return KonfirmasiBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+            userRepo: kameraBayarBloc.userRepo,
+            );
+          },
+          child: KonfirmasiPage(),
+
+        );
+      }
+      )
+      );
+    }
+
+    void checkWajah() async {
+      int valueRecog;
+      final pref = await SharedPreferences.getInstance();
+      valueRecog = pref.getInt('valueRecog');
+      print("Value = "+"$valueRecog");
+      
+          if(valueRecog == 0){
+            //ERROR
+            Fluttertoast.showToast(
+	              msg: 'Wajah Tidak Dikenal !, Tunggu Beberapa Saat dan Silahkan Coba Lagi ...',
+	              toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white
+            );
+                pref.remove('valueRecog');
+                pref.remove('tagHasil');
+
+                pref.reload();
+
+                print(pref.getInt('valueRecog'));
+                print(pref.getInt('tagHasil'));
+                //print(pref.getString('objectIdPenerima'));
+                  
+                  //print("value = "+pref.getString('valueRecog'));
+
+          }else {
+          Fluttertoast.showToast(
+	              msg: 'User Terdeteksi !, Silahkan Tunggu ...',
+	              toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.green,
+                textColor: Colors.white
+            );
+          new Future.delayed(const Duration(seconds: 3), ()=> _loadKonfirmasiPage());
+          pref.remove('valueRecog');
+          pref.remove('tagHasil');
+
+          pref.remove('objectIdPenerima');
+          pref.remove('alamatPenerima');
+          pref.remove('namaLengkapPenerima');
+          pref.remove('emailPenerima');
+          pref.remove('usernamePenerima');
+          pref.remove('notelpPenerima');
+
+          pref.remove('userRekIdPenerima');
+          pref.remove('noRekUserPenerima');
+          pref.remove('saldoPenerima');
+
+          pref.reload();
+          pref.reload();
+
+          print(pref.getInt('valueRecog'));
+          print(pref.getString('tagHasil'));
+          print(pref.getString('objectIdPenerima'));
+          pref.reload();
+          }
+
+    }
+
   }
+   
