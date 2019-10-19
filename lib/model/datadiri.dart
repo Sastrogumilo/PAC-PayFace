@@ -28,7 +28,5 @@ class Profil extends ParseObject implements ParseCloneable{
   set objId(String objId) => set<String>(keyID, objId);
 
   ParseUser get user => get<ParseUser>(keyUser);
-  set user(ParseUser user) => set<ParseUser>(keyUser, user); 
-
-  
+  set user(ParseUser user) => set<ParseUser>(keyUser, user);   
 }

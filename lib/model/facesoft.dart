@@ -9,20 +9,15 @@ final String uploadImage = "face/tags/image";
 final String faceRecog = "face/tags/find";
 
 //"apikey":"rc5ayz8azvp-i6q470w73i" => lama
-
-
 Map<String, String> headers = {"apikey":"2qcrg70r3so-r2h4lp1vf1", "Content-Type" : "application/json"};
-
-
 Client client = Client();
-
 
 class Tags{
   String tagID;
   Tags({this.tagID});
-
+  
   factory Tags.fromJson(Map<String, dynamic> parsedJson) {
-  return Tags(tagID: parsedJson['tagID']);
+    return Tags(tagID: parsedJson['tagID']);
   }
 }
 class GagalUpload{
@@ -45,14 +40,11 @@ class GagalRecognise{
 
 class ListHasilRecog{
   final List<Hasil> recog; 
-
   ListHasilRecog({this.recog});
 
   factory ListHasilRecog.fromJson(List<dynamic> parsedJson) {
-
     List<Hasil> recog = new List<Hasil>();
     recog = parsedJson.map((f)=>Hasil.fromJson(f)).toList();
-
     return new ListHasilRecog(recog: recog);
   }
   
@@ -61,9 +53,8 @@ class ListHasilRecog{
 class Hasil{
   double confidence;
   String tagID;
-  
   Hasil({this.confidence, this.tagID});
-
+  
   factory Hasil.fromJson(Map<String, dynamic> json){
     return new Hasil (confidence: json['confidence'],
                       tagID: json['tagID']);
@@ -92,7 +83,6 @@ Future getTags() async {
       return null;
     }
 }
-
 
 Future uploadGambar() async {
   String image1;
@@ -130,7 +120,6 @@ Future faceRecognition() async {
     final dataGagal = json.decode(response.body);
     GagalRecognise error = new GagalRecognise.fromJson(dataGagal);
     print(error.error);
-
   } else {
     final dataSukses = json.decode(response.body);
     print('respon = '+response.body); // => [{}]
@@ -138,9 +127,9 @@ Future faceRecognition() async {
     pref.setDouble('confidence', dataList.recog[0].confidence);
     pref.setString('tagHasil', dataList.recog[0].tagID);
     print('tagID: '+dataList.recog[0].tagID+', confidence: '+dataList.recog[0].confidence.toString());
-
-    tagHasil = pref.getString('tagHasil');
-    tagAwal = pref.getString('tagID');
+    
+    tagHasil = pref.getString('tagHasil'); // Get Data tagHasil
+    tagAwal = pref.getString('tagID'); // Get Data tagAwal
 
     if (tagAwal == tagHasil) {
       print("Ini Wajah Anda");

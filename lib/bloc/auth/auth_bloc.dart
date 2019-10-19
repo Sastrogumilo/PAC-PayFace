@@ -6,9 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:PayFace/model/deleteAllSharedPreference.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-
   final BaseUserRepo userRepo;
-
   AuthBloc({@required this.userRepo}) : assert(userRepo != null);
 
   @override
