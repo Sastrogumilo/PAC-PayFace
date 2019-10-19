@@ -6,9 +6,7 @@ import 'package:PayFace/bloc/auth/auth_state.dart';
 import 'package:meta/meta.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-
   final BaseUserRepo userRepo;
-
   AuthBloc({@required this.userRepo}) : assert(userRepo != null);
 
   @override
