@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:PayFace/bloc/auth/auth_bloc.dart';
 import 'package:PayFace/bloc/kamera_bayar/kameraBayar_bloc.dart';
 import 'package:PayFace/component/kamera_bayar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:PayFace/bloc/konfirmasi/konfirmasi_bloc.dart';
+import 'package:PayFace/component/konfirmasi.dart';
 
 class ColorPalete {
   static const backgroundColor = Color(0xff0066ff) ;
@@ -41,6 +44,10 @@ class _KirimPageState extends State<KirimPage> {
   String _jumlah;
   
   KirimBloc _kirimBloc;
+  String _password;
+  int _jumlah_transfer;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  KameraBayarBloc kameraBayarBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +58,7 @@ class _KirimPageState extends State<KirimPage> {
         final pageKirim = Column(
           children: <Widget>[
             SizedBox(height: 8,),
+            // Jumlah Transfer
             Padding(
               padding: new EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
               child: TextFormField(
@@ -67,11 +75,14 @@ class _KirimPageState extends State<KirimPage> {
                 ),
                 maxLines: 1,
                 keyboardType: TextInputType.number,
+                onSaved: (value) => _jumlah_transfer = value, 
+                key: Key('JumlahTransfer'),
                 //onSaved: (String value) => this._jumlah = value,
               ),
               //onSaved: (String value) => this._jumlah = value,
             ),
             SizedBox(height: 8,),
+            // Password Akun
             Padding(
               padding: new EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
               child: TextFormField(
@@ -87,17 +98,20 @@ class _KirimPageState extends State<KirimPage> {
                 maxLines: 1,
                 maxLength: 8,
                 obscureText: true,
+                onSaved: (value) => _password = value, 
+                key: Key('password'),
                 //onSaved: (String value) => this._jumlah = value,
               ),
             ),
             SizedBox(height: 8,),
+            // Button Bantuan
             Padding(
               padding: new EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
               child: new RaisedButton(
                 elevation: 0,
                 color: Colors.white,
                 padding: EdgeInsets.all(0),
-                onPressed: () {},
+                onPressed: () => _sendDataTransfer(),
                 child: Container(
                 padding: EdgeInsets.symmetric(vertical: 14),
                   width: double.infinity,
@@ -115,6 +129,11 @@ class _KirimPageState extends State<KirimPage> {
           ]
         );
         
+        final pageFormKirim = Form(
+          key: _formKey,
+          child: pageKirim,
+        );
+
         return Scaffold(
           floatingActionButton: FloatingActionButton.extended(
               onPressed: _loadKameraBayarPage,
@@ -132,12 +151,48 @@ class _KirimPageState extends State<KirimPage> {
             ],
           ),
           body: SingleChildScrollView(
-            child: pageKirim,
+            child: pageFormKirim,
           ),
         );
       }
     );
   }
+  
+  bool _validateDanSave() {
+    final FormState form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+  
+  void _sendDataTransfer() async{
+    if(_validateDanSave()){
+      var pref = await SharedPreferences.getInstance();
+      pref.setInt('jumlah_transfer', _jumlah_transfer);  
+      pref.setString('password', _password); 
+      _loadKonfirmasiPage();
+    }  
+  }
+
+  void _loadKonfirmasiPage() {
+      Navigator.push(context, 
+        MaterialPageRoute(
+          builder: (context){
+            return BlocProvider<KonfirmasiBloc>(
+              builder: (context) {
+                return KonfirmasiBloc(authBloc: BlocProvider.of<AuthBloc>(context),
+                userRepo: kameraBayarBloc.userRepo,
+                );
+              },
+              child: KonfirmasiPage(),
+            );
+          }
+        )
+      );
+    }
+  
   void _loadKameraBayarPage() {
     Navigator.push(context, 
         MaterialPageRoute(builder: (context){

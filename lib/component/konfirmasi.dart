@@ -33,6 +33,7 @@ class _KonfirmasiPageState extends State<KonfirmasiPage> {
     
     }));
   }
+
   @override 
   void initState() {
     super.initState();
@@ -54,7 +55,6 @@ class _KonfirmasiPageState extends State<KonfirmasiPage> {
             appBar: new AppBar(
               title: const Text('Konfirmasi Penerima'),
             ),
-
             body: SingleChildScrollView(
               child: Form(
               child: Padding (
@@ -73,9 +73,7 @@ class _KonfirmasiPageState extends State<KonfirmasiPage> {
                       fillColor: Colors.white30,
                       icon:Icon(Icons.person),
                       labelText: "$namaPenerima"
-                      
-                    ),
-                    
+                    ),      
                   ),
 
                   // E-MAIL
@@ -147,7 +145,7 @@ class _KonfirmasiPageState extends State<KonfirmasiPage> {
   }
 
   void _loadPinPage() {
-  Navigator.push(context, 
+    Navigator.push(context, 
       MaterialPageRoute(builder: (context){
         return BlocProvider<PinBloc>(
           builder: (context) {
@@ -156,10 +154,9 @@ class _KonfirmasiPageState extends State<KonfirmasiPage> {
             );
           },
           child: PinPage(),
-
         );
-      }
-      )
-  );
+      })
+    );
   }
+
 }

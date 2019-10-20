@@ -466,6 +466,14 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
           print(pref.getString('tagHasil'));
           print(pref.getString('objectIdPenerima'));
           pref.reload();
+          Fluttertoast.showToast(
+              msg: 'Kembali ke menu sebelumnya....',
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIos: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white
+          );
           //new Future.delayed(const Duration(seconds: 3), ()=> _loadKonfirmasiPage());
           //_loadKonfirmasiPage();
         }

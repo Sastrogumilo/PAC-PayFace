@@ -23,9 +23,6 @@ class _LoginPageState extends State<LoginPage> {
   String _email, _password;
   final GlobalKey<ScaffoldState> _scaffoldstate = GlobalKey<ScaffoldState>();
   LoginBloc _loginBloc;
-  
- 
-    
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
   }
   
   void _handleLogin() {
-        if (_validateDanSave()) {
+    if (_validateDanSave()) {
       _loginBloc.dispatch(LoginButtonPressed(
         //username: _username,
         username: _email,
