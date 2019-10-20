@@ -5,15 +5,13 @@ import 'package:PayFace/component/profil_v2.dart';
 
 
 class Routes extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
-  return MaterialApp(
-    routes: {
-      '/' : (context) => Root(userRepo: UserRepo()),
-      ProfilPage.tag: (context) => ProfilPage(),
-    },
-  ); 
+    return MaterialApp(
+      routes: {
+        '/' : (context) => Root(userRepo: UserRepo()),
+        ProfilPage.tag: (context) => ProfilPage(),
+      },
+    ); 
   }
 }

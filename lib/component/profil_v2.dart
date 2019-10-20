@@ -39,16 +39,22 @@ class _ProfilPageState extends State<ProfilPage> {
     'BTN',
     'DLL'
   ];
-  String _nama;
-  String _email;
-  String _notelp;
-  String _passwd;
-  String _username;
-  String _norek;
-  String _alamat;
+  String _nama,isinama;
+  String _email,isiemail;
+  String _notelp,isinotelp;
+  String _passwd,isipasswd;
+  String _username,isiusername;
+  String _norek,isinorek;
+  String _alamat,isialamat;
 
-  String _validasiNama(String value)
-  {
+  
+  @override
+  void initState(){
+    super.initState();
+    _loadDataDiri();
+  }
+  
+  String _validasiNama(String value){
     if(value.isEmpty)return 'Belum mengisi nama';
     final RegExp nameExp = new RegExp(r'^[A-za-z ]+$');
     if(!nameExp.hasMatch(value))return 'Hanya bisa memasukan huruf dan angka';
@@ -74,168 +80,172 @@ class _ProfilPageState extends State<ProfilPage> {
               actions: <Widget>[
                 new IconButton(
                   icon: const Icon(Icons.save),
-                  onPressed: () => {_handleDataUpdate(), 
-                    Timer(const Duration(seconds: 5), _loadProfilPage),}
+                  onPressed: () => {
+                    _handleDataUpdate(), 
+                    Timer(const Duration(seconds: 5), _loadProfilPage),
+                  }
                 ) //<-Di isi
               ],
             ),
             body: SingleChildScrollView(
               child: Form(
                 key: _formKey,
-              child: Padding (
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: new Column(
-                children: <Widget>[
-                  // NAMA LENGKAP
-                  SizedBox(height: 12,),
-                  TextFormField(
-                    textCapitalization: TextCapitalization.words,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white30,
-                      icon:Icon(Icons.person),
-                      hintText: "Siapa nama lengkap anda?",
-                      labelText: "Nama Lengkap"
+                child: Padding (
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: new Column(
+                    children: <Widget>[
+                      // NAMA LENGKAP
+                      SizedBox(height: 12,),
+                      TextFormField(
+                        textCapitalization: TextCapitalization.words,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          filled: true,
+                          fillColor: Colors.white30,
+                          icon:Icon(Icons.person),
+                          hintText: "Siapa nama lengkap anda?",
+                          labelText: "Nama Lengkap"
+                          
+                        ),
+                        key: Key('Nama Lengkap'),
+                        onSaved: (value) => _nama = value,
+                        validator: _validasiNama,
+                      ),
+
+                      // E-MAIL
+                      SizedBox(height: 12,),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          filled: true,
+                          fillColor: Colors.white30,
+                          icon:Icon(Icons.email),
+                          hintText: "Email yang digunakan",
+                          labelText: "E-mail"
+                        ),
+                        key: Key('Email'),
+                        onSaved: (value) => _email = value,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+
+                      // No Telp
+                      SizedBox(height: 12,),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          filled: true,
+                          fillColor: Colors.white30,
+                          icon:Icon(Icons.phone),
+                          hintText: "No telepon yang digunakan",
+                          labelText: "No Telepon: 08965454627"
+                        ),
+                        key: Key('No Telp'),
+                        onSaved: (String value) => _notelp = value,
+                        keyboardType: TextInputType.phone,
+                      ),
                       
-                    ),
-                    key: Key('Nama Lengkap'),
-                    onSaved: (value) => _nama = value,
-                    validator: _validasiNama,
-                  ),
-
-                  // E-MAIL
-                  SizedBox(height: 12,),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white30,
-                      icon:Icon(Icons.email),
-                      hintText: "Email yang digunakan",
-                      labelText: "E-mail"
-                    ),
-                    key: Key('Email'),
-                    onSaved: (value) => _email = value,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-
-                  // No Telp
-                  SizedBox(height: 12,),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white30,
-                      icon:Icon(Icons.phone),
-                      hintText: "No telepon yang digunakan",
-                      labelText: "No Telepon: 08965454627"
-                    ),
-                    key: Key('No Telp'),
-                    onSaved: (String value) => _notelp = value,
-                    keyboardType: TextInputType.phone,
-                  ),
-                  
-                  // ALAMAT
-                  SizedBox(height: 12,),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white30,
-                      icon:Icon(Icons.home),
-                      hintText: "Alamat rumah anda",
-                      labelText: "Alamat"
-                    ),
-                    key: Key('Alamat'),
-                    onSaved: (value) => _alamat = value,
-                    maxLines: 3,
-                  ),
-
-                  // No Rekening
-                  SizedBox(height: 12,),
-                  TextFormField(
-                    textCapitalization: TextCapitalization.words,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white30,
-                      icon:Icon(Icons.supervised_user_circle),
-                      hintText: "Nomer Rekening Bank Anda",
-                      labelText: "No. Rekening"
-                    ),
-                    key: Key('No Rekening'),
-                    onSaved: (value) => _norek = value,
-                    validator: _validasiNama,
-                  ),
-
-                  // USERNAME
-                  SizedBox(height: 12,),
-                  TextFormField(
-                    textCapitalization: TextCapitalization.words,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.white30,
-                      icon:Icon(Icons.supervised_user_circle),
-                      hintText: "Username yang diinginkan",
-                      labelText: "Username"
-                    ),
-                    key: Key('Username'),
-                    onSaved: (value) => _username = value,
-                    validator: _validasiNama,
-                  ),
-
-                  // PASSWORD
-                  SizedBox(height: 12,),
-                  PasswordField(
-                    fieldKey: _passwdFieldKey,
-                    helperText: 'tidak lebih dari 8 karakter',
-                    labelText: 'Password',
-                    onFieldSubmitted: (String value){
-                      setState(() {
-                      _passwd = value; 
-                      });
-                    },
-                  ),
-
-                  // RE-TYPE PASSWORD
-                  SizedBox(height: 12,),
-                  TextFormField(
-                    enabled: this._passwd != null && this._passwd.isNotEmpty,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      icon: Icon(Icons.lock_outline),
-                      labelText: 'Re-type Password'
-                    ),
-                    maxLength: 8,
-                    obscureText: true,
-                  ),
-                  
-                  new RaisedButton(
-                    elevation: 0,
-                    color: Colors.white,
-                    padding: EdgeInsets.all(0),
-                    onPressed: _loadKameraProfilPage,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 14),
-                      width: double.infinity,
-                      child: Text('Scan Wajah',
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.center,
+                      // ALAMAT
+                      SizedBox(height: 12,),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          filled: true,
+                          fillColor: Colors.white30,
+                          icon:Icon(Icons.home),
+                          hintText: "Alamat rumah anda",
+                          labelText: "Alamat"
+                        ),
+                        key: Key('Alamat'),
+                        onSaved: (value) => _alamat = value,
+                        maxLines: 3,
                       ),
-                      decoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.circular(32)
+
+                      // No Rekening
+                      SizedBox(height: 12,),
+                      TextFormField(
+                        textCapitalization: TextCapitalization.words,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          filled: true,
+                          fillColor: Colors.white30,
+                          icon:Icon(Icons.supervised_user_circle),
+                          hintText: "Nomer Rekening Bank Anda",
+                          labelText: "No. Rekening"
+                        ),
+                        key: Key('No Rekening'),
+                        onSaved: (value) => _norek = value,
+                        validator: _validasiNama,
                       ),
-                    ),
+
+                      // USERNAME
+                      SizedBox(height: 12,),
+                      TextFormField(
+                        textCapitalization: TextCapitalization.words,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          filled: true,
+                          fillColor: Colors.white30,
+                          icon:Icon(Icons.supervised_user_circle),
+                          hintText: "Username yang diinginkan",
+                          labelText: "Username"
+                        ),
+                        key: Key('Username'),
+                        onSaved: (value) => _username = value,
+                        validator: _validasiNama,
+                      ),
+
+                      // PASSWORD
+                      SizedBox(height: 12,),
+                      PasswordField(
+                        fieldKey: _passwdFieldKey,
+                        helperText: 'tidak lebih dari 8 karakter',
+                        labelText: 'Password',
+                        onFieldSubmitted: (String value){
+                          setState(() {
+                          _passwd = value; 
+                          });
+                        },
+                      ),
+
+                      // RE-TYPE PASSWORD
+                      SizedBox(height: 12,),
+                      TextFormField(
+                        enabled: this._passwd != null && this._passwd.isNotEmpty,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          filled: true,
+                          icon: Icon(Icons.lock_outline),
+                          labelText: 'Re-type Password'
+                        ),
+                        maxLength: 8,
+                        obscureText: true,
+                      ),
+                      
+                      new RaisedButton(
+                        elevation: 0,
+                        color: Colors.white,
+                        padding: EdgeInsets.all(0),
+                        onPressed: _loadKameraProfilPage,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          width: double.infinity,
+                          child: Text('Scan Wajah',
+                            style: TextStyle(color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(32)
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 8,),
+                    ],
                   ),
-                  SizedBox(height: 8,),
-                ],
-              ),
+                )
+              )
             )
-          )));
+          );
         }
       )
     );
@@ -246,8 +256,9 @@ class _ProfilPageState extends State<ProfilPage> {
       MaterialPageRoute(builder: (context){
         return BlocProvider<KameraProfilBloc>(
           builder: (context) {
-            return KameraProfilBloc(authBloc: BlocProvider.of<AuthBloc>(context),
-            userRepo:   _dataDiriBloc.userRepo,
+            return KameraProfilBloc(
+              authBloc: BlocProvider.of<AuthBloc>(context),
+              userRepo:   _dataDiriBloc.userRepo,
             );
           },
           child: KameraPage(),
@@ -262,8 +273,9 @@ class _ProfilPageState extends State<ProfilPage> {
       MaterialPageRoute(builder: (context){
         return BlocProvider<DashBoardBloc>(
           builder: (context) {
-            return DashBoardBloc(authBloc: BlocProvider.of<AuthBloc>(context),
-            userRepo:   _dataDiriBloc.userRepo,
+            return DashBoardBloc(
+              authBloc: BlocProvider.of<AuthBloc>(context),
+              userRepo:   _dataDiriBloc.userRepo,
             );
           },
           child: DashBoardPage(),
@@ -362,10 +374,14 @@ class _ProfilPageState extends State<ProfilPage> {
     Timer(const Duration(seconds: 5), getUsersData);
     
   }
+
+  void _loadDataDiri() async{
+    var pref = await SharedPreferences.getInstance();
+    isinama = pref.getString('name');
+  }
 }
 
-class PasswordField extends StatefulWidget
-{
+class PasswordField extends StatefulWidget{
   const PasswordField({
     this.fieldKey,
     this.hintText,
@@ -388,13 +404,11 @@ class PasswordField extends StatefulWidget
   _PasswordFieldState createState() => new _PasswordFieldState();
 }
 
-class _PasswordFieldState extends State<PasswordField>
-{
+class _PasswordFieldState extends State<PasswordField>{
   bool _obscureText = true;
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context){
     return new TextFormField(
       key: widget.fieldKey,
       obscureText: _obscureText,

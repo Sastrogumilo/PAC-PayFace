@@ -445,7 +445,7 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
               backgroundColor: Colors.green,
               textColor: Colors.white
           );
-          pref.remove('valueRecog');
+          /*pref.remove('valueRecog');
           pref.remove('tagHasil');
 
           pref.remove('objectIdPenerima');
@@ -457,10 +457,10 @@ import 'package:PayFace/bloc/auth/auth_bloc.dart';
 
           pref.remove('userRekIdPenerima');
           pref.remove('noRekUserPenerima');
-          pref.remove('saldoPenerima');
+          pref.remove('saldoPenerima');*/
 
           pref.reload();
-          pref.reload();
+          //pref.reload();
 
           print(pref.getInt('valueRecog'));
           print(pref.getString('tagHasil'));

@@ -172,7 +172,7 @@ Future <void> rekUserQuery() async {
     print("Data Saldo tidak Ditemukan Di Server");
     print(response.error);
   }else{
-    print("hasil update Rekening: = "+response.result.toString());
+    //print("hasil update Rekening: = "+response.result.toString());
     final data = json.decode(response.result.toString());
     
     ListHasilRek dataList = ListHasilRek.fromJson(data);
@@ -180,11 +180,11 @@ Future <void> rekUserQuery() async {
     pref.setString('noRekUser', dataList.rekening[0].noRek);
     pref.setInt('saldo', dataList.rekening[0].saldo);
 
-    String userRek = pref.getString('userRekID');
+    /*String userRek = pref.getString('userRekID');
     String noRekUser = pref.getString('noRekUser');
     int saldo = pref.getInt('saldo');
-    print('Menyimpan Data Pada Devices....');
-    print('UserRekening = '+"$userRek"+", No Rekening = "+"$noRekUser"+", Saldo = "+"$saldo");
+    //print('Menyimpan Data Pada Devices....');
+    //print('UserRekening = '+"$userRek"+", No Rekening = "+"$noRekUser"+", Saldo = "+"$saldo");*/
   }
 }
 
@@ -212,7 +212,7 @@ Future<bool> getSaldoUser() async{
 
    // String userRek = pref.getString('userRekID');
     //String noRekUser = pref.getString('noRekUser');
-    int saldo = pref.getInt('saldo');
+    //int saldo = pref.getInt('saldo');
     //print('Menyimpan Data Pada Devices....');
     //print('UserRekening = '+"$userRek"+", No Rekening = "+"$noRekUser"+", Saldo = "+"$saldo");
     return true;

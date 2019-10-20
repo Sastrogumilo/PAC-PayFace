@@ -33,31 +33,25 @@ class _RootState extends State<Root>{
             builder: (context) {
               return DashBoardBloc()..dispatch(DashBoardStart());
             },
-            child: DashBoardPage(),
-            
-              
+            child: DashBoardPage(),      
           );
-          }
-          if (state is AuthUnauth) {
-            return BlocProvider(
-              builder: (context) {
-                return LoginBloc(
-                  authBloc: BlocProvider.of<AuthBloc>(context),
-                  userRepo: widget.userRepo,
-                );
-              },
-              child: LoginPage(),
-            );
-          }
-          
-          return Center(child: CircularProgressIndicator(),
+        }
+        if (state is AuthUnauth) {
+          return BlocProvider(
+            builder: (context) {
+              return LoginBloc(
+                authBloc: BlocProvider.of<AuthBloc>(context),
+                userRepo: widget.userRepo,
+              );
+            },
+            child: LoginPage(),
           );
-        
-        },
-        );
+        } 
+        return Center(
+          child: CircularProgressIndicator(),        
+        );  
+      },
+    );
       
-      }
-    
-   
-  }
-  
+  }  
+}  

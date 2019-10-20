@@ -163,8 +163,9 @@ class _LoginPageState extends State<LoginPage> {
         MaterialPageRoute(builder: (context){
           return BlocProvider<RegisterBloc>(
             builder: (context) {
-              return RegisterBloc(authBloc: BlocProvider.of<AuthBloc>(context),
-              userRepo: _loginBloc.userRepo,
+              return RegisterBloc(
+                authBloc: BlocProvider.of<AuthBloc>(context),
+                userRepo: _loginBloc.userRepo,
               );
             },
             child: RegisterPage(),

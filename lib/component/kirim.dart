@@ -47,7 +47,6 @@ class _KirimPageState extends State<KirimPage> {
   String _password;
   int _jumlah_transfer;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  KameraBayarBloc kameraBayarBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +74,8 @@ class _KirimPageState extends State<KirimPage> {
                 ),
                 maxLines: 1,
                 keyboardType: TextInputType.number,
-                onSaved: (value) => _jumlah_transfer = value, 
                 key: Key('JumlahTransfer'),
+                onSaved: (value) => _jumlah_transfer = int.parse(value), 
                 //onSaved: (String value) => this._jumlah = value,
               ),
               //onSaved: (String value) => this._jumlah = value,
@@ -145,9 +144,7 @@ class _KirimPageState extends State<KirimPage> {
             title: const Text('Trasfer'),
             actions: <Widget>[
               new IconButton(icon: const Icon(Icons.send),
-              onPressed: () {
-
-              }) //<-Di isi
+              onPressed: () => _sendDataTransfer()) //<-Di isi
             ],
           ),
           body: SingleChildScrollView(
@@ -172,6 +169,7 @@ class _KirimPageState extends State<KirimPage> {
       var pref = await SharedPreferences.getInstance();
       pref.setInt('jumlah_transfer', _jumlah_transfer);  
       pref.setString('password', _password); 
+      print("Jumlah Transfer: "+_jumlah_transfer.toString());
       _loadKonfirmasiPage();
     }  
   }
@@ -182,8 +180,9 @@ class _KirimPageState extends State<KirimPage> {
           builder: (context){
             return BlocProvider<KonfirmasiBloc>(
               builder: (context) {
-                return KonfirmasiBloc(authBloc: BlocProvider.of<AuthBloc>(context),
-                userRepo: kameraBayarBloc.userRepo,
+                return KonfirmasiBloc(
+                  authBloc: BlocProvider.of<AuthBloc>(context),
+                  userRepo: _kirimBloc.userRepo,
                 );
               },
               child: KonfirmasiPage(),
@@ -198,8 +197,9 @@ class _KirimPageState extends State<KirimPage> {
         MaterialPageRoute(builder: (context){
           return BlocProvider<KameraBayarBloc>(
             builder: (context) {
-              return KameraBayarBloc(authBloc: BlocProvider.of<AuthBloc>(context),
-              userRepo: _kirimBloc.userRepo,
+              return KameraBayarBloc(
+                authBloc: BlocProvider.of<AuthBloc>(context),
+                userRepo: _kirimBloc.userRepo,
               );
             },
             child: KameraBayarPage(),
