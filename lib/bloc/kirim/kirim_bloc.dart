@@ -17,7 +17,24 @@ class KirimBloc extends Bloc<KirimEvent, KirimState> {
 
   @override
   Stream<KirimState> mapEventToState(KirimEvent event) async* {
-   
+    if (event is PressKirim) {
+      //yield LoginLoading();
+      /*try {
+        final user = await userRepo.authenticate(
+          username: event.username,
+          //email: event.email,
+          password: event.password,
+        );
+        if (user != null) {
+          authBloc.dispatch(LoggedIn(user: user));
+        } else {
+          yield KirimGagal(error: 'LoginGagal');
+        }
+      } catch (error) {
+        yield KirimGagal(error: error.toString());
+      }*/
+      
+    }
   }
 
 }

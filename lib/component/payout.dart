@@ -23,8 +23,7 @@ class _PayoutPage extends State<PayoutPage> {
   {
     showDialog(
       context: context,
-      builder: (context)
-      {
+      builder: (context){
         return AlertDialog(
           title: Text('Masukan jumlah uang yang akan dicairkan'),
           content: Column(
@@ -52,43 +51,113 @@ class _PayoutPage extends State<PayoutPage> {
             ],
           ),
           actions: <Widget>[
-              FlatButton(
-                  onPressed: () {
-                   _dismissDialog();
-                  },
-                  child: Text('Close', style: TextStyle(color: Colors.red),)),
-              FlatButton(
+            FlatButton(
                 onPressed: () {
-                  //print('HelloWorld!');
-                  _dismissDialog();
+                _dismissDialog();
                 },
-                child: Text('Cairkan'),
-              )
-            ],
+                child: Text('Close', style: TextStyle(color: Colors.red),)),
+            FlatButton(
+              onPressed: () {
+                //print('HelloWorld!');
+                _dismissDialog();
+                _createPayOut();
+              },
+              child: Text('Cairkan'),
+            )
+          ],
         );
       }
     );
   }
+  
   PayOutBloc payOutBloc;
 
   @override
   void initState() {
     super.initState();
-    rekUserQuery();
+    //rekUserQuery();
     
   }
+
   @override
   Widget build(BuildContext context) {
     payOutBloc = BlocProvider.of<PayOutBloc>(context);
     return BlocBuilder<PayOutBloc, PayOutState>(
       bloc: payOutBloc,
       builder: (context, state){
+
         final tambahButton = FloatingActionButton.extended(
           onPressed: () => _showDialog(),
           label: Text('Cairkan Uang'),
           icon: Icon(Icons.attach_money),
           backgroundColor: Colors.orange,
         );
+
+        //List Isi Item
+        final list_item_baris = Container(
+          padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "PO-3331-0000-111-222",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18
+                ),
+              ),
+              Row(
+                children: <Widget>[
+                  Text(
+                    "Belum Disetujui",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                  ),
+                  SizedBox(width: 8,),
+                  Text(
+                    "23-10-2019",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 14
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                  "Jumlah: 300.000",
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                  ),
+                ),
+            ],
+          ),
+        );
+        
+        final list_item = Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.fromLTRB(8, 2, 8, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Flexible(
+                flex: 1,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset('asset/rupiah_b.png'),
+                ),
+              ),
+              SizedBox(width: 8,),
+              Flexible(
+                flex: 8,
+                child:  list_item_baris,
+              ),
+            ],
+          ),
+        );
+
+        //HALAMAN MENU
         return Scaffold(
           appBar: AppBar(
             title: Text('Pay Out'),
@@ -97,29 +166,7 @@ class _PayoutPage extends State<PayoutPage> {
             padding: EdgeInsets.fromLTRB(8, 4, 8, 0),
             child: Column(
               children: <Widget>[
-                Row(
-                  
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Icon(
-                      Icons.payment,
-                      size: 52,  
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                          child: Text('Transaksi : 123123asd12'),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                          child: Text('Jumlah : Rp. 50,000',textAlign: TextAlign.start,),
-                        )
-                      ],
-                    ),
-                  ],
-                )             
+                list_item
               ],
             ),
           ),
@@ -127,5 +174,9 @@ class _PayoutPage extends State<PayoutPage> {
         );
       }
     );
+  }
+
+  void _createPayOut(){
+
   }
 }

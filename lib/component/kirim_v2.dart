@@ -55,6 +55,7 @@ class _KirimPageState extends State<KirimPage> {
       ),
   
       const Divider(height: 400),
+      
       new RaisedButton(
         elevation: 0,
         color: Colors.white,

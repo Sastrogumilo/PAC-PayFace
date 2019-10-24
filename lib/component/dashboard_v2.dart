@@ -24,6 +24,7 @@ import 'package:PayFace/bloc/payout/payOut_bloc.dart';
 import 'package:PayFace/bloc/history/history_bloc.dart';
 import 'package:PayFace/bloc/topup/topUp_bloc.dart';
 import 'package:PayFace/model/initialization.dart';
+import 'package:PayFace/repository/rekening_repo.dart';
 
 
 class DashBoardPage extends StatefulWidget 
@@ -41,9 +42,9 @@ class _DashBoardPageState extends State<DashBoardPage>
   PermissionStatus _status; //check status
 
   //DataUser
-  String displayNama;
-  String displayEmail;
-  int displaySaldo;
+  String displayNama = 'Loading...';
+  String displayEmail = 'Loading...';
+  int displaySaldo = 0;
 
   // Data dari piechart
   Map<String, double> dataMap = new Map();
@@ -55,23 +56,22 @@ class _DashBoardPageState extends State<DashBoardPage>
     Colors.orange,
   ];
 
+  //Get Data User
   loadDataUser() async {
     try {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    //pref.reload();
-      
+      rekUserQuery();
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      //pref.reload();
       new Future.delayed(Duration.zero, () => setState(() {
-      displayNama = (pref.getString('namaLengkap') ?? "Loading Data ...");
-      displayEmail = (pref.getString('email') ?? "Email Anda");
-      displaySaldo = (pref.getString('saldo') ?? 0);
-      //print(displayNama);
-          }
-        )
-      );
+        displayNama = (pref.getString('namaLengkap') ?? "Loading Data ...");
+        displayEmail = (pref.getString('email') ?? "Email Anda");
+        displaySaldo = (pref.getInt('saldo') ?? 0);
+      }));
     } catch (Exception) {
 
     }
   } 
+  
   // Inisialisasi awal
   @override
   void initState(){
@@ -111,6 +111,7 @@ class _DashBoardPageState extends State<DashBoardPage>
 
   @override
   Widget build(BuildContext context) {
+    
     _dashBoardBloc = BlocProvider.of<DashBoardBloc>(context);
     _authBloc = BlocProvider.of<AuthBloc>(context);
     return BlocBuilder<DashBoardBloc, DashBoardState>(

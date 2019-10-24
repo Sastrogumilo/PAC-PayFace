@@ -9,3 +9,8 @@ class KirimStart extends KirimEvent {
   @override 
   String toString() => 'KirimStart';
 }
+
+class PressKirim extends KirimEvent {
+  @override 
+  String toString() => 'PressKirim';
+}

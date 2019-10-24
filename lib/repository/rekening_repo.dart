@@ -84,7 +84,6 @@ class ListHasilRek{
     rekening = parsedJson.map((f)=>HasilRek.fromJson(f)).toList();
     return new ListHasilRek(rekening: rekening);
   }
-  
 }
 
 class HasilRek{
@@ -112,27 +111,26 @@ class DebugRekening{
   }
 }
 
-
-Future postRekening(String noRek) async {
+Future postRekening(
+  String noRek,
+) async {
+  String body;
   var pref = await SharedPreferences.getInstance();
   String objectID = pref.getString('objectID');
+  print("$noRek");
+  Map<String, dynamic> bodyRek = {
+                                  "user_id" : "$objectID",
+                                  "no_rekening" : "$noRek",
+                                  "saldo": 0,
+  };
+  body = jsonEncode(bodyRek);
 
-  final response = await client.post(
-    "$urlRekening", 
-    headers: headers, 
-    body: {
-      "user_id" : "$objectID",
-      "no_rekening" : "$noRek",
-      "saldo": 0,
-    }
+  final response = await client.post("$urlRekening", 
+                                    headers: headers, 
+                                    body: body
+                                          
   );
   print("POST Rekening = "+response.statusCode.toString());
-  
-  if (response.statusCode >= 400){
-    final data = json.decode(response.body);
-    DebugRekening error = new DebugRekening.fromJson(data);
-    print(error.error);
-  }
 }
 
 // Mengedit Nomer Rekening dari User
@@ -174,7 +172,7 @@ Future <void> rekUserQuery() async {
     print("Data Saldo tidak Ditemukan Di Server");
     print(response.error);
   }else{
-    print("hasil update Rekening: = "+response.result.toString());
+    //print("hasil update Rekening: = "+response.result.toString());
     final data = json.decode(response.result.toString());
     
     ListHasilRek dataList = ListHasilRek.fromJson(data);
@@ -182,10 +180,72 @@ Future <void> rekUserQuery() async {
     pref.setString('noRekUser', dataList.rekening[0].noRek);
     pref.setInt('saldo', dataList.rekening[0].saldo);
 
-    String userRek = pref.getString('userRekID');
+    /*String userRek = pref.getString('userRekID');
     String noRekUser = pref.getString('noRekUser');
     int saldo = pref.getInt('saldo');
-    print('Menyimpan Data Pada Devices....');
-    print('UserRekening = '+"$userRek"+", No Rekening = "+"$noRekUser"+", Saldo = "+"$saldo");
+    //print('Menyimpan Data Pada Devices....');
+    //print('UserRekening = '+"$userRek"+", No Rekening = "+"$noRekUser"+", Saldo = "+"$saldo");*/
+  }
+}
+
+Future<bool> getSaldoUser() async{
+  var pref = await SharedPreferences.getInstance();
+  objectID = pref.getString('objectID');
+
+  final QueryBuilder<RekUser> query = QueryBuilder<RekUser>(RekUser())
+                ..regEx(userID, "$objectID");
+  final response = await query.query();
+  print(response.statusCode);
+  
+  if(response.result == null){
+    print("Data Saldo tidak Ditemukan Di Server");
+    print(response.error);
+    return false;
+  }else{
+    //print("hasil update Rekening: = "+response.result.toString());
+    final data = json.decode(response.result.toString());
+    
+    ListHasilRek dataList = ListHasilRek.fromJson(data);
+    //pref.setString('userRekID', dataList.rekening[0].objectIDRek);
+    //pref.setString('noRekUser', dataList.rekening[0].noRek);
+    pref.setInt('saldo', dataList.rekening[0].saldo);
+
+   // String userRek = pref.getString('userRekID');
+    //String noRekUser = pref.getString('noRekUser');
+    //int saldo = pref.getInt('saldo');
+    //print('Menyimpan Data Pada Devices....');
+    //print('UserRekening = '+"$userRek"+", No Rekening = "+"$noRekUser"+", Saldo = "+"$saldo");
+    return true;
+  }
+}
+
+Future<ListHasilRek> getPayOutNotAccUser() async{
+  var pref = await SharedPreferences.getInstance();
+  objectID = pref.getString('objectID');
+
+  final QueryBuilder<RekUser> query = QueryBuilder<RekUser>(RekUser())
+                ..regEx(userID, "$objectID");
+  final response = await query.query();
+  print(response.statusCode);
+  
+  if(response.result == null){
+    print("Data Saldo tidak Ditemukan Di Server");
+    print(response.error);
+    return null;
+  }else{
+    //print("hasil update Rekening: = "+response.result.toString());
+    final data = json.decode(response.result.toString());
+    
+    ListHasilRek dataList = ListHasilRek.fromJson(data);
+    //pref.setString('userRekID', dataList.rekening[0].objectIDRek);
+    //pref.setString('noRekUser', dataList.rekening[0].noRek);
+    //pref.setInt('saldo', dataList.rekening[0].saldo);
+
+   // String userRek = pref.getString('userRekID');
+    //String noRekUser = pref.getString('noRekUser');
+    //int saldo = pref.getInt('saldo');
+    //print('Menyimpan Data Pada Devices....');
+    //print('UserRekening = '+"$userRek"+", No Rekening = "+"$noRekUser"+", Saldo = "+"$saldo");
+    return dataList;
   }
 }
